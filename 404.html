@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infinity Studio 官方网站</title>
+
+<!-- Bootstrap -->
+<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap.min.css">
+<style>
+nav {
+	opacity: 0.8;
+}
+nav:hover {
+	opacity: 1.0;
+}
+* {
+font-family: "Microsoft YaHei" ! important;
+}
+</style>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid"> 
+			<!-- 移动端显示 -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">折叠</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+				<a class="navbar-brand" href="#">导航栏</a>
+			</div>
+			<!-- 导航栏 -->
+			<div class="collapse navbar-collapse" id="defaultNavbar1">
+				<ul class="nav navbar-nav">
+					<li><a href="#">主页<span class="sr-only">(current)</span></a></li>
+					<li class="dropdown">
+					<!-- 下拉菜单 -->
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">我们的项目<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Exotic Power 异域之能</a></li>
+							<li><a href="#">FoodCraft 食物工艺</a></li>
+							<li><a data-rel="external" href="projects/hmcl.html">Hello Minecraft! Launcher</a></li>
+						</ul>
+					</li>
+				</ul>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search">
+					</div>
+					<button type="submit" class="btn btn-default">搜索</button>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">更多链接<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+						<li><a href="http://blog.infinity-studio.org/">博客</a></li>
+						<li><a href="http://weblate.infinity-studio.org">Weblate</a></li>
+						<li><a href="https://github.com/InfinityStudio">Github</a></li>
+						<li><a href="http://ci.infinity-studio.org">Jenkins CI</a></li>
+						<li><a href="http://ci.infinity-studio.org/plugin/repository/">Maven仓库</a></li>
+						</ul>
+					</li>
+					<li><a href="join.html">加入我们</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse --> 
+		</div>
+		<!-- /.container-fluid --> 
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3"> <br>
+				<div class="alert alert-warning"><h1 class="text-center">对不起！你访问的网页找不到！</h1></div>
+				<br />
+				<h1 class="text-center"><a role="button" href="javascript:history.go(-1)" data-role="button" class="btn btn-info">返回上一页</a></h1>
+				<br />
+				<h4 class="text-center">如果你是网管，请报告以下错误：HTTP 404</h4>
+			</div>
+		<p id="logo"></p> 
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="text-center col-md-6 col-md-offset-3">
+			<p>Copyright &copy; 2015 Infinity Studio &middot; All Rights Reserved &middot; <a href="http://yourwebsite.com/" >Infinity Studio 官方网站</a></p>
+		</div>
+	</div>
+	<!-- jQuery --> 
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script> 
+	<script>$(function () 
+      { $("[data-toggle='popover']").popover();
+      });
+   </script>
+	<!-- Bootstrap的按钮类等 --> 
+	<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.js"></script>
+</body>
+</html>
