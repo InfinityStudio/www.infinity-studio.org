@@ -32,3 +32,4 @@ $smarty->assign('Title','Infinity Studio');
 $smarty->assign('MainActive', 'active');
 $smarty->assign('BodyClass','bs-docs-home');
 $smarty->display('index.tpl');
+?>

@@ -31,3 +31,4 @@ $smarty->cache_dir = 'smarty/cache/';
 $smarty->assign('Title','Infinity Studio - 加入我们');
 $smarty->assign('JoinActive', 'active');
 $smarty->display('join.tpl');
+?>
