@@ -81,15 +81,15 @@
 					{*</ul>*}
 				{*</li>*}
 				<li class="{$joinActive}"><a href="join.php">加入我们</a></li>
-				<li id="language-select">
-					<form method="get" action="http://www.infinity-studio.org/index.php">
-						<select name="languages">
-							<option value="zh_CN">中文（中国）</option>
-							<option value="en_US">English</option>
-						</select>
-						<input type="submit" value="Submit"/>
-					</form>
-				</li>
+				{*<li id="language-select">*}
+					{*<form method="get" action="http://www.infinity-studio.org/index.php">*}
+						{*<select name="languages">*}
+							{*<option value="zh_CN">中文（中国）</option>*}
+							{*<option value="en_US">English</option>*}
+						{*</select>*}
+						{*<input type="submit" value="Submit"/>*}
+					{*</form>*}
+				{*</li>*}
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> 
