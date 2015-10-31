@@ -1,3 +1,4 @@
-w
-wiki
-isMyAdmin
+/.idea
+/Command/Templates_c
+/Command/Cache
+.gitignore
