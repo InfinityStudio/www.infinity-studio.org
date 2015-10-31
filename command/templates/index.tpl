@@ -31,7 +31,15 @@
     </div>
     <div class="container">
         <div class="row text-center">
-            <div class="col-md-6 col-md-offset-3">我们是一群热爱MineCraft，致力于推进MineCraft本地化进程，立志为国内玩家带来更丰富和更精彩内容的人。</div>
+            <div class="col-md-6 col-md-offset-3">
+                {if $language == 'zh_CN'}
+                    我们是一群热爱MineCraft，致力于推进MineCraft本地化进程，致力于为国内玩家带来更丰富和更精彩内容的人。
+                {elseif $language == 'en_US'}
+                    We are a group which is love Minecraft, working for progress Minecraft Internationalization, Committed for brought more rich and wonderful contents.
+                {elseif $language == 'ja_JP'}
+                    {* TODO: Japen language *}
+                {/if}
+            </div>
         </div>
     </div>
 </main>
@@ -42,10 +50,15 @@
     <div class="row text-center">
         <div class="col-md-6 col-md-offset-3">
             <strong>
-                我们的程序，Mod，插件全部是完全开源，并且托管在Github上。
-                你可以点击下面的按钮或点击网址：<a href="https://github.com/InfinityStudio">https://github.com/InfinityStudio</a>
+                {if $language == 'en_US'}
+                    Our program, Mod, plugins are fully open-source, and saved on GitHub.
+                    You can press the button below or press there: <a href="https://github.com/InfinityStudio">https://github.com/InfinityStudio</a>
+                {elseif $language == 'zh_CN'}
+                    我们的程序，Mod，插件全部是完全开源，并且托管在Github上。
+                    你可以点击下面的按钮或点击网址：<a href="https://github.com/InfinityStudio">https://github.com/InfinityStudio</a>
+                {/if}
                 <br />
-                <a class="btn btn-warning btn-sm" data-role="button" href="https://github.com/InfinityStudio">点击跳转至Github</a>
+                <a class="btn btn-warning btn-sm" data-role="button" href="https://github.com/InfinityStudio">{if $language == 'en_US'}Press to jump to GitHub{elseif $language == 'zh_CN'}点击来跳转至GitHub{/if}</a>
             </strong>
         </div>
     </div>
@@ -63,10 +76,17 @@
         <!--					<a data-role="button" class="btn btn-info btn-sm" href="projects/exoticpower.php">详细介绍</a>-->
         <!--				</div>-->
         <div class="col-sm-6 text-justify">
-            <strong>FoodCraft 食物工艺</strong><br />
-            <p>增加更多有趣的食物！</p>
-            <br />
-            <a data-role="button" class="btn btn-info btn-sm" href="#">详细介绍</a>
+            {if $language == 'en_US'}
+                <strong>FoodCraft</strong><br />
+                <p>Add more interesting food!</p>
+                <br />
+                <a data-role="button" class="btn btn-info btn-sm" href="#">More Description</a>
+            {elseif $language == 'zh_CN'}
+                <strong>FoodCraft 食物工艺</strong><br />
+                <p>增加更多有趣的食物！</p>
+                <br />
+                <a data-role="button" class="btn btn-info btn-sm" href="#">详细介绍</a>
+            {/if}
         </div>
     </div>
 </div>

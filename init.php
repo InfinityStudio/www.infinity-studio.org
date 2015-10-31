@@ -47,3 +47,4 @@ $smarty->config_dir = 'command/configs';
 $smarty->cache_dir = 'command/cache';
 //init
 require ROOT.'/command/lib/common.php';
+?>
