@@ -25,7 +25,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>{$Title}</title>
+	<title>{$title}</title>
 
 </head>
 <!-- Bootstrap -->
@@ -46,7 +46,7 @@
 		opacity: 1.0;
 	}
 </style>
-<body class="{$BodyClass}">
+<body class="{$bodyClass}">
 <nav class="navbar navbar-default">
 	<div class="container-fluid"> 
 		<!-- 移动端显示 -->
@@ -57,7 +57,7 @@
 		<!-- 导航栏 -->
 		<div class="collapse navbar-collapse" id="defaultNavbar1">
 			<ul class="nav navbar-nav">
-				<li class="{$MainActive}"><a href="index.php">主页<span class="sr-only">(current)</span></a></li>
+				<li class="{$mainActive}"><a href="index.php">主页<span class="sr-only">(current)</span></a></li>
 				<li class="dropdown">
 					<!-- 下拉菜单 -->
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">我们的项目<span class="caret"></span></a>
@@ -80,7 +80,7 @@
 						<li><a href="http://www.infinity-studio.org:8081/plugin/repository/">Maven</a></li>
 					{*</ul>*}
 				{*</li>*}
-				<li class="{$JoinActive}"><a href="join.php">加入我们</a></li>
+				<li class="{$joinActive}"><a href="join.php">加入我们</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> 

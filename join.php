@@ -22,7 +22,7 @@
  */
 //error_reporting(E_ERROR | E_PARSE);
 require 'init.php';
-$smarty->assign('Title','Infinity Studio - 加入我们');
-$smarty->assign('JoinActive', 'active');
+$smarty->assign('title','Infinity Studio - 加入我们');
+$smarty->assign('joinActive', 'active');
 $smarty->display('join.tpl');
 ?>

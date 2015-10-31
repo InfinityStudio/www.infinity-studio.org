@@ -66,7 +66,7 @@
             <strong>FoodCraft 食物工艺</strong><br />
             <p>增加更多有趣的食物！</p>
             <br />
-            <a data-role="button" class="btn btn-info btn-sm" href="projects/foodcraft.php">详细介绍</a>
+            <a data-role="button" class="btn btn-info btn-sm" href="#">详细介绍</a>
         </div>
     </div>
 </div>
