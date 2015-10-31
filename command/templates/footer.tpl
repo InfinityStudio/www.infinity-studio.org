@@ -20,18 +20,18 @@
     @author LasmGratel <lasm_gratel@hotmail.com>
     @author Cannon_fotter <gfyguofanyi@gmail.com>
 *}
-<hr>
-<div class="row">
-    <div class="text-center col-md-8 col-md-offset-2">
+<hr class="half-rule">
+<div class="container">
+    <div class="text-center">
         <a href="http://blog.infinity-studio.org/">Blog</a>&nbsp;|
         {*<a href="http://weblate.infinity-studio.org">Weblate</a>&nbsp;|*}
         <a href="https://github.com/InfinityStudio">Github</a>&nbsp;|
         <a href="http://www.infinity-studio.org:8081">Jenkins CI</a>&nbsp;|
-        <a href="http://www.infinity-studio.org:8081/plugin/repository/">Maven</a>&nbsp;|
+        <a href="http://www.infinity-studio.org:8081/plugin/repository/">Maven</a><br>
         Copyright &copy; 2015 <a href="http://www.infinity-studio.org">Infinity Studio</a> &middot; All Rights Reserved &middot;
     </div>
 </div>
-<hr>
+<hr class="half-rule">
 <!-- jQuery -->
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
 <!-- Bootstrap的按钮类等 -->

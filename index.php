@@ -24,7 +24,7 @@
 //require('smarty/Smarty.class.php');
 //$smarty = new Smarty;
 require 'init.php';
-$smarty->assign('Title','Infinity Studio');
-$smarty->assign('MainActive', 'active');
-$smarty->assign('BodyClass','bs-docs-home');
+$smarty->assign('title','Infinity Studio');
+$smarty->assign('mainActive', 'active');
+$smarty->assign('bodyClass','bs-docs-home');
 $smarty->display('index.tpl');
