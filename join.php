@@ -22,6 +22,10 @@
  */
 //error_reporting(E_ERROR | E_PARSE);
 require 'init.php';
+if(isset($_COOKIE["language"])) {
+    $smarty->assign('language',$_COOKIE["language"]);
+}
 $smarty->assign('title','Infinity Studio - 加入我们');
 $smarty->assign('joinActive', 'active');
 $smarty->display('join.tpl');
+?>
