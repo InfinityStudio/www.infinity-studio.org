@@ -55,13 +55,13 @@
 
 <div class="container">
     <div class="row">
-        <!--				<div class="col-sm-6 text-justify">-->
-        <!--					<strong>Exotic Power 异域之能</strong>-->
-        <!--					<br />-->
-        <!--					<p>一个以Minecraft世界观设定为基础的科技Mod，主要内容包括异域能量、对应的机器如组装机、重构机、传送机等。</p>-->
-        <!--					<br />-->
-        <!--					<a data-role="button" class="btn btn-info btn-sm" href="projects/exoticpower.php">详细介绍</a>-->
-        <!--				</div>-->
+        <div class="col-sm-6 text-justify">
+            <strong>Exotic Power 异域之能</strong>
+            <br />
+            <p>一个以Minecraft世界观设定为基础的科技Mod，主要内容包括异域能量、对应的机器如组装机、重构机、传送机等。</p>
+            <br />
+            <a data-role="button" class="btn btn-info btn-sm" href="projects/exoticpower.php">详细介绍</a>
+        </div>
         <div class="col-sm-6 text-justify">
             <strong>FoodCraft 食物工艺</strong><br />
             <p>增加更多有趣的食物！</p>
