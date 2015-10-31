@@ -87,6 +87,7 @@
 							<option value="zh_CN">中文（中国）</option>
 							<option value="en_US">English</option>
 						</select>
+						<input type="submit" value="Submit"/>
 					</form>
 				</li>
 			</ul>
