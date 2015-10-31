@@ -28,17 +28,17 @@ if(isset($_COOKIE["language"])) {
     $smarty->assign('language',$_COOKIE["language"]);
 }
 else {
-    setcookie("language","en_US");
+    if($_GET["languages"]=="zh_CN") {
+        setcookie("language","zh_CN");
+    }
+    elseif($_GET["languages"]=="en_US") {
+        setcookie("language","en_US");
+    }
+    else {
+        setcookie("language", "en_US");
+    }
 }
-if($_GET["languages"]=="zh_CN") {
-    setcookie("language","zh_CN");
-}
-elseif($_GET["languages"]=="en_US") {
-    setcookie("language","en_US");
-}
-else {
-    setcookie("language","en_US");
-}
+
 $smarty->assign('language',$_COOKIE["language"]);
 $smarty->assign('title','Infinity Studio');
 $smarty->assign('mainActive', 'active');
