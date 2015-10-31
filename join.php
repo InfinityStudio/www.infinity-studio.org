@@ -20,14 +20,8 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-error_reporting(E_ERROR | E_PARSE);
-require('smarty/Smarty.class.php');
-$smarty = new Smarty;
-//Smarty Dir Config
-$smarty->template_dir = 'smarty/templates/';
-$smarty->compile_dir = 'smarty/templates_c/';
-$smarty->config_dir = 'smarty/configs/';
-$smarty->cache_dir = 'smarty/cache/';
+//error_reporting(E_ERROR | E_PARSE);
+require 'init.php';
 $smarty->assign('Title','Infinity Studio - 加入我们');
 $smarty->assign('JoinActive', 'active');
 $smarty->display('join.tpl');

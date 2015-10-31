@@ -1,3 +1,4 @@
 /.idea
-/smarty/templates_c
+/Command/Templates_c
+/Command/Cache
 .gitignore
