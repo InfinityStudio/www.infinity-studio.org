@@ -2,3 +2,4 @@
 /Command/Templates_c
 /Command/Cache
 .gitignore
+test.php
