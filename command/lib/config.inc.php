@@ -20,7 +20,10 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-require ROOT . '/command/lib/Db.class.php';
-class Model{
-
-}
+//Database
+define('DB_HOST','localhost');
+define('DB_USER','root');
+define('DB_PASS','root');
+define('DB_NAME','test');
+define('DB_PORT',3306);
+define('DB_PREFIX',null);

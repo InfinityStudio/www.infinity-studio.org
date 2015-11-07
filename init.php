@@ -27,7 +27,9 @@ define('ROOT',dirname(__FILE__));
 //Timezone
 date_default_timezone_set('Asia/Shanghai');
 //Smarty
-require ROOT.'/command/lib/smarty/Smarty.class.php';
+require ROOT . '/command/lib/Smarty.class.php';
+//Config
+require ROOT . '/command/lib/config.inc.php';
 $smarty = new Smarty();
 //Auto load class
 function __autoload($_className) {
@@ -35,6 +37,8 @@ function __autoload($_className) {
         require ROOT.'/command/controller/'.$_className.'.class.php';
     } elseif (substr($_className, -5) == 'Model') {
         require ROOT.'/command/model/'.$_className.'.class.php';
+    } elseif (substr($_className, 0, 6) != 'Smarty'){
+        require ROOT.'/command/lib/'.$_className.'.class.php';
     }
 }
 //Smarty Dir Config
