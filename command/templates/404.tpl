@@ -21,16 +21,30 @@
     @author Cannon_fotter <gfyguofanyi@gmail.com>
 *}
 {include file='header.tpl'}
+<script>
+    var i = 5;
+    var intervalid;
+    intervalid = setInterval("fun()", 1000);
+    function fun() {
+        if (i == 0) {
+            window.location.href = "index.php";
+            clearInterval(intervalid);
+        }
+        document.getElementById("mes").innerHTML = i;
+        i--;
+    }
+</script>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 col-md-offset-3"> <br>
             <div class="alert alert-warning"><h1 class="text-center">对不起！你访问的网页被Sine吃了！</h1></div>
             <br />
-            <h1 class="text-center"><a role="button" href="javascript:history.go(-1)" data-role="button" class="btn btn-info">返回上一页</a></h1>
-            <br />
+            {*<h1 class="text-center"><a role="button" href="javascript:history.go(-1)" data-role="button" class="btn btn-info">返回上一页</a></h1>*}
+            {*<br />*}
             <h4 class="text-center">如果你是网管，请报告以下错误：HTTP 404</h4>
+            <h4 class="text-center">将在<span id="mes">5</span>秒后返回<a href="index.php">主页</a></h4>
         </div>
-        <p id="logo"></p>
+
     </div>
 </div>
 {include file='footer.tpl'}
