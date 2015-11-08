@@ -20,7 +20,6 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-require ROOT . '/command/lib/Db.class.php';
 class Model{
-
+//TODO
 }
