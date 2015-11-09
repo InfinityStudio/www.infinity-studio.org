@@ -33,8 +33,8 @@
 </div>
 <hr class="half-rule">
 <!-- jQuery -->
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-<!-- Bootstrap的按钮类等 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.js"></script>
+<script src="https://ajax.useso.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- Bootstrap js -->
+<script src="http://libs.useso.com/js/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
