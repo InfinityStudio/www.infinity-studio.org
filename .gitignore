@@ -1,5 +1,6 @@
 /.idea
-/Command/Templates_c
-/Command/Cache
+/command/templates_c
+/command/cache
 .gitignore
 test.php
+*.iml

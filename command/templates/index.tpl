@@ -37,7 +37,7 @@
                 {*{elseif $language == 'en_US'}*}
                     {*We are a group which is love Minecraft, working for progress Minecraft Internationalization, Committed for brought more rich and wonderful contents.*}
                 {*{elseif $language == 'ja_JP'}*}
-                    {* TODO: Japen language *}
+                    {* TODO: Japan language *}
                 {*{/if}*}
             </div>
         </div>
