@@ -20,7 +20,7 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-//Fuck!
+namespace Command\Tools;
 class Db{
     /**获取数据库句柄
      * @return mysqli
