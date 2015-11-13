@@ -38,8 +38,8 @@
 					<!-- 下拉菜单 -->
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">我们的项目<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="{$FCActive}"><a href="/projects/foodcraft.php">FoodCraft 食物工艺</a></li>
-						<li class="{$HMCLActive}"><a data-rel="external" href="/projects/hmcl.php">Hello Minecraft! Launcher</a></li>
+						<li class="{$fcActive}"><a href="project.php?pn=FoodCraft">FoodCraft 食物工艺</a></li>
+						<li class="{$hmclActive}"><a data-rel="external" href="project.php?pn=HMCL">Hello Minecraft! Launcher</a></li>
 					</ul>
 				</li>
 			</ul>

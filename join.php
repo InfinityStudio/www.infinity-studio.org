@@ -22,6 +22,7 @@
  */
 require 'init.php';
 $smarty->assign('title','Infinity Studio - 加入我们');
+$smarty->assign('bodyClass','');
 $smarty->assign('joinActive', 'active');
 $smarty->display('join.tpl');
 ?>
