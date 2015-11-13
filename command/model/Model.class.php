@@ -20,6 +20,7 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-class Model{
+class Model
+{
 //TODO
 }

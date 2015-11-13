@@ -20,6 +20,7 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
+use Command\Tools;
 //error_reporting(E_ERROR | E_PARSE);
 //require('smarty/Smarty.class.php');
 //$smarty = new Smarty;
@@ -38,7 +39,7 @@ require 'init.php';
 //        setcookie("language", "en_US");
 //    }
 //}
-
+$db = new Command\Tools\Db();
 //$smarty->assign('language',$_COOKIE["language"]);
 $smarty->assign('title','Infinity Studio');
 $smarty->assign('mainActive', 'active');
