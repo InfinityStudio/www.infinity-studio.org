@@ -21,26 +21,7 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 use Command\Tools;
-//error_reporting(E_ERROR | E_PARSE);
-//require('smarty/Smarty.class.php');
-//$smarty = new Smarty;
 require 'init.php';
-//if(isset($_COOKIE["language"])) {
-//    $smarty->assign('language',$_COOKIE["language"]);
-//}
-//else {
-//    if($_GET["languages"]=="zh_CN") {
-//        setcookie("language","zh_CN");
-//    }
-//    elseif($_GET["languages"]=="en_US") {
-//        setcookie("language","en_US");
-//    }
-//    else {
-//        setcookie("language", "en_US");
-//    }
-//}
-$db = new Command\Tools\Db();
-//$smarty->assign('language',$_COOKIE["language"]);
 $smarty->assign('title','Infinity Studio');
 $smarty->assign('mainActive', 'active');
 $smarty->assign('bodyClass','bs-docs-home');
