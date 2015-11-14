@@ -28,7 +28,7 @@
 		<!-- 移动端显示 -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">折叠</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-			<a class="navbar-brand" href="#">Infinity Studio</a>
+			<a class="navbar-brand" href="index.php">Infinity Studio</a>
 		</div>
 		<!-- 导航栏 -->
 		<div class="collapse navbar-collapse" id="defaultNavbar1">
