@@ -21,7 +21,6 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 require 'init.php';
-$smarty->assign('bodyClass','');
 if (isset($_GET['pn'])) {
     switch ($_GET['pn']) {
         case 'FoodCraft':

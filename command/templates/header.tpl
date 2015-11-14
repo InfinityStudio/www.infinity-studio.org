@@ -22,7 +22,7 @@
 		opacity: 1.0;
 	}
 </style>
-<body class="{$bodyClass}">
+<body>
 <nav class="navbar navbar-default">
 	<div class="container-fluid"> 
 		<!-- 移动端显示 -->

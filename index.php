@@ -24,5 +24,4 @@ use Command\Tools;
 require 'init.php';
 $smarty->assign('title','Infinity Studio');
 $smarty->assign('mainActive', 'active');
-$smarty->assign('bodyClass','bs-docs-home');
 $smarty->display('index.tpl');
