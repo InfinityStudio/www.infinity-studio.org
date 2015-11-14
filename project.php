@@ -33,6 +33,11 @@ if (isset($_GET['pn'])) {
             $smarty->assign('hmclActive', 'active');
             $smarty->assign('pn', $_GET['pn']);
             break;
+        case 'ExoticPower':
+            $smarty->assign('title','Infinity Studio - HMCL 启动器');
+            //$smarty->assign('epActive', 'active');
+            $smarty->assign('pn', $_GET['pn']);
+            break;
         default:
             header('Location: http://www.infinity-studio.org/404.html');
             exit();
