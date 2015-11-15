@@ -6,22 +6,27 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
- * 
+ *
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-require 'init.php';
-$smarty->assign('title','Infinity Studio - 加入我们');
-$smarty->assign('joinActive', 'active');
-$smarty->display('join.tpl');
-?>
+class Controller
+{
+    protected $_smarty = null;
+    protected $_model = null;
+    protected function __construct(&$_smarty, $_model = null)
+    {
+        $this->_smarty = $_smarty;
+        $this->_model = $_model;
+    }
+}

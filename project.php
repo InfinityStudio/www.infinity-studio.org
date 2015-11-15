@@ -20,36 +20,30 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-namespace Command\Tools;
-class Db
-{
-    /**获取数据库句柄
-     * @return \mysqli
-     */
-    public static function getDb()
-    {
-        $_mysqli = new \mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
-        if (mysqli_connect_errno()) {
-            echo 'Err:'.mysqli_connect_error();
+require 'init.php';
+if (isset($_GET['pn'])) {
+    switch ($_GET['pn']) {
+        case 'FoodCraft':
+            $smarty->assign('title','Infinity Studio - FoodCraft 食物工艺');
+            $smarty->assign('fcActive', 'active');
+            $smarty->assign('pn', $_GET['pn']);
+            break;
+        case 'HMCL':
+            $smarty->assign('title','Infinity Studio - HMCL 启动器');
+            $smarty->assign('hmclActive', 'active');
+            $smarty->assign('pn', $_GET['pn']);
+            break;
+        case 'ExoticPower':
+            $smarty->assign('title','Infinity Studio - HMCL 启动器');
+            //$smarty->assign('epActive', 'active');
+            $smarty->assign('pn', $_GET['pn']);
+            break;
+        default:
+            header('Location: http://www.infinity-studio.org/404.html');
             exit();
-        }
-        $_mysqli->set_charset('utf8');
-        return $_mysqli;
+            break;
     }
-
-    /**销毁数据库句柄
-     * @param $_result \Object 结果集
-     * @param $_db \Object 数据库句柄
-     */
-    public static function unDB(&$_result, &$_db)
-    {
-        if (is_object($_result)) {
-            $_result->free();
-            $_result = null;
-        }
-        if (is_object($_db)) {
-            $_db->close();
-            $_db = null;
-        }
-    }
+} else {
+    header('Location: 404.html');
 }
+$smarty->display('project.tpl');

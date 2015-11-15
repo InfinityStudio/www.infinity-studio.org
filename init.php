@@ -26,17 +26,18 @@ header('Content-Type:text/html;charset=utf-8');
 define('ROOT',dirname(__FILE__));
 //Timezone
 date_default_timezone_set('Asia/Shanghai');
-//Smarty
-require ROOT.'/command/lib/smarty/Smarty.class.php';
+//Auto loader 妈妈再也不用担心我的学习
+require ROOT . '/command/lib/LoadClass.class.php';
+//TODO 干掉Smarty自带的Autoloader
+require ROOT . '/command/lib/Smarty.class.php';
+$loader = new Command\Tools\LoadClass();
+$loader->register();
+$loader->addNamespace('Command\Controller', ROOT . '/command/controller');
+$loader->addNamespace('Command\Model', ROOT . '/command/model');
+$loader->addNamespace('Command\Tools', ROOT . '/command/lib');
+//Config
+require ROOT . '/command/lib/config.inc.php';
 $smarty = new Smarty();
-//Auto load class
-function __autoload($_className) {
-    if (substr($_className, -10) == 'Controller') {
-        require ROOT.'/command/controller/'.$_className.'.class.php';
-    } elseif (substr($_className, -5) == 'Model') {
-        require ROOT.'/command/model/'.$_className.'.class.php';
-    }
-}
 //Smarty Dir Config
 $smarty->template_dir = 'command/templates/';
 $smarty->compile_dir = 'command/templates_c/';

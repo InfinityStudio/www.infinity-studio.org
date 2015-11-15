@@ -20,28 +20,8 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-//error_reporting(E_ERROR | E_PARSE);
-//require('smarty/Smarty.class.php');
-//$smarty = new Smarty;
+use Command\Tools;
 require 'init.php';
-//if(isset($_COOKIE["language"])) {
-//    $smarty->assign('language',$_COOKIE["language"]);
-//}
-//else {
-//    if($_GET["languages"]=="zh_CN") {
-//        setcookie("language","zh_CN");
-//    }
-//    elseif($_GET["languages"]=="en_US") {
-//        setcookie("language","en_US");
-//    }
-//    else {
-//        setcookie("language", "en_US");
-//    }
-//}
-
-//$smarty->assign('language',$_COOKIE["language"]);
 $smarty->assign('title','Infinity Studio');
 $smarty->assign('mainActive', 'active');
-$smarty->assign('bodyClass','bs-docs-home');
 $smarty->display('index.tpl');
-?>

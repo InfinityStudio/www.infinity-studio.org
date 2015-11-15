@@ -9,9 +9,11 @@ blockquote {
     padding-right:20px;
     font-size: 16px;
 }
+blockquote li {
+    white-space: pre-wrap;
+}
 blockquote dl,blockquote dd,blockquote dt{
     overflow: visible;
-
 }
 .a dt{
     color: #8A6D3B;
@@ -41,4 +43,7 @@ blockquote.c h4 {
 blockquote.d {
     background-color: #F0FFF0;
     border-color: #CDEB8B;
+}
+ul li {
+    list-style-type: none;
 }
