@@ -33,13 +33,13 @@ class Db
             echo 'Err:'.mysqli_connect_error();
             exit();
         }
-        $_mysqli->set_charset('utf8');
+        $_mysqli->set_charset('utf8');;
         return $_mysqli;
     }
 
     /**销毁数据库句柄
-     * @param $_result \Object 结果集
-     * @param $_db \Object 数据库句柄
+     * @param $_result \mixed 结果集
+     * @param $_db \mixed 数据库句柄
      */
     public static function unDB(&$_result, &$_db)
     {
