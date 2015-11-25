@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2015 Infinity Studio.
  *
@@ -18,19 +19,8 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
- * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-class Controller
+class Description
 {
-    protected $_smarty = null;
-    protected $_model = null;
-    protected function __construct(&$_smarty, $_model = null)
-    {
-        $this->_smarty = $_smarty;
-        $this->_model = $_model;
-    }
-    public function generateProjectPage($project)
-    {
 
-    }
 }

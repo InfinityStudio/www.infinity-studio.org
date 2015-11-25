@@ -18,19 +18,6 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
- * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-class Controller
-{
-    protected $_smarty = null;
-    protected $_model = null;
-    protected function __construct(&$_smarty, $_model = null)
-    {
-        $this->_smarty = $_smarty;
-        $this->_model = $_model;
-    }
-    public function generateProjectPage($project)
-    {
-
-    }
-}
+$authors = [new Author("huanghongxun","jackhuang1998@gmail.com","https://github.com/huanghongxun/"),new Author("")];
+$projects = array(new Project("HMCL",$authors[0],"HMCL"));
