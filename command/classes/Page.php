@@ -19,56 +19,59 @@
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
  */
-class Project extends Page
+class Page implements IHTMLObject
 {
-    private $logo = null;
-    private $author = null;
+    private $description = '';
+    private $name = '';
 
     /**
-     * Project constructor.
+     * Page constructor.
      * @param string $description
-     * @param null $author
      * @param string $name
-     * @param string $logo
      */
-    public function __construct($description, $author, $name, $logo = null)
+    public function __construct($description, $name)
     {
         setDescription($description);
-        setAuthor($author);
         setName($name);
-        setLogo($logo);
     }
 
     /**
      * @return string
      */
-    public function getLogo()
+    public function getDescription()
     {
-        return $this->logo;
+        return $this->description;
     }
 
     /**
-     * @param string $logo
+     * @param string $description
      */
-    public function setLogo($logo)
+    public function setDescription($description)
     {
-        $this->logo = $logo;
+        $this->description = $description;
     }
 
     /**
-     * @return null
+     * @return string
      */
-    public function getAuthor()
+    public function getName()
     {
-        return $this->author;
+        return $this->name;
     }
 
     /**
-     * @param null $author
+     * @param string $name
      */
-    public function setAuthor($author)
+    public function setName($name)
     {
-        $this->author = $author;
+        $this->name = $name;
     }
 
+    /**
+     * Return the HTML of this page.
+     */
+    public function toHTML()
+    {
+        //TODO: returns the html of this page
+    }
 }
