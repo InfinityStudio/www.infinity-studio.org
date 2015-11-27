@@ -43,7 +43,6 @@ $smarty = new Smarty();
 //Smarty Dir Config
 $smarty->template_dir = 'command/templates/';
 $smarty->compile_dir = 'command/templates_c/';
-$smarty->compile_dir = 'command/templates_c/';
 $smarty->config_dir = 'command/configs';
 $smarty->cache_dir = 'command/cache';
 //init
