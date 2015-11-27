@@ -4,3 +4,4 @@
 .gitignore
 test.php
 *.iml
+/command/templates/test.tpl

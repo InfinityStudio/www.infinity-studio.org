@@ -73,5 +73,4 @@ class Project extends Page
         $this->logo = $logo;
     }
 
-
 }

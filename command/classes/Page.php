@@ -26,7 +26,7 @@ class Page implements IHTMLObject
 {
     private $description = '';
     private $name = '';
-    protected $smarty = null;
+    protected $smarty;
 
     /**
      * Page constructor.
@@ -87,5 +87,6 @@ class Page implements IHTMLObject
     public function toHTML()
     {
         //TODO: returns the html of this page
+        //$this->smarty->assign('test', $this->getDescription());
     }
 }
