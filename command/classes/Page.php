@@ -26,16 +26,27 @@ class Page implements IHTMLObject
 {
     private $description = '';
     private $name = '';
+    protected $smarty = null;
 
     /**
      * Page constructor.
      * @param string $description
      * @param string $name
+     * @param $smarty
      */
-    public function __construct($description, $name)
+    public function __construct($description, $name, &$smarty)
     {
+        $this->setSmarty($smarty);
         $this->setDescription($description);
         $this->setName($name);
+    }
+
+    /**
+     * @param null $smarty
+     */
+    public function setSmarty($smarty)
+    {
+        $this->smarty = $smarty;
     }
 
     /**

@@ -20,7 +20,7 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-namespace Command\Tools;
+namespace Command\Lib;
 class Tools
 {
     public static function htmlString($_str)
@@ -30,17 +30,14 @@ class Tools
                 $_string[$_key] = Tools::htmlString($_value);
             }
         } elseif (is_object($_str)) {
+            $_string = new \stdClass();
             foreach ($_str as $_key=>$_value) {
-                $_string = null;
                 $_string->$_key = Tools::htmlString($_value);
             }
         } else {
             $_string = htmlspecialchars($_str);
         }
-        if (isset($_string)) {
             return $_string;
-        }
-        return false;
     }
 
     /**去除可能造成xss攻击的字符
@@ -148,5 +145,108 @@ class Tools
             }
         }
         return $str;
+    }
+
+    /**
+     * 生成一定数量的随机数，并且不重复
+     * @param integer $number 数量
+     * @param string $len 长度
+     * @param string $type 字串类型
+     * 0 字母 1 数字 其它 混合
+     * @return string
+     */
+    static public function buildCountRand ($number,$length=4,$mode=1) {
+        if($mode==1 && $length<strlen($number) ) {
+            //不足以生成一定数量的不重复数字
+            return false;
+        }
+        $rand   =  array();
+        for($i=0; $i<$number; $i++) {
+            $rand[] =   self::randString($length,$mode);
+        }
+        $unqiue = array_unique($rand);
+        if(count($unqiue)==count($rand)) {
+            return $rand;
+        }
+        $count   = count($rand)-count($unqiue);
+        for($i=0; $i<$count*3; $i++) {
+            $rand[] =   self::randString($length,$mode);
+        }
+        $rand = array_slice(array_unique ($rand),0,$number);
+        return $rand;
+    }
+
+    /**
+     *  带格式生成随机字符 支持批量生成
+     *  但可能存在重复
+     * @param string $format 字符格式
+     *     # 表示数字 * 表示字母和数字 $ 表示字母
+     * @param integer $number 生成数量
+     * @return string | array
+     */
+    static public function buildFormatRand($format,$number=1) {
+        $str  =  array();
+        $length =  strlen($format);
+        for($j=0; $j<$number; $j++) {
+            $strtemp   = '';
+            for($i=0; $i<$length; $i++) {
+                $char = substr($format,$i,1);
+                switch($char){
+                    case "*"://字母和数字混合
+                        $strtemp   .= String::randString(1);
+                        break;
+                    case "#"://数字
+                        $strtemp  .= String::randString(1,1);
+                        break;
+                    case "$"://大写字母
+                        $strtemp .=  String::randString(1,2);
+                        break;
+                    default://其他格式均不转换
+                        $strtemp .=   $char;
+                        break;
+                }
+            }
+            $str[] = $strtemp;
+        }
+    }
+
+    /**
+     * 获取一定范围内的随机数字 位数不足补零
+     * @param integer $min 最小值
+     * @param integer $max 最大值
+     * @return string
+     */
+    public static function randNumber ($min, $max) {
+        return sprintf("%0".strlen($max)."d", mt_rand($min,$max));
+    }
+
+    // 自动转换字符集 支持数组转换
+    public static function autoCharset($string, $from='gbk', $to='utf-8') {
+        $from = strtoupper($from) == 'UTF8' ? 'utf-8' : $from;
+        $to = strtoupper($to) == 'UTF8' ? 'utf-8' : $to;
+        if (strtoupper($from) === strtoupper($to) || empty($string) || (is_scalar($string) && !is_string($string))) {
+            //如果编码相同或者非字符串标量则不转换
+            return $string;
+        }
+        if (is_string($string)) {
+            if (function_exists('mb_convert_encoding')) {
+                return mb_convert_encoding($string, $to, $from);
+            } elseif (function_exists('iconv')) {
+                return iconv($from, $to, $string);
+            } else {
+                return $string;
+            }
+        } elseif (is_array($string)) {
+            foreach ($string as $key => $val) {
+                $_key = self::autoCharset($key, $from, $to);
+                $string[$_key] = self::autoCharset($val, $from, $to);
+                if ($key != $_key)
+                    unset($string[$key]);
+            }
+            return $string;
+        }
+        else {
+            return $string;
+        }
     }
 }

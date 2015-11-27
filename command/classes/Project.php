@@ -32,10 +32,11 @@ class Project extends Page
      * @param null $author
      * @param string $name
      * @param string $logo
+     * @param \smarty $smarty
      */
-    public function __construct($description, $author, $name, $logo = null)
+    public function __construct(&$smarty, $description, $author, $name, $logo = null)
     {
-        parent::__construct($description, $name);
+        parent::__construct($description, $name, $smarty);
         $this->setAuthor($author);
         $this->setLogo($logo);
     }
