@@ -19,6 +19,8 @@
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
  */
+namespace Command\Classes;
+use Command\Interfaces\IHTMLObject;
 class Header implements IHTMLObject
 {
     public function toHTML()

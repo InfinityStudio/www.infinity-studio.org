@@ -18,7 +18,10 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
+ * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
+namespace Command\Classes;
+use Command\Interfaces\IHTMLObject;
 class Footer implements IHTMLObject
 {
     public function toHTML()

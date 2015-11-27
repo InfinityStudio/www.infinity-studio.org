@@ -11,7 +11,39 @@
 + Lasm_Gratel <lasm_gratel@hotmail.com>
 + Cannon_fotter <gfyguofanyi@gmail.com>
 + Blealtan <bevan159632@gmail.com>
-#### 编码风格
-[PHP-FIG](http://www.php-fig.org/)
+#### 开发人员必读
+**项目编码规范**-[PHP-FIG](http://www.php-fig.org/)
+
+**PHP文件命名空间**
++ 业务流程控制器(Controller)
+
+    `Command\Controller` ---- `/command/controller/`
+
++ 业务模型(Model)
+
+    `Command\Model` ---- `/command/model`
+
++ 中间类(Classes)
+
+    `Command\Classes` ---- `/command/classes`
+
++ 中间接口(Interfaces)
+
+    `Command\Interfaces` ---- `/command/interfaces`
+
++ 库(Lib)
+
+    `Command\Lib` ---- `/command/lib`
+
+
+**增加新的namespace**
+1. 在`init.php`中`$loader = new Command\Tools\LoadClass();`后添加如下代码
+
+    `$loader->addNamespace('Command\NewNamespace', ROOT . '/command/DIR');`
+
+2. 在希望调用对应类的文件头部添加`use Command\NewNamespace;`即可直接new，无需手动require文件
+
+> NOTICE：
+> 在实际需要访问的页面头部，还需要引入`init.php`来使自动加载正常工作
 #### 另见
 [Infinity Studio](http://www.infinity-studio.org)

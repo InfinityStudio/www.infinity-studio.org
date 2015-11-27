@@ -18,7 +18,10 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
+ * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
+namespace Command\Classes;
+use Command\Interfaces\IHTMLObject;
 class Page implements IHTMLObject
 {
     private $description = '';
@@ -31,8 +34,8 @@ class Page implements IHTMLObject
      */
     public function __construct($description, $name)
     {
-        setDescription($description);
-        setName($name);
+        $this->setDescription($description);
+        $this->setName($name);
     }
 
     /**
@@ -44,19 +47,19 @@ class Page implements IHTMLObject
     }
 
     /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**

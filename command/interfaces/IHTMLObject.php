@@ -19,6 +19,7 @@
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
  */
+namespace Command\Interfaces;
 interface IHTMLObject
 {
     /**

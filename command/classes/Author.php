@@ -18,12 +18,14 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
+ * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
+namespace Command\Classes;
 class Author
 {
-    private $name = null;
-    private $email = null;
-    private $website = null;
+    private $name = '';
+    private $email = '';
+    private $website = '';
 
     /**
      * Author constructor.
@@ -33,9 +35,9 @@ class Author
      */
     public function __construct($name, $email = null, $website = null)
     {
-        $this->name = $name;
-        $this->email = $email;
-        $this->website = $website;
+        $this->setName($name);
+        $this->setEmail($email);
+        $this->setWebsite($website);
     }
 
     /**

@@ -18,11 +18,13 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
+ * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
+namespace Command\Classes;
 class Project extends Page
 {
-    private $logo = null;
     private $author = null;
+    private $logo = null;
 
     /**
      * Project constructor.
@@ -33,30 +35,13 @@ class Project extends Page
      */
     public function __construct($description, $author, $name, $logo = null)
     {
-        setDescription($description);
-        setAuthor($author);
-        setName($name);
-        setLogo($logo);
+        parent::__construct($description, $name);
+        $this->setAuthor($author);
+        $this->setLogo($logo);
     }
 
     /**
      * @return string
-     */
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @param string $logo
-     */
-    public function setLogo($logo)
-    {
-        $this->logo = $logo;
-    }
-
-    /**
-     * @return null
      */
     public function getAuthor()
     {
@@ -64,11 +49,28 @@ class Project extends Page
     }
 
     /**
-     * @param null $author
+     * @param string $author
      */
     public function setAuthor($author)
     {
         $this->author = $author;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param null|string $logo
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    }
+
 
 }
