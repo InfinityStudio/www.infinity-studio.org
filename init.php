@@ -30,7 +30,7 @@ date_default_timezone_set('Asia/Shanghai');
 require ROOT . '/command/lib/LoadClass.php';
 //TODO 干掉Smarty自带的Autoloader
 require ROOT . '/command/lib/smarty/Smarty.class.php';
-$loader = new Command\Tools\LoadClass();
+$loader = new Command\Lib\LoadClass();
 $loader->register();
 $loader->addNamespace('Command\Controller', ROOT . '/command/controller');
 $loader->addNamespace('Command\Model', ROOT . '/command/model');
