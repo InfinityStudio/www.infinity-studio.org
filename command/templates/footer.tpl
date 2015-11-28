@@ -13,5 +13,7 @@
 <script src="//ajax.useso.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <!-- Bootstrap js -->
 <script src="//libs.useso.com/js/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script src="http://s4.cnzz.com/z_stat.php?id=1256855039&web_id=1256855039" language="JavaScript"></script>
 </body>
 </html>

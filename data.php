@@ -19,5 +19,9 @@
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
  */
+namespace Site\Home;
+use Command\Classes\Author;
+use Command\Classes\Project;
+require 'init.php';
 $authors = [new Author("huanghongxun","jackhuang1998@gmail.com","https://github.com/huanghongxun/"),new Author("")];
-$projects = array(new Project("HMCL",$authors[0],"HMCL"));
+$projects = array(new Project($smarty, "HMCL",$authors[0],"HMCL"));
