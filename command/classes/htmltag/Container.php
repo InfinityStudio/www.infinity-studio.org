@@ -18,9 +18,39 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
- * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-namespace Command\Classes;
-class Description
+
+namespace command\classes\htmltag;
+use Command\Classes\ArrayList;
+class Container extends HTMLTag
 {
+    private $textlist;
+    public function __construct()
+    {
+        $this->textlist = new ArrayList();
+    }
+    public function add($object)
+    {
+        $this->textlist->add($object);
+    }
+    public function remove($object)
+    {
+        $this->textlist->remove($object);
+    }
+    public function toHTML()
+    {
+        // TODO: Implement toHTML() method.
+
+    }
+
+    public function getTag()
+    {
+        // TODO: Implement getTag() method.
+    }
+
+    public function customCSS($css)
+    {
+        // TODO: Implement customCSS() method.
+    }
+
 }

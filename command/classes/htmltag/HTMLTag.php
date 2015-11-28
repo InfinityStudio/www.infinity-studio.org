@@ -18,9 +18,29 @@
  * MA 02110-1301  USA
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
- * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-namespace Command\Classes;
-class Description
+namespace command\classes\htmltag;
+use Command\Interfaces\IHTMLObject;
+abstract class HTMLTag implements IHTMLObject
 {
+    private $text=null;
+    public abstract function toHTML();
+    public abstract function getTag();
+    public abstract function customCSS($css);
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 }

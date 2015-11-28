@@ -37,6 +37,7 @@ $loader->addNamespace('Command\Model', ROOT . '/command/model');
 $loader->addNamespace('Command\Lib', ROOT . '/command/lib');
 $loader->addNamespace('Command\Interfaces', ROOT . '/command/interfaces');
 $loader->addNamespace('Command\Classes', ROOT . '/command/classes');
+$loader->addNamespace('Command\Classes\htmltag', ROOT . '/command/classes/htmltag');
 //Config
 require ROOT . '/command/lib/config.inc.php';
 $smarty = new Smarty();

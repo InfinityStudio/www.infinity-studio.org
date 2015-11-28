@@ -21,6 +21,12 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 namespace Command\Classes;
-class Description
+/**
+ * Class CustomPage
+ * Custom a Page.
+ * @package Command\Classes
+ */
+class CustomPage extends Page
 {
+
 }
