@@ -37,13 +37,14 @@
 
 
 **增加新的namespace**
-1. 在`init.php`中`$loader = new Command\Tools\LoadClass();`后添加如下代码
+
+1.在`init.php`中`$loader = new Command\Tools\LoadClass();`后添加如下代码
 
     `$loader->addNamespace('Command\NewNamespace', ROOT . '/command/DIR');`
-
-2. 在希望调用对应类的文件头部添加`use Command\NewNamespace;`即可直接new，无需手动require文件
+2.在希望调用对应类的文件头部添加`use Command\NewNamespace;`即可直接new，无需手动require文件
 
 > NOTICE：
 > 在实际需要访问的页面头部，还需要引入`init.php`来使自动加载正常工作
+
 #### 另见
 [Infinity Studio](http://www.infinity-studio.org)
