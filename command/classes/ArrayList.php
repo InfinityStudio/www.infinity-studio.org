@@ -20,44 +20,130 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  */
 
-namespace command\classes;
+namespace Command\Classes;
 class ArrayList
 {
-    private $arr=array();
+    private $arr = array();
+
+    public function __construct($elements = array())
+    {
+        if (!empty($elements)) $this->arr = $elements;
+    }
     public function add($element)
     {
-        array_push($this->arr,$element);
+        return (array_push($this->arr, $element)) ? true : false;
     }
-    public function addAll($element)
+
+    public function unshift($element)
     {
-        array_merge($this->arr,$element);
+        return (array_unshift($this->arr,$element)) ? true : false;
     }
-    public function contains($element)
+
+    public function pop()
     {
-        return in_array($this->arr,$element);
+        return array_pop($this->arr);
     }
+
+    public function addAll($list)
+    {
+        $before = $this->size();
+        foreach($list as $element) {
+            $this->add($element);
+        }
+        $after = $this->size();
+        return ($before < $after);
+    }
+
+    public function clear()
+    {
+        $this->arr = array();
+    }
+
     public function get($element)
     {
         return $this->arr[$element];
     }
+
+    public function set($index, $element)
+    {
+        $previous = $this->get($index);
+        $this->arr[$index] = $element;
+        return $previous;
+    }
+
+    public function contains($element)
+    {
+        return in_array($this->arr,$element);
+    }
+
     public function indexOf($element)
     {
         return array_keys($this->arr,$element);
     }
+
+    public function lastIndexOf($element)
+    {
+        for ($i = (count($this->arr) - 1); $i > 0; $i--) {
+            if ($element == $this->get($i)) return $i;
+        }
+        return false;
+    }
+
     public function isEmpty()
     {
         return empty($this->arr);
     }
     public function remove($index)
     {
-        unset($this->arr,$index);
-    }
-    public function removeObj($object)
-    {
-        unset($this->arr,$this->indexOf($object));
+        $element = $this->get($index);
+        if (!is_null($element)) array_splice($this->arr, $index, 1);
+        return $element;
     }
     public function size()
     {
         return count($this->arr);
+    }
+    public function toArray()
+    {
+        return $this->arr;
+    }
+    public function toJson()
+    {
+        return json_encode($this->arr);
+    }
+    public function range($offset,$length=null)
+    {
+        return array_slice($this->arr,$offset,$length);
+    }
+    public function removeRange($offset , $length)
+    {
+        array_splice($this->arr, $offset , $length);
+    }
+    // 列表排序
+    public function ksort()
+    {
+        ksort($this->arr);
+    }
+
+    // 列表排序
+    public function asort()
+    {
+        asort($this->arr);
+    }
+
+    // 逆向排序
+    public function rsort()
+    {
+        rsort($this->arr);
+    }
+
+    // 自然排序
+    public function natsort()
+    {
+        natsort($this->arr);
+    }
+
+    public function unique() {
+        $this->arr = array_unique($this->arr);
     }
 }
