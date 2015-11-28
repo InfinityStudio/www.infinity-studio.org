@@ -47,7 +47,7 @@
 2.在希望调用对应类的文件头部添加`use Command\NewNamespace;`即可直接new，无需手动require文件
 
 > NOTICE：
-> 在实际需要访问的页面头部，还需要引入`init.php`来使自动加载正常工作
+> 在实际需要访问的页面头部，还需要引入`init.php`来使页面正常工作
 
 #### 另见
 [Infinity Studio](http://www.infinity-studio.org)
