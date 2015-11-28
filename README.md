@@ -1,4 +1,5 @@
 # Infinity Studio 官方网站
+
 #### 本网站的建立，离不开以下项目的支持
 + [Nginx](http://nginx.org/)
 + [MySQL](http://www.mysql.com/)
@@ -7,10 +8,12 @@
 + [Smarty](http://www.smarty.net/)
 + [Bootstrap](http://getbootstrap.com/)
 + [LESS](http://lesscss.org/)
+
 #### 网站开发人员
 + Lasm_Gratel <lasm_gratel@hotmail.com>
 + Cannon_fotter <gfyguofanyi@gmail.com>
 + Blealtan <bevan159632@gmail.com>
+
 #### 开发人员必读
 **项目编码规范**-[PHP-FIG](http://www.php-fig.org/)
 
