@@ -45,16 +45,16 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				{*<li><a href="http://blog.infinity-studio.org/">Blog</a></li>*}
-				{*<li><a href="https://github.com/InfinityStudio">Github</a></li>*}
-				{*<li><a href="http://www.infinity-studio.org:8081/">Jenkins CI</a></li>*}
-				{*<li><a href="http://www.infinity-studio.org:8081/plugin/repository/">Maven</a></li>*}
-				{*<li class="{$joinActive}"><a href="join.php">加入我们</a></li>*}
-				{if $nav}
-					{foreach from=$nav key=k item=v}
-						<li><a href="{$v.nav_link}" title="{$v.nav_description}">{$v.nav_name}</a></li>
-					{/foreach}
-				{/if}
+				<li><a href="http://blog.infinity-studio.org/">Blog</a></li>
+				<li><a href="https://github.com/InfinityStudio">Github</a></li>
+				<li><a href="http://www.infinity-studio.org:8081/">Jenkins CI</a></li>
+				<li><a href="http://www.infinity-studio.org:8081/plugin/repository/">Maven</a></li>
+				<li class="{$joinActive}"><a href="join.php">加入我们</a></li>
+				{*{if $nav}*}
+					{*{foreach from=$nav key=k item=v}*}
+						{*<li><a href="{$v.nav_link}" title="{$v.nav_description}">{$v.nav_name}</a></li>*}
+					{*{/foreach}*}
+				{*{/if}*}
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> 
