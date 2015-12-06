@@ -21,6 +21,6 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 global $smarty;
-//use Command\Controller\NavController;
-//$_nav = new NavController($smarty);
-//$_nav->showFront();
+use Command\Controller\NavController;
+$_nav = new NavController($smarty);
+$_nav->showFront();
