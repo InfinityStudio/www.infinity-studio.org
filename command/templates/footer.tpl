@@ -1,10 +1,11 @@
 <hr class="half-rule">
 <div class="container">
     <div class="text-center">
-        <a href="http://blog.infinity-studio.org/">Blog</a>&nbsp;|
-        <a href="https://github.com/InfinityStudio">Github</a>&nbsp;|
-        <a href="http://www.infinity-studio.org:8081">Jenkins CI</a>&nbsp;|
-        <a href="http://www.infinity-studio.org:8081/plugin/repository/">Maven</a>&nbsp;|
+        {if $nav}
+            {foreach from=$nav key=k item=v}
+                <a href="{$v.nav_link}" title="{$v.nav_description}">{$v.nav_name}</a>&nbsp;|
+            {/foreach}
+        {/if}
         <script src="http://s4.cnzz.com/z_stat.php?id=1256855039&web_id=1256855039" language="JavaScript"></script>
         <br>
         Copyright &copy; 2015 <a href="http://www.infinity-studio.org">Infinity Studio</a> &middot; All Rights Reserved &middot;
