@@ -64,7 +64,7 @@ class Model
         $_db = DB::getDB();
         $_result = $_db->query($_sql);
         $_html = array();
-        while (!!$_objects = $_result->fetch_object()) {
+        while (!!$_objects = $_result->fetch_assoc()) {
             $_html[] = $_objects;
         }
         DB::unDB($_result, $_db);

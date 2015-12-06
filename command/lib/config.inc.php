@@ -22,8 +22,8 @@
  */
 //Database
 define('DB_HOST','localhost');
-define('DB_USER','root');
-define('DB_PASS','root');
-define('DB_NAME','test');
+define('DB_USER','cannon_fotter');
+define('DB_PASS','uqah27rf');
+define('DB_NAME','is_web');
 define('DB_PORT',3306);
 define('DB_PREFIX',null);

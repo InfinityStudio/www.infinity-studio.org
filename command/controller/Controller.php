@@ -20,10 +20,11 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
+namespace Command\Controller;
 class Controller
 {
-    protected $_smarty = null;
-    protected $_model = null;
+    protected $_smarty;
+    protected $_model;
     protected function __construct(&$_smarty, $_model = null)
     {
         $this->_smarty = $_smarty;

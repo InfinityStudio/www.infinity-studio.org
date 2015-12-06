@@ -34,7 +34,7 @@ $loader = new Command\Lib\LoadClass();
 $loader->register();
 $loader->addNamespace('Command\Controller', ROOT . '/command/controller');
 $loader->addNamespace('Command\Model', ROOT . '/command/model');
-$loader->addNamespace('Command\Lib', ROOT . '/command/lib');
+$loader->addNamespace('Command\Tools', ROOT . '/command/lib');
 $loader->addNamespace('Command\Interfaces', ROOT . '/command/interfaces');
 $loader->addNamespace('Command\Classes', ROOT . '/command/classes');
 $loader->addNamespace('Command\Classes\htmltag', ROOT . '/command/classes/htmltag');
