@@ -20,10 +20,20 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-//Database
-define('DB_HOST','localhost');
-define('DB_USER','cannon_fotter');
-define('DB_PASS','uqah27rf');
-define('DB_NAME','is_web');
-define('DB_PORT',3306);
-define('DB_PREFIX',null);
+namespace Command\Controller;
+use Command\Model\NavModel;
+class NavController extends Controller
+{
+    public function __construct(&$smarty)
+    {
+        parent::__construct($smarty, new NavModel());
+    }
+    public function _action()
+    {
+
+    }
+    public function showFront()
+    {
+        $this->_smarty->assign('nav',$this->_model->getAllNav());
+    }
+}

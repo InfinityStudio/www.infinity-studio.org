@@ -20,10 +20,11 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-//Database
-define('DB_HOST','localhost');
-define('DB_USER','cannon_fotter');
-define('DB_PASS','uqah27rf');
-define('DB_NAME','is_web');
-define('DB_PORT',3306);
-define('DB_PREFIX',null);
+namespace Command\Model;
+class NavModel extends Model
+{
+    public function getAllNav() {
+        $_sql = "SELECT nav_name, nav_description, nav_link FROM is_nav ORDER BY nav_sort ASC";
+        return parent::all($_sql);
+    }
+}
