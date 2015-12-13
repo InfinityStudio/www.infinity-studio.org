@@ -1,7 +1,7 @@
 <!-- Main Footer -->
 <footer class="main-footer">
     <!-- To the right -->
-    <div class="pull-right hidden-xs">
+    <div class="pull-right hidden-xs" style="display:none;">
         Anything you want
     </div>
     <!-- Default to the left -->
