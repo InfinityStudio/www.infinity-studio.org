@@ -13,9 +13,9 @@
 </div>
 <hr class="half-rule">
 <!-- jQuery -->
-<script src="//ajax.useso.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- Bootstrap js -->
-<script src="//libs.useso.com/js/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 </body>
 </html>

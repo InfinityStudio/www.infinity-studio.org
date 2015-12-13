@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh_CN">
 <head>
 	<meta charset="utf-8">
@@ -8,12 +9,10 @@
 </head>
 <!-- Bootstrap -->
 <link rel="stylesheet" href="public/css/general.css">
-<link rel="stylesheet" href="//libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <!--[if lt IE 9]>
-	  <script src="//libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
-	  <script src="//libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+	  <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <style>
 	nav {
