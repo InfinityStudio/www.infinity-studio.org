@@ -42,9 +42,9 @@ $loader->addNamespace('Command\Classes\htmltag', ROOT . '/command/classes/htmlta
 require ROOT . '/command/lib/config.inc.php';
 $smarty = new Smarty();
 //Smarty Dir Config
-$smarty->template_dir = 'command/templates/';
-$smarty->compile_dir = 'command/templates_c/';
-$smarty->config_dir = 'command/configs/';
-$smarty->cache_dir = 'command/cache/';
+$smarty->setTemplateDir(ROOT . '/command/templates/');
+$smarty->setCompileDir(ROOT . '/command/templates_c/');
+$smarty->setConfigDir(ROOT . '/command/configs/');
+$smarty->setCacheDir(ROOT . '/command/cache/');
 //init
 require ROOT.'/command/lib/common.php';
