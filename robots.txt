@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: 
+Disallow: /command/
+Disallow: /KhqZBKhI/
+Disallow: /public/
+Disallow: /isMyAdmin/
