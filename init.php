@@ -48,3 +48,4 @@ $smarty->setConfigDir(ROOT . '/command/configs/');
 $smarty->setCacheDir(ROOT . '/command/cache/');
 //init
 require ROOT.'/command/lib/common.php';
+
