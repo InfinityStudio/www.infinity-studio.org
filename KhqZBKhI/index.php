@@ -16,10 +16,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
- *
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 require '../init.php';
 $smarty->setTemplateDir(ROOT . '/command/templates/a/');
+$smarty->assign('title', '首页');
 $smarty->display('template.tpl');
