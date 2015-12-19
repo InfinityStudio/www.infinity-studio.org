@@ -29,7 +29,7 @@ date_default_timezone_set('Asia/Shanghai');
 //Auto loader 妈妈再也不用担心我的学习
 require ROOT . '/command/lib/LoadClass.php';
 //TODO 干掉Smarty自带的Autoloader
-require ROOT . '/command/lib/smarty/Smarty.class.php';
+require ROOT . '/command/lib/smarty/libs/Smarty.class.php';
 $loader = new Command\Lib\LoadClass();
 $loader->register();
 $loader->addNamespace('Command\Controller', ROOT . '/command/controller');
