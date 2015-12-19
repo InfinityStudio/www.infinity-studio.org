@@ -6,7 +6,7 @@
                 <a href="{$v.nav_link}" title="{$v.nav_description}">{$v.nav_name}</a>&nbsp;|
             {/foreach}
         {/if}
-        <script src="http://s4.cnzz.com/z_stat.php?id=1256855039&web_id=1256855039" language="JavaScript"></script>
+        <script src="https://s4.cnzz.com/z_stat.php?id=1256855039&web_id=1256855039" language="JavaScript"></script>
         <br>
         Copyright &copy; 2015 <a href="http://www.infinity-studio.org">Infinity Studio</a> &middot; All Rights Reserved &middot;
     </div>
