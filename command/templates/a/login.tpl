@@ -29,32 +29,39 @@
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
 
-        <form action="#" method="post">
+        <form>
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <input id="email" name="Email" type="text" class="form-control" placeholder="Email Address"/>
+                <span  class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password">
+                <input id="passwd" name="Password" type="password" class="form-control" placeholder="Password"/>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox"> Remember Me
-                        </label>
-                    </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                </div>
-                <!-- /.col -->
-            </div>
         </form>
-        <!-- /.social-auth-links -->
-    </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox icheck">
+                    <label>
+                        <input id="remember_me" value="week" type="checkbox"> Remember me
+                    </label>
+                </div>
+            </div><!-- /.col -->
+            <div class="col-xs-4">
+                <button id="login" type="submit" class="btn btn-primary btn-block btn-flat">Sign in</button>
+            </div><!-- /.col -->
+        </div>
+        <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
+            <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-info"></i> Login Success!</h4>
+            <p id="msg-success-p"></p>
+        </div>
+        <div id="msg-error" class="alert alert-warning alert-dismissable" style="display: none;">
+            <button type="button" class="close" id="error-close" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i> Error!</h4>
+            <p id="msg-error-p"></p>
+        </div>
+    </div><!-- /.login-box-body -->
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
@@ -65,14 +72,7 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="//cdn.bootcss.com/iCheck/1.0.1/icheck.min.js"></script>
-<script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-    });
-</script>
+{*<script src="../public/js/login.js"></script>*}
+<script src="../public/js/login.js"></script>
 </body>
 </html>
