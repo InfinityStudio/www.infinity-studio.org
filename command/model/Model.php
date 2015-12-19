@@ -21,7 +21,9 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 namespace Command\Model;
+
 use Command\Tools\Db;
+
 class Model
 {
 

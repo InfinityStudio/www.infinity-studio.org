@@ -21,6 +21,7 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 namespace Command\Controller;
+
 class Controller
 {
     protected $_smarty;
