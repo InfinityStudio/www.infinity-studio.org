@@ -50,4 +50,4 @@
 > 在实际需要访问的页面头部，还需要引入`init.php`来使页面正常工作
 
 #### 另见
-[Infinity Studio](http://www.infinity-studio.org)
+[Infinity Studio](https://www.infinity-studio.org)
