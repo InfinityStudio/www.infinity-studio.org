@@ -23,7 +23,7 @@
 //Charset:UTF-8
 header('Content-Type:text/html;charset=utf-8');
 //ROOT
-define('ROOT',dirname(__FILE__));
+define('ROOT', dirname(__FILE__));
 //Timezone
 date_default_timezone_set('Asia/Shanghai');
 //Auto loader 妈妈再也不用担心我的学习
@@ -49,4 +49,4 @@ $smarty->setCacheDir(ROOT . '/command/cache/');
 $smarty->caching = true; //开启缓存
 $smarty->cache_lifetime = 120; //缓存存活时间（秒）
 //init
-require ROOT.'/command/lib/common.php';
+require ROOT . '/command/lib/common.php';

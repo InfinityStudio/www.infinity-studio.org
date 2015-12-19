@@ -33,12 +33,12 @@ class NavController extends Controller
 
     private function showFront()
     {
-        $this->_smarty->assign('nav',$this->_model->getAllFront());
+        $this->_smarty->assign('nav', $this->_model->getAllFront());
     }
 
     private function showFooter()
     {
-        $this->_smarty->assign('footer',$this->_model->getAllFooter());
+        $this->_smarty->assign('footer', $this->_model->getAllFooter());
     }
 
     public function show()

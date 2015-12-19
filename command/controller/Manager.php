@@ -33,7 +33,7 @@ class ManagerController extends Controller
 
     public function action()
     {
-        switch($_GET['a']) {
+        switch ($_GET['a']) {
             case 'in' :
                 $this->login();
                 break;

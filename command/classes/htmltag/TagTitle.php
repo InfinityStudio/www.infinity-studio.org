@@ -24,21 +24,22 @@ class TagTitle extends HTMLTag
 {
     private $texttype = "text-center";
     private $size = 1;
+
     public function toHTML()
     {
         return
-            '<h'.$this->getSize().
-                ' class=\''.
-                $this->getTexttype().
-                '\''.
-            '>'.
-                $this->getText().
-            '</h'.$this->getSize().'>';
+            '<h' . $this->getSize() .
+            ' class=\'' .
+            $this->getTexttype() .
+            '\'' .
+            '>' .
+            $this->getText() .
+            '</h' . $this->getSize() . '>';
     }
 
     public function getTag()
     {
-        return 'h'.$this->getSize();
+        return 'h' . $this->getSize();
     }
 
     public function customCSS($css)

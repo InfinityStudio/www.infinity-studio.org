@@ -26,11 +26,13 @@ class Controller
 {
     protected $_smarty;
     protected $_model;
+
     protected function __construct(&$_smarty, $_model = null)
     {
         $this->_smarty = $_smarty;
         $this->_model = $_model;
     }
+
     public function generateProjectPage($project)
     {
 

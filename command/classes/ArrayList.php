@@ -29,6 +29,7 @@ class ArrayList
     {
         if (!empty($elements)) $this->arr = $elements;
     }
+
     public function add($element)
     {
         return (array_push($this->arr, $element)) ? true : false;
@@ -36,7 +37,7 @@ class ArrayList
 
     public function unshift($element)
     {
-        return (array_unshift($this->arr,$element)) ? true : false;
+        return (array_unshift($this->arr, $element)) ? true : false;
     }
 
     public function pop()
@@ -47,7 +48,7 @@ class ArrayList
     public function addAll($list)
     {
         $before = $this->size();
-        foreach($list as $element) {
+        foreach ($list as $element) {
             $this->add($element);
         }
         $after = $this->size();
@@ -73,12 +74,12 @@ class ArrayList
 
     public function contains($element)
     {
-        return in_array($this->arr,$element);
+        return in_array($this->arr, $element);
     }
 
     public function indexOf($element)
     {
-        return array_keys($this->arr,$element);
+        return array_keys($this->arr, $element);
     }
 
     public function lastIndexOf($element)
@@ -93,32 +94,39 @@ class ArrayList
     {
         return empty($this->arr);
     }
+
     public function remove($index)
     {
         $element = $this->get($index);
         if (!is_null($element)) array_splice($this->arr, $index, 1);
         return $element;
     }
+
     public function size()
     {
         return count($this->arr);
     }
+
     public function toArray()
     {
         return $this->arr;
     }
+
     public function toJson()
     {
         return json_encode($this->arr);
     }
-    public function range($offset,$length=null)
+
+    public function range($offset, $length = null)
     {
-        return array_slice($this->arr,$offset,$length);
+        return array_slice($this->arr, $offset, $length);
     }
-    public function removeRange($offset , $length)
+
+    public function removeRange($offset, $length)
     {
-        array_splice($this->arr, $offset , $length);
+        array_splice($this->arr, $offset, $length);
     }
+
     // 列表排序
     public function ksort()
     {
@@ -143,7 +151,8 @@ class ArrayList
         natsort($this->arr);
     }
 
-    public function unique() {
+    public function unique()
+    {
         $this->arr = array_unique($this->arr);
     }
 }

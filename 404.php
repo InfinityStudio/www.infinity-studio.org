@@ -21,5 +21,5 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 require 'init.php';
-$smarty->assign('title','Infinity Studio - 404!');
+$smarty->assign('title', 'Infinity Studio - 404!');
 $smarty->display('404.tpl');

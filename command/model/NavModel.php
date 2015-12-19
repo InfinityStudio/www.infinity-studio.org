@@ -24,12 +24,14 @@ namespace Command\Model;
 
 class NavModel extends Model
 {
-    public function getAllFront() {
+    public function getAllFront()
+    {
         $_sql = "SELECT nav_name, nav_description, nav_link FROM is_nav WHERE show_front=1 ORDER BY nav_sort ASC";
         return parent::all($_sql);
     }
 
-    public function getAllFooter() {
+    public function getAllFooter()
+    {
         $_sql = "SELECT nav_name, nav_description, nav_link FROM is_nav WHERE show_footer=1 ORDER BY nav_sort ASC";
         return parent::all($_sql);
     }

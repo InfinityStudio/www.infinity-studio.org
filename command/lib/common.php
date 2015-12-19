@@ -22,5 +22,6 @@
  */
 global $smarty;
 use Command\Controller\NavController;
+
 $_nav = new NavController($smarty);
 $_nav->show();

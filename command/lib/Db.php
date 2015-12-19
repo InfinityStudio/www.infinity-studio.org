@@ -28,9 +28,9 @@ class Db
      */
     public static function getDb()
     {
-        $_mysqli = new \mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_PORT);
+        $_mysqli = new \mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
         if (mysqli_connect_errno()) {
-            echo 'Err:'.mysqli_connect_error();
+            echo 'Err:' . mysqli_connect_error();
             exit();
         }
         $_mysqli->set_charset('utf8');;

@@ -24,22 +24,22 @@ require 'init.php';
 if (isset($_GET['pn'])) {
     switch ($_GET['pn']) {
         case 'FoodCraft':
-            $smarty->assign('title','Infinity Studio - FoodCraft 食物工艺');
+            $smarty->assign('title', 'Infinity Studio - FoodCraft 食物工艺');
             $smarty->assign('fcActive', 'active');
             $smarty->assign('pn', $_GET['pn']);
             break;
         case 'HMCL':
-            $smarty->assign('title','Infinity Studio - HMCL 启动器');
+            $smarty->assign('title', 'Infinity Studio - HMCL 启动器');
             $smarty->assign('hmclActive', 'active');
             $smarty->assign('pn', $_GET['pn']);
             break;
         case 'ExoticPower':
-            $smarty->assign('title','Infinity Studio - HMCL 启动器');
+            $smarty->assign('title', 'Infinity Studio - HMCL 启动器');
             //$smarty->assign('epActive', 'active');
             $smarty->assign('pn', $_GET['pn']);
             break;
         case 'Singularity':
-            $smarty->assign('title','Infinity Studio - Singularity');
+            $smarty->assign('title', 'Infinity Studio - Singularity');
             //$smarty->assign('epActive', 'active');
             $smarty->assign('pn', $_GET['pn']);
             break;
@@ -49,6 +49,6 @@ if (isset($_GET['pn'])) {
             break;
     }
 } else {
-    header('Location: 404.html');
+    header('Location: 404.php');
 }
 $smarty->display('project.tpl', md5($_SERVER['REQUEST_URI']));

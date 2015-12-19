@@ -32,7 +32,7 @@
         <form>
             <div class="form-group has-feedback">
                 <input id="email" name="Email" type="text" class="form-control" placeholder="Email Address"/>
-                <span  class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
                 <input id="passwd" name="Password" type="password" class="form-control" placeholder="Password"/>
@@ -46,22 +46,27 @@
                         <input id="remember_me" value="week" type="checkbox"> Remember me
                     </label>
                 </div>
-            </div><!-- /.col -->
+            </div>
+            <!-- /.col -->
             <div class="col-xs-4">
                 <button id="login" type="submit" class="btn btn-primary btn-block btn-flat">Sign in</button>
-            </div><!-- /.col -->
+            </div>
+            <!-- /.col -->
         </div>
         <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
             <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
             <h4><i class="icon fa fa-info"></i> Login Success!</h4>
+
             <p id="msg-success-p"></p>
         </div>
         <div id="msg-error" class="alert alert-warning alert-dismissable" style="display: none;">
             <button type="button" class="close" id="error-close" aria-hidden="true">&times;</button>
             <h4><i class="icon fa fa-warning"></i> Error!</h4>
+
             <p id="msg-error-p"></p>
         </div>
-    </div><!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box-body -->
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->

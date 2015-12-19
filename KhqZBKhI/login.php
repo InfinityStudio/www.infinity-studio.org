@@ -21,6 +21,7 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 use Command\Controller\Manager;
+
 require 'init.php';
 $smarty->setTemplateDir(ROOT . '/command/templates/a/');
 $smarty->display('login.tpl');

@@ -20,12 +20,17 @@
  * @author LasmGratel <lasm_gratel@hotmail.com>
  */
 namespace command\classes\htmltag;
+
 use Command\Interfaces\IHTMLObject;
+
 abstract class HTMLTag implements IHTMLObject
 {
-    private $text=null;
+    private $text = null;
+
     public abstract function toHTML();
+
     public abstract function getTag();
+
     public abstract function customCSS($css);
 
     /**

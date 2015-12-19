@@ -3,10 +3,12 @@
     <div class="container">
         {if $pn eq "FoodCraft"}
             <p>FC</p>
-
         {elseif $pn eq "HMCL"}
             <h2 class="text-center">Hello Minecraft Launcher</h2>
-            <p class="image-center"><img src="http://ww3.sinaimg.cn/large/005GStl5jw1er1ko9642mj30n60f278i.jpg" class="img-responsive" alt="HMCL"></p>
+            <p class="image-center">
+                <img src="http://ww3.sinaimg.cn/large/005GStl5jw1er1ko9642mj30n60f278i.jpg" class="img-responsive"
+                     alt="HMCL">
+            </p>
             <div>
                 <blockquote class="c">
                     <h4>功能特点</h4>
@@ -25,7 +27,9 @@
                 </blockquote>
                 <blockquote class="b">
                     <h4>下载</h4>
-                    <p><a href="http://pan.baidu.com/s/1dDBxTLn">百度云</a>&nbsp;|&nbsp;<a href="//ci.infinity-studio.org/job/HMCL">最新构建</a></p>
+
+                    <p><a href="http://pan.baidu.com/s/1dDBxTLn">百度云</a>&nbsp;|&nbsp;<a
+                                href="//ci.infinity-studio.org/job/HMCL">最新构建</a></p>
                 </blockquote>
                 <blockquote class="a">
                     <h4>另</h4>
@@ -37,15 +41,17 @@
             </div>
         {elseif $pn eq "ExoticPower"}
             <div class="row">
-                <div class="col-md-6 col-md-offset-3"> <br>
+                <div class="col-md-6 col-md-offset-3"><br>
+
                     <h1 class="text-center">Exotic Power</h1>
+
                     <h2 class="text-center">异域之能</h2>
                     </br>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-md-6 col-md-offset-3">
-                    一个以Minecraft世界观设定为基础的科技Mod，主要内容包括异域能量、对应的机器如组装机、重构机、传送机等。<br />
+                    一个以Minecraft世界观设定为基础的科技Mod，主要内容包括异域能量、对应的机器如组装机、重构机、传送机等。<br/>
                     <a href="http://tieba.baidu.com/p/3995322593" data-rel="button" class="btn btn-info">转至贴吧介绍页面</a>
                 </div>
             </div>
@@ -53,17 +59,17 @@
             <div class="row text-center">
                 <div class="col-md-6 col-md-offset-3">
                     <b>一、什么是ExoticPower</b>
-                    <br />
+                    <br/>
                     ExoticPower是一个冒险、科技、魔法并存的多条科技线阵营Mod，不同阵营之间互相合作或者互相敌对，重在对异世界（下界、末地）的探索，以获得新能源为目标，包含长距定点能量传输元件、长距转移定位元件、无线传输器、大型空间现象发生元件等大型元件或机器，前期侧重于探险类。玩家在游戏中需选择一个阵营和其中的流派（科技线）发展，提升自己的能力（扩充科技线），达到imbac程度
-                    <br />
+                    <br/>
                     <b>二、Mod背景</b>
-                    <br />
-                    格林尼治历683年，科学家们在对非自然现象的调查中发现了一种与现存的科学和魔法作用力都不同的作用力，称之为第六作用力，也就是所谓“异域之能”。<br />
-                    异域之能被证实来自于末地的虚空中，很有可能是来自于被乱流吞噬的熵重组而成的能量，商人们看见了其中的利益，于是争相开发之。异域之能在世界中的存在形式为固定的“空间裂隙”，也就是俗称的“能量节点”。<br />
-                    然而五年后的688年，情况却开始变化，节点开始变得不稳定而容易崩溃，而世界则发生了所谓“崩坏”，怪物开始横行于世……政府倒台……人们人心惶惶危在旦夕……<br />
-                    这个时候人们内部产生了分歧，进而形成了3个阵营，又因为流派不同被划分为了9个职业，各个阵营都以自己的方式行事，然而并没有人知道谁的道路是正确的……<br />
+                    <br/>
+                    格林尼治历683年，科学家们在对非自然现象的调查中发现了一种与现存的科学和魔法作用力都不同的作用力，称之为第六作用力，也就是所谓“异域之能”。<br/>
+                    异域之能被证实来自于末地的虚空中，很有可能是来自于被乱流吞噬的熵重组而成的能量，商人们看见了其中的利益，于是争相开发之。异域之能在世界中的存在形式为固定的“空间裂隙”，也就是俗称的“能量节点”。<br/>
+                    然而五年后的688年，情况却开始变化，节点开始变得不稳定而容易崩溃，而世界则发生了所谓“崩坏”，怪物开始横行于世……政府倒台……人们人心惶惶危在旦夕……<br/>
+                    这个时候人们内部产生了分歧，进而形成了3个阵营，又因为流派不同被划分为了9个职业，各个阵营都以自己的方式行事，然而并没有人知道谁的道路是正确的……<br/>
                     或许，这场崩坏，是神指引人类迈上新高度的开始，又或者，是神已经抛弃了人类......
-                    <br />
+                    <br/>
                 </div>
             </div>
         {elseif $pn eq "Singularity"}

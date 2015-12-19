@@ -23,7 +23,7 @@
 //Charset:UTF-8
 header('Content-Type:text/html;charset=utf-8');
 //ROOT
-define('ROOT',substr(dirname(__FILE__), 0, -9));
+define('ROOT', substr(dirname(__FILE__), 0, -9));
 //Timezone
 date_default_timezone_set('Asia/Shanghai');
 //Auto loader 妈妈再也不用担心我的学习

@@ -45,6 +45,7 @@ class LoadClass
     {
         spl_autoload_register(array($this, 'loadClass'));
     }
+
     /**
      * Adds a base directory for a namespace prefix.
      *

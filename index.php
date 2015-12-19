@@ -21,6 +21,6 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 require 'init.php';
-$smarty->assign('title','Infinity Studio');
+$smarty->assign('title', 'Infinity Studio');
 $smarty->assign('mainActive', 'active');
 $smarty->display('index.tpl');

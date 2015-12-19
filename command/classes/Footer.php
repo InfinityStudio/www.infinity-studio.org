@@ -21,7 +21,9 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
 namespace Command\Classes;
+
 use Command\Interfaces\IHTMLObject;
+
 class Footer implements IHTMLObject
 {
     public function toHTML()
