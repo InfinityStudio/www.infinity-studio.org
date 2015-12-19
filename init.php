@@ -46,6 +46,7 @@ $smarty->setTemplateDir(ROOT . '/command/templates/');
 $smarty->setCompileDir(ROOT . '/command/templates_c/');
 $smarty->setConfigDir(ROOT . '/command/configs/');
 $smarty->setCacheDir(ROOT . '/command/cache/');
+$smarty->caching = true; //开启缓存
+$smarty->cache_lifetime = 120; //缓存存活时间（秒）
 //init
 require ROOT.'/command/lib/common.php';
-

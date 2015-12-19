@@ -51,4 +51,4 @@ if (isset($_GET['pn'])) {
 } else {
     header('Location: 404.html');
 }
-$smarty->display('project.tpl');
+$smarty->display('project.tpl', md5($_SERVER['REQUEST_URI']));

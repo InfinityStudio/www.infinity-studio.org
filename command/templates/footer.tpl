@@ -2,7 +2,7 @@
 <div class="container">
     <div class="text-center">
         {if $nav}
-            {foreach from=$nav key=k item=v}
+            {foreach from=$footer key=k item=v}
                 <a href="{$v.nav_link}" title="{$v.nav_description}">{$v.nav_name}</a>&nbsp;|
             {/foreach}
         {/if}
