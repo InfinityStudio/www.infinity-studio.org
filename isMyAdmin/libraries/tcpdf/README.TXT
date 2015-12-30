@@ -9,10 +9,10 @@ http://sourceforge.net/donate/index.php?group_id=128076
 
 Name: TCPDF
 Version: 6.2.9
-Release date: 2015-06-18
+Release date: 2016-06-18
 Author:	Nicola Asuni
 
-Copyright (c) 2002-2015:
+Copyright (c) 2002-2016:
 	Nicola Asuni
 	Tecnick.com LTD
 	www.tecnick.com

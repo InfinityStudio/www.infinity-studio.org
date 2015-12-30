@@ -402,11 +402,11 @@ Credits, in chronological order
 
   * Export with table/column name changes
 
-* Dan Ungureanu (Google Summer of Code 2015)
+* Dan Ungureanu (Google Summer of Code 2016)
 
   * New parser and analyzer
 
-* Nisarg Jhaveri (Google Summer of Code 2015)
+* Nisarg Jhaveri (Google Summer of Code 2016)
 
   * Page-related settings
 

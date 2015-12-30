@@ -252,7 +252,7 @@ options which the setup script does not provide.
 Verifying phpMyAdmin releases
 +++++++++++++++++++++++++++++
 
-Since July 2015 all phpMyAdmin releases are cryptographically signed by the
+Since July 2016 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who is currently Marc Delisle. His key id is
 0x81AF644A, his PGP fingerprint is:
 
@@ -270,7 +270,7 @@ for it. Once you have both of them in the same folder, you can verify the signat
 .. code-block:: console
 
     $ gpg --verify phpMyAdmin-4.4.9-all-languages.zip.asc
-    gpg: Signature made Fri Jun 12 13:09:58 2015 CEST using RSA key ID 81AF644A
+    gpg: Signature made Fri Jun 12 13:09:58 2016 CEST using RSA key ID 81AF644A
     gpg: Can't check signature: No public key
 
 As you can see gpg complains that it does not know the public key. At this
@@ -300,7 +300,7 @@ in the key:
 .. code-block:: console
 
     $ gpg --verify phpMyAdmin-4.4.9-all-languages.zip.asc
-    gpg: Signature made Fri Jun 12 13:09:58 2015 CEST using RSA key ID 81AF644A
+    gpg: Signature made Fri Jun 12 13:09:58 2016 CEST using RSA key ID 81AF644A
     gpg: Good signature from "Marc Delisle <marc@infomarc.info>" [unknown]
     gpg: WARNING: This key is not certified with a trusted signature!
     gpg:          There is no indication that the signature belongs to the owner.
@@ -320,7 +320,7 @@ Once the key is trusted, the warning will not occur:
 .. code-block:: console
 
     $ gpg --verify phpMyAdmin-4.4.9-all-languages.zip.asc
-    gpg: Signature made Fri Jun 12 13:09:58 2015 CEST using RSA key ID 81AF644A
+    gpg: Signature made Fri Jun 12 13:09:58 2016 CEST using RSA key ID 81AF644A
     gpg: Good signature from "Marc Delisle <marc@infomarc.info>" [full]
 
 Should the signature be invalid (the archive has been changed), you would get a
@@ -329,7 +329,7 @@ clear error regardless of the fact that the key is trusted or not:
 .. code-block:: console
 
     $ gpg --verify phpMyAdmin-4.4.9-all-languages.zip.asc
-    gpg: Signature made Fri Jun 12 13:09:58 2015 CEST using RSA key ID 81AF644A
+    gpg: Signature made Fri Jun 12 13:09:58 2016 CEST using RSA key ID 81AF644A
     gpg: BAD signature from "Marc Delisle <marc@infomarc.info>" [unknown]
 
 .. _Validating other keys on your public keyring: https://www.gnupg.org/gph/en/manual.html#AEN335

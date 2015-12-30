@@ -1,6 +1,6 @@
 {*
  * Infinity Studio Offcial Website.
- * Copyright (C) 2015 Infinity Studio.
+ * Copyright (C) 2016 Infinity Studio.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -31,7 +31,7 @@
             <script src="https://s4.cnzz.com/z_stat.php?id=1256855039&web_id=1256855039" language="JavaScript"></script>
         {/nocache}
         <br>
-        Copyright &copy; 2015 <a href="http://www.infinity-studio.org">Infinity Studio</a> &middot; All Rights
+        Copyright &copy; 2016 <a href="http://www.infinity-studio.org">Infinity Studio</a> &middot; All Rights
         Reserved &middot;
     </div>
 </div>

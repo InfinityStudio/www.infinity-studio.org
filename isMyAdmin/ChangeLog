@@ -1,7 +1,7 @@
 phpMyAdmin - ChangeLog
 ======================
 
-4.5.1.0 (2015-10-23)
+4.5.1.0 (2016-10-23)
 - issue        Invalid argument supplied for foreach()
 - issue        array_key_exists() expects parameter 2 to be array
 - issue #11480 Notice Undefined index: drop_database
@@ -36,13 +36,13 @@ phpMyAdmin - ChangeLog
 - issue #11520 Incorrect syntax creating a user using mysql_native_password with MariaDB
 - issue #11561 Cannot use third party auth plugins
 
-4.5.0.2 (2015-09-25)
+4.5.0.2 (2016-09-25)
 - issue #11497 Incorrect indexes when exporting
 
-4.5.0.1 (2015-09-24)
+4.5.0.1 (2016-09-24)
 - issue #11492 AUTO_INCREMENT statements are partly missing from exports
 
-4.5.0.0 (2015-09-23)
+4.5.0.0 (2016-09-23)
 + rfe          Pagination for GIS visualization
 + issue #6207  Usability improvements for console
 + issue #6310  Access to Add columns text-box and Go button when creating table
@@ -142,11 +142,11 @@ phpMyAdmin - ChangeLog
 - issue #11448 Clarify doc about the MemoryLimit directive
 - issue #11489 Cannot copy a database under certain conditions
 
-4.4.15.1 (2015-10-23)
+4.4.15.1 (2016-10-23)
 - issue #11464 phpMyAdmin suggests upgrading to newer version not usable on that system
 - issue        [security] Content spoofing on url.php
 
-4.4.15.0 (2015-09-20)
+4.4.15.0 (2016-09-20)
 - issue #11411 Undefined "replace" function on numeric scalar
 - issue #11421 Stored-proc / routine - broken parameter parsing
 - issue        Missing name for configuration read_as_multibytes
@@ -160,10 +160,10 @@ phpMyAdmin - ChangeLog
 - issue #11461 Foreign key constraints for InnoDB tables with upper-case letters disabled
 - issue #11487 Warning when entering Query page
 
-4.4.14.1 (2015-09-08)
+4.4.14.1 (2016-09-08)
 - issue        [security] reCaptcha bypass
 
-4.4.14.0 (2015-08-20)
+4.4.14.0 (2016-08-20)
 - issue #11367 Export after search, missing WHERE clause
 - issue #11380 Incomplete message after import
 - issue        Incorrect scalar type declaration (reported under PHP 7)
@@ -174,10 +174,10 @@ phpMyAdmin - ChangeLog
 - issue #11386 Cannot import database with long data in one column
 - issue #11410 SPATIAL index option is not clickable
 
-4.4.13.1 (2015-08-08)
+4.4.13.1 (2016-08-08)
 - issue #11368 SQL error when importing phpMyAdmin dump file
 
-4.4.13.0 (2015-08-07)
+4.4.13.0 (2016-08-07)
 - issue #1808  "Improve table structure" generates invalid SQL
 - issue        Once checked "Show only active" checkbox is always checked
 - issue #1813  Delete rows using "Check All" is broken
@@ -188,7 +188,7 @@ phpMyAdmin - ChangeLog
 - issue        Table list in navigation collapses when entering into a table in another page
 - issue #11364 JS error while trying to auto navigate to db structure page when db creation has failed
 
-4.4.12.0 (2015-07-20)
+4.4.12.0 (2016-07-20)
 - bug       Saved chart image does not have a proper name or an extension
 - bug #4976 Timepicker CSS issues in Original theme
 - bug #4975 Move/Copy/Rename operations on Table/Db fail on Drizzle server
@@ -197,7 +197,7 @@ phpMyAdmin - ChangeLog
 - bug       Add missing head tag
 - bug #4985 Column headers move when scrolling
 
-4.4.11.0 (2015-07-06)
+4.4.11.0 (2016-07-06)
 - bug       Missing selected/entered values when editing active options in visual query builder
 - bug #4969 Autoload from prefs_storage not behaving properly
 - bug #4972 Incorrect length computed for binary data
@@ -206,7 +206,7 @@ phpMyAdmin - ChangeLog
 - bug #4974 Creating a database from console doesn't update navigation panel
 - bug #4844 FAQ 1.17 needs an update
 
-4.4.10.0 (2015-06-17)
+4.4.10.0 (2016-06-17)
 - bug #4950 Issues in database selection for replication
 - bug #4951 Trying to save chart as image crashes the browser
 - bug #4953 cant drag sql.gz file onto import input
@@ -216,7 +216,7 @@ phpMyAdmin - ChangeLog
 - bug #4955 Clicking on the navi logo does not always work
 - bug       External URL for $cfg['NavigationLogoLink'] causes JavaScript error when clicked
 
-4.4.9.0 (2015-06-04)
+4.4.9.0 (2016-06-04)
 - bug #4920 relation view doesn't list fields of table in other database
 - bug #4905 Sorting by an alias
 - bug #4931 False error before entering reCAPTCHA
@@ -225,7 +225,7 @@ phpMyAdmin - ChangeLog
 - bug #4908 Reverse proxy: infinite internal redirect (added warning in doc)
 - bug #4942 Export to gzip saves plain text under Chrome
 
-4.4.8.0 (2015-05-28)
+4.4.8.0 (2016-05-28)
 - bug       Allow accessing visual query builder when pmadb is not configured
 - bug #4893 Nav tree line alignment issue
 - bug #4911 Lock page icon is not shown after fresh reload
@@ -238,7 +238,7 @@ phpMyAdmin - ChangeLog
 - bug #4929 Edit view structure doesn't load the algorithm
 - bug #4923 Do not limit table comments to 60 characters
 
-4.4.7.0 (2015-05-16)
+4.4.7.0 (2016-05-16)
 - bug #4876 Settings issues (Favorite tables shown twice in Settings)
 - bug #4896 Non-styled error page when following results link
 - bug #4894 Deleting without confirmation
@@ -257,16 +257,16 @@ phpMyAdmin - ChangeLog
 - bug #4904 Setup: Overview > Display does not work
 - bug #4906 Designer: pages from all databases
 
-4.4.6.1 (2015-05-13)
+4.4.6.1 (2016-05-13)
 - bug #4899 [security] CSRF vulnerability in setup
 - bug #4900 [security] Vulnerability allowing man-in-the-middle attack
 
-4.4.6.0 (2015-05-07)
+4.4.6.0 (2016-05-07)
 - bug #4890 webkitStorageInfo and webkitIndexedDB is deprecated
 - bug #4892 Undefined variable: unique_conditions
 - bug #4891 CSV Import ignores "Replace table data with file" checkbox
 
-4.4.5.0 (2015-05-05)
+4.4.5.0 (2016-05-05)
 - bug       Table overhead stats: missing space before the unit
 - bug       Fix resize icon in Designer
 - bug #4879 Exit fullscreen in Designer does not change the button text
@@ -279,7 +279,7 @@ phpMyAdmin - ChangeLog
 - bug #4886 Clicking on external links in advisor rules give JS error
 - bug #4888 Filter in central columns does not work in other languages
 
-4.4.4.0 (2015-04-26)
+4.4.4.0 (2016-04-26)
 - bug #4863 Edit vs Change
 - bug #4859 Don't scroll (to bottom) when editing multiple rows
 - bug #4862 Misaligned Inline edit field
@@ -292,7 +292,7 @@ phpMyAdmin - ChangeLog
 - bug #4871 Error on creating table
 - bug       Undefined index: Rows
 
-4.4.3.0 (2015-04-20)
+4.4.3.0 (2016-04-20)
 - bug #4851 PHP errors in login dialogue
 - bug #4207 json_encode error due to strftime returning non utf8 chars in Windows 8.1 Chinese version
 - bug #4845 White screen (Cloudflare)
@@ -305,7 +305,7 @@ phpMyAdmin - ChangeLog
 - bug #4857 Alter table after changing column name error
 - bug #4830 Maximum execution time exceeded in Util.class.php
 
-4.4.2.0 (2015-04-13)
+4.4.2.0 (2016-04-13)
 - bug #4835 PMA_hideShowConnection not called after submit_num_fields
 - bug #4836 Server warning after moving from console to direct clicks
 - bug #4837 Duplicate new version notification when using the "Back" button
@@ -318,10 +318,10 @@ phpMyAdmin - ChangeLog
 - bug #4849 Functions accessed from navigation do not load on ajax dialog
 - bug #4850 Relation view on 1920
 
-4.4.1.1 (2015-04-08)
+4.4.1.1 (2016-04-08)
 - bug #4846 Web server's error log is flooded
 
-4.4.1.0 (2015-04-07)
+4.4.1.0 (2016-04-07)
 - bug #4813 MySQL 5.7.6 and the Users menu tab
 - bug #4818 MySQL 5.7.6 and changing the password for another user
 - bug #4819 Request URI too large
@@ -340,7 +340,7 @@ phpMyAdmin - ChangeLog
 - bug #4832 Sorting distinct values result loses links
 - bug #4834 Do not attach token to css requests to improve caching
 
-4.4.0.0 (2015-04-01)
+4.4.0.0 (2016-04-01)
 + rfe #1553 InnoDB presently supports one FULLTEXT index creation at a time
 + rfe #1562 Allow tracking multiple table at once from database level tracking page
 + rfe #1564 Improve action message on Tracking page
@@ -408,7 +408,7 @@ explanation
 4.3.14.0 (not yet released)
 
 
-4.3.13.0 (2015-03-29)
+4.3.13.0 (2016-03-29)
 - bug #4803 "Show hidden items" is sometimes hidden
 - bug #4807 Breaks when sorting by multiple columns while using UNION
 - bug #4798 Missing column when exporting in sql
@@ -419,7 +419,7 @@ explanation
 - bug #4820 Invalid links to dev.mysql.com
 - bug #4718 simulate query fails, but actual query does not
 
-4.3.12.0 (2015-03-14)
+4.3.12.0 (2016-03-14)
 - bug #4746 Right-aligned columns have left-aligned header
 - bug #4779 PMA_Util::parseEnumSetValues fails on enums with UTF-8 values
 - bug       Undefined index savedsearcheswork
@@ -431,10 +431,10 @@ explanation
 - bug #4784 Incomplete bookmark saving
 - bug #4786 SELECT width on relations page
 
-4.3.11.1 (2015-03-04)
-- bug       [security] Risk of BREACH attack, see PMASA-2015-1
+4.3.11.1 (2016-03-04)
+- bug       [security] Risk of BREACH attack, see PMASA-2016-1
 
-4.3.11.0 (2015-03-02)
+4.3.11.0 (2016-03-02)
 - bug #4774 SQL links are completely wrong
 - bug #4768 MariaDB: version mismatch
 - bug #4777 Some images are missing in Designer for original theme
@@ -444,7 +444,7 @@ explanation
 - bug #4778 SQL error when database list is sorted by additional columns
 - bug #4780 Notice when timestamp column does not have default value
 
-4.3.10.0 (2015-02-20)
+4.3.10.0 (2016-02-20)
 - bug       Undefined index navwork
 - bug #4744 Opening console scroll down the page
 - bug       Remove extra column heading in view structure page
@@ -455,7 +455,7 @@ explanation
 - bug #4752 Incorrect page after creating table
 - bug #4771 Central Columns not working, showing error
 
-4.3.9.0 (2015-02-05)
+4.3.9.0 (2016-02-05)
 - bug #4728 Incorrect headings in routine editor
 - bug #4730 Notice while browsing tables when phpmyadmin pma database exists, but not all the tables
 - bug #4729 Display original field when using "Relational display column" option and display column is empty
@@ -472,7 +472,7 @@ explanation
 - bug #4750 Disable renaming referenced columns
 - bug #4748 Column name center-aligned instead of left-aligned in Relations
 
-4.3.8.0 (2015-01-24)
+4.3.8.0 (2016-01-24)
 - bug       Undefined constant PMA_DRIZZLE
 - bug #4712 Wrongly positioned date-picker while Grid-Editing
 - bug #4714 Forced ORDER BY for own sql statements
@@ -487,7 +487,7 @@ explanation
 - bug       Undefined index central_columnswork
 - bug       Undefined index favorite_tables
 
-4.3.7.0 (2015-01-15)
+4.3.7.0 (2016-01-15)
 - bug #4694 js error on marking table as favorite in Safari (in private mode)
 - bug #4695 Changing $cfg['DefaultTabTable'] doesn't update link and title
 - bug       Undefined index menuswork
@@ -500,7 +500,7 @@ explanation
 - bug #4707 Call to undefined method PMA_Schema_PDF::dieSchema()
 - bug #4702 URL is non RFC-2396 compatible in get_scripts.js.php
 
-4.3.6.0 (2015-01-07)
+4.3.6.0 (2016-01-07)
 - bug       Undefined index notices while configuring recent and favorite tables
 - bug #4687 Designer breaks without configuration storage
 - bug #4686 Select elements flicker and selects something else
@@ -510,7 +510,7 @@ explanation
 - bug #4688 File permissions in archive
 - bug #4692 Dynamic javascripts gives 500 when db selected
 
-4.3.5.0 (2015-01-05)
+4.3.5.0 (2016-01-05)
 - bug       Auto-configuration: tables were not created automatically
 - bug #4677 Advanced feature checker does not check for favorite tables feature
 - bug #4678 Some of the data stored in configuration storage are not deleted upon db or table delete

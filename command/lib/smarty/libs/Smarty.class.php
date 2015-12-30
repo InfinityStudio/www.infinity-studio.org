@@ -21,8 +21,8 @@
  * smarty-discussion-subscribe@googlegroups.com
  *
  * @link      http://www.smarty.net/
- * @copyright 2015 New Digital Group, Inc.
- * @copyright 2015 Uwe Tews
+ * @copyright 2016 New Digital Group, Inc.
+ * @copyright 2016 Uwe Tews
  * @author    Monte Ohrt <monte at ohrt dot com>
  * @author    Uwe Tews
  * @author    Rodney Rehm

@@ -1,7 +1,7 @@
 <?php
 /**
  * Infinity Studio Offcial Website.
- * Copyright (C) 2015 Infinity Studio.
+ * Copyright (C) 2016 Infinity Studio.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as

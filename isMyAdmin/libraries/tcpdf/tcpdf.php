@@ -3,11 +3,11 @@
 // File name   : tcpdf.php
 // Version     : 6.2.9
 // Begin       : 2002-08-03
-// Last Update : 2015-06-18
+// Last Update : 2016-06-18
 // Author      : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
 // License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
 // -------------------------------------------------------------------
-// Copyright (C) 2002-2015 Nicola Asuni - Tecnick.com LTD
+// Copyright (C) 2002-2016 Nicola Asuni - Tecnick.com LTD
 //
 // This file is part of TCPDF software library.
 //
