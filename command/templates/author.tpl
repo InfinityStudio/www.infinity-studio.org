@@ -1,5 +1,4 @@
-<?php
-/**
+{*
  * Infinity Studio Offcial Website.
  * Copyright (C) 2016 Infinity Studio.
  *
@@ -18,8 +17,21 @@
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
- */
-require 'init.php';
-$smarty->assign('title', 'Infinity Studio - 加入我们');
-$smarty->assign('joinActive', 'active');
-$smarty->display('join.tpl');
+ *}
+{include file="header.tpl"}
+<main>
+    <div class="container">
+        {if $author && $pos}
+            <h2 class="text-center">
+                {$author[$pos].name}
+            </h2>
+            <p>
+                <img src="{$author[$pos].avatar}" class="img-responsive" alt="avatar">
+            </p>
+            <blockquote class="c">
+                {$author[$pos].description}
+            </blockquote>
+        {/if}
+    </div>
+</main>
+{include file="footer.tpl"}

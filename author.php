@@ -1,7 +1,7 @@
 <?php
 /**
  * Infinity Studio Offcial Website.
- * Copyright (C) 2016 Infinity Studio.
+ * Copyright (C) 2015 Infinity Studio.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,9 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
- * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
+use command\controller\AuthorController;
+
 require 'init.php';
-$smarty->assign('title', 'Infinity Studio - 加入我们');
-$smarty->assign('joinActive', 'active');
-$smarty->display('join.tpl');
+$smarty->assign('title','Infinity Studio - 作者介绍');
+if(isset($_GET["pn"]))
+{
+    $_author = new AuthorController($smarty);
+    $_author->show();
+    $smarty->display('author.tpl', md5($_SERVER['REQUEST_URI']));
+}
+else
+{
+    header('Location: 404.php');
+}

@@ -1,7 +1,7 @@
 <?php
 /**
  * Infinity Studio Offcial Website.
- * Copyright (C) 2016 Infinity Studio.
+ * Copyright (C) 2015 Infinity Studio.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,9 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author LasmGratel <lasm_gratel@hotmail.com>
- * @author Cannon_fotter <gfyguofanyi@gmail.com>
  */
-require 'init.php';
-$smarty->assign('title', 'Infinity Studio - 加入我们');
-$smarty->assign('joinActive', 'active');
-$smarty->display('join.tpl');
+
+namespace command\classes\project;
+
+
+use Command\Classes\Project;
+
+class Mod extends Project
+{
+    private $modtype = null;
+}

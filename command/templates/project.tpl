@@ -22,6 +22,8 @@
 <main>
     <div class="container">
         {if $pn eq "FoodCraft"}
+            <h2 class="text-center">FoodCraft</h2>
+            <h4 class="text-center">食物工艺</h4>
             <p>FC</p>
         {elseif $pn eq "HMCL"}
             <h2 class="text-center">Hello Minecraft Launcher</h2>

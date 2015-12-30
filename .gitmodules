@@ -1,0 +1,6 @@
+[submodule "command/lib/smarty"]
+	path = command/lib/smarty
+	url = https://github.com/smarty-php/smarty.git
+[submodule "isMyAdmin"]
+	path = isMyAdmin
+	url = https://github.com/phpmyadmin/phpmyadmin.git
