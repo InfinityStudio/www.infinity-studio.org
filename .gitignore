@@ -1,7 +1,28 @@
-/.idea
-/command/templates_c
-/command/cache
-.gitignore
-test.php
-*.iml
-/command/templates/test.tpl
+# exclude all
+/*
+
+# include markdowns
+!*.md
+!LICENSE
+
+# include git important files
+!.gitmodules
+!.gitignore
+
+# include source code
+!command/
+!public/
+!KhqZBKhl/
+
+# include libs
+!isMyAdmin/
+
+# include web files
+!*.php
+!*.html
+!favicon.ico
+!robots.txt
+
+# include PHPStorm files
+!.editorconfig
+!license-header.txt
