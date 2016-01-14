@@ -231,7 +231,7 @@ echo '<h2>' , __('Appearance settings') , '</h2>';
 echo '  <ul>';
 
 // Displays language selection combo
-if (empty($cfg['Lang']) && count($GLOBALS['available_languages']) > 1) {
+if (empty($cfg['Lang'])) {
     echo '<li id="li_select_lang" class="no_bullets">';
     include_once 'libraries/display_select_lang.lib.php';
     echo PMA\libraries\Util::getImage('s_lang.png') , " "
@@ -591,8 +591,8 @@ if (isset($GLOBALS['dbi'])
 ) {
     $_client_info = $GLOBALS['dbi']->getClientInfo();
     if ($server > 0
-        && /*overload*/mb_strpos($_client_info, 'mysqlnd') === false
-        && /*overload*/mb_strpos(PMA_MYSQL_STR_VERSION, 'MariaDB') === false
+        && mb_strpos($_client_info, 'mysqlnd') === false
+        && mb_strpos(PMA_MYSQL_STR_VERSION, 'MariaDB') === false
         && substr(PMA_MYSQL_CLIENT_API, 0, 3) != substr(
             PMA_MYSQL_INT_VERSION, 0, 3
         )

@@ -254,7 +254,7 @@ if (!defined('TESTSUITE')) {
     if ($export_type == 'server') {
         $err_url = 'server_export.php' . PMA_URL_getCommon();
     } elseif ($export_type == 'database'
-        && /*overload*/mb_strlen($db)
+        && mb_strlen($db)
     ) {
         $err_url = 'db_export.php' . PMA_URL_getCommon(array('db' => $db));
         // Check if we have something to export
@@ -263,8 +263,8 @@ if (!defined('TESTSUITE')) {
         } else {
             $tables = array();
         }
-    } elseif ($export_type == 'table' && /*overload*/mb_strlen($db)
-        && /*overload*/mb_strlen($table)
+    } elseif ($export_type == 'table' && mb_strlen($db)
+        && mb_strlen($table)
     ) {
         $err_url = 'tbl_export.php' . PMA_URL_getCommon(
             array(
@@ -454,10 +454,8 @@ if (!defined('TESTSUITE')) {
                         $do_relation, $do_comments, $do_mime, $do_dates, $aliases,
                         $separate_files
                     );
+                } finally {
                     PMA_unlockTables();
-                } catch (Exception $e) { // TODO use finally when PHP version is 5.5
-                    PMA_unlockTables();
-                    throw $e;
                 }
             } else {
                 PMA_exportDatabase(
@@ -487,10 +485,8 @@ if (!defined('TESTSUITE')) {
                         $do_mime, $do_dates, $allrows, $limit_to, $limit_from,
                         $sql_query, $aliases
                     );
+                } finally {
                     PMA_unlockTables();
-                } catch (Exception $e) { // TODO use finally when PHP version is 5.5
-                    PMA_unlockTables();
-                    throw $e;
                 }
             } else {
                 PMA_exportTable(

@@ -56,7 +56,7 @@ if ($foreign_db) {
     );
     while ($row = $GLOBALS['dbi']->fetchRow($tables_rs)) {
         if (isset($row[1])
-            && /*overload*/mb_strtoupper($row[1]) == $tbl_storage_engine
+            && mb_strtoupper($row[1]) == $tbl_storage_engine
         ) {
             $tables[] = $row[0];
         }
@@ -145,7 +145,7 @@ if ($foreign_db) {
                 array(
                     'name' => 'destination_foreign_db[' . $i . ']',
                     'title' => __('Database'),
-                    'values' => $GLOBALS['pma']->databases,
+                    'values' => $GLOBALS['dblist']->databases,
                     'foreign' => $foreign_db
                 )
             ); ?>

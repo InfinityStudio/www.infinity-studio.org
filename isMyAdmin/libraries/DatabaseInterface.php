@@ -8,6 +8,7 @@
 namespace PMA\libraries;
 
 use PMA\libraries\dbi\DBIExtension;
+use PMA\libraries\LanguageManager;
 
 require_once './libraries/logging.lib.php';
 require_once './libraries/util.lib.php';
@@ -93,8 +94,8 @@ class DatabaseInterface
     /**
      * Get a cached value from table cache.
      *
-     * @param string $contentPath Dot notation of the target value
-     * @param mixed  $default     Return value on cache miss
+     * @param array $contentPath Array of the name of the target value
+     * @param mixed $default     Return value on cache miss
      *
      * @return mixed cached value or default
      */
@@ -106,8 +107,8 @@ class DatabaseInterface
     /**
      * Set an item in table cache using dot notation.
      *
-     * @param string $contentPath Dot notation of the target path
-     * @param mixed  $value       Target value
+     * @param array $contentPath Array with the target path
+     * @param mixed $value       Target value
      *
      * @return void
      */
@@ -120,10 +121,8 @@ class DatabaseInterface
             return;
         }
 
-        $keys = explode('.', $contentPath);
-
-        while (count($keys) > 1) {
-            $key = array_shift($keys);
+        while (count($contentPath) > 1) {
+            $key = array_shift($contentPath);
 
             // If the key doesn't exist at this depth, we will just create an empty
             // array to hold the next value, allowing us to create the arrays to hold
@@ -135,7 +134,7 @@ class DatabaseInterface
             $loc = &$loc[$key];
         }
 
-        $loc[array_shift($keys)] = $value;
+        $loc[array_shift($contentPath)] = $value;
     }
 
     /**
@@ -680,14 +679,14 @@ class DatabaseInterface
             return $tables[$database];
         }
 
-        if (isset($tables[/*overload*/mb_strtolower($database)])) {
+        if (isset($tables[mb_strtolower($database)])) {
             // on windows with lower_case_table_names = 1
             // MySQL returns
             // with SHOW DATABASES or information_schema.SCHEMATA: `Test`
             // but information_schema.TABLES gives `test`
             // bug #2036
             // https://sourceforge.net/p/phpmyadmin/bugs/2036/
-            return $tables[/*overload*/mb_strtolower($database)];
+            return $tables[mb_strtolower($database)];
         }
 
         return $tables;
@@ -762,7 +761,7 @@ class DatabaseInterface
             $tables[$table_name]['TABLE_COMMENT']
                 =& $tables[$table_name]['Comment'];
 
-            $commentUpper = /*overload*/mb_strtoupper(
+            $commentUpper = mb_strtoupper(
                 $tables[$table_name]['Comment']
             );
             if ($commentUpper === 'VIEW'
@@ -905,14 +904,14 @@ class DatabaseInterface
             // display only databases also in official database list
             // f.e. to apply hide_db and only_db
             $drops = array_diff(
-                array_keys($databases), (array) $GLOBALS['pma']->databases
+                array_keys($databases), (array) $GLOBALS['dblist']->databases
             );
             foreach ($drops as $drop) {
                 unset($databases[$drop]);
             }
         } else {
             $databases = array();
-            foreach ($GLOBALS['pma']->databases as $database_name) {
+            foreach ($GLOBALS['dblist']->databases as $database_name) {
                 // MySQL forward compatibility
                 // so pma could use this array as if every server is of version >5.0
                 // todo : remove and check the rest of the code for usage,
@@ -1130,7 +1129,7 @@ class DatabaseInterface
         } else {
             $columns = array();
             if (null === $database) {
-                foreach ($GLOBALS['pma']->databases as $database) {
+                foreach ($GLOBALS['dblist']->databases as $database) {
                     $columns[$database] = $this->getColumnsFull(
                         $database, null, null, $link
                     );
@@ -1209,8 +1208,7 @@ class DatabaseInterface
             }
 
             if (null !== $column) {
-                reset($columns);
-                $columns = current($columns);
+                return reset($columns);
             }
 
             return $columns;
@@ -1528,6 +1526,16 @@ class DatabaseInterface
         } else {
             $this->query(
                 "SET NAMES '$default_charset' COLLATE '$default_collation';",
+                $link,
+                self::QUERY_STORE
+            );
+        }
+
+        /* Locale for messages */
+        $locale = LanguageManager::getInstance()->getCurrentLanguage()->getMySQLLocale();
+        if (! empty($locale)) {
+            $this->query(
+                "SET lc_messages = '" . $locale . "';",
                 $link,
                 self::QUERY_STORE
             );
