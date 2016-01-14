@@ -121,7 +121,7 @@ class Smarty extends Smarty_Internal_TemplateBase
     /**
      * smarty version
      */
-    const SMARTY_VERSION = '3.1.30-dev/12';
+    const SMARTY_VERSION = '3.1.30-dev/18';
 
     /**
      * define variable scopes
@@ -133,8 +133,6 @@ class Smarty extends Smarty_Internal_TemplateBase
     const SCOPE_TPL_ROOT = 4;
 
     const SCOPE_ROOT = 8;
-
-    const SCOPE_SMARTY = 16;
 
     const SCOPE_GLOBAL = 32;
 
@@ -209,6 +207,7 @@ class Smarty extends Smarty_Internal_TemplateBase
 
     /**
      * Resource caching modes
+     * (not used since 3.1.30)
      */
     const RESOURCE_CACHE_OFF = 0;
 
@@ -566,13 +565,6 @@ class Smarty extends Smarty_Internal_TemplateBase
     public $default_config_type = 'file';
 
     /**
-     * enable resource caching
-     *
-     * @var bool
-     */
-    public $resource_cache_mode = 1;
-
-    /**
      * check If-Modified-Since headers
      *
      * @var boolean
@@ -682,9 +674,9 @@ class Smarty extends Smarty_Internal_TemplateBase
      *
      * @var string[]
      */
-    private $obsoleteProperties = array('resource_caching', 'template_resource_caching',
-                                               'direct_access_security', '_dir_perms', '_file_perms',
-                                               'plugin_search_order', 'inheritance_merge_compiled_includes');
+    private $obsoleteProperties = array('resource_caching', 'template_resource_caching', 'direct_access_security',
+                                        '_dir_perms', '_file_perms', 'plugin_search_order',
+                                        'inheritance_merge_compiled_includes', 'resource_cache_mode',);
 
     /**
      * List of private properties which will call getter/setter on a direct access
