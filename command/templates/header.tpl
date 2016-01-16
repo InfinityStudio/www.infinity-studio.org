@@ -43,7 +43,7 @@
 	}
 </style>
 <body>
-<nav class="navbar navbar-default" id="contentpjax">
+<nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<!-- 移动端显示 -->
 		<div class="navbar-header">
