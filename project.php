@@ -42,18 +42,6 @@ if (isset($_GET['pn'])) {
             //$smarty->assign('epActive', 'active');
             $smarty->assign('pn', $_GET['pn']);
             break;
-        case 'simon':
-            $smarty->assign('title', 'Infinity Studio - simon 测试');
-            //$smarty->assign('epActive', 'active');
-            $smarty->assign('zuoZhe', 'simon');
-            $smarty->assign('pn', $_GET['pn']);
-            break;
-        case 'simon2':
-            $smarty->assign('title', 'Infinity Studio - simon 测试2');
-            //$smarty->assign('epActive', 'active');
-            $smarty->assign('zuoZhe', 'simon2');
-            $smarty->assign('pn', $_GET['pn']);
-            break;
         default:
             header('Location: http://www.infinity-studio.org/404.html');
             exit();
