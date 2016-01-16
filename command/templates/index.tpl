@@ -19,7 +19,7 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  *}
 {include file='header.tpl'}
-<main>
+<main id="contentpjax">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">

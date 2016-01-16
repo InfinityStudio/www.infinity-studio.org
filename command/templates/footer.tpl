@@ -49,13 +49,13 @@
 <!-- pjax -->
 <script type="text/javascript" language="javascript">
   $(function() {
-    $(document).pjax('a', 'main', {
+    $(document).pjax('a', '#contentpjax', {
       fragment: 'main',
       storage: true,
       timeout: 6000
     });
     $(document).on('submit', 'form', function(event) {
-      $.pjax.submit(event, 'main', {
+      $.pjax.submit(event, '#contentpjax', {
         fragment: '#content',
         timeout: 6000
       });

@@ -43,8 +43,8 @@
 	}
 </style>
 <body>
-<nav class="navbar navbar-default">
-	<div class="container-fluid"> 
+<nav class="navbar navbar-default" id="contentpjax">
+	<div class="container-fluid">
 		<!-- 移动端显示 -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">折叠</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
@@ -71,7 +71,7 @@
 				{/if}
 			</ul>
 		</div>
-		<!-- /.navbar-collapse --> 
+		<!-- /.navbar-collapse -->
 	</div>
-	<!-- /.container-fluid --> 
+	<!-- /.container-fluid -->
 </nav>
