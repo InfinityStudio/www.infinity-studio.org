@@ -40,6 +40,34 @@
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- Bootstrap js -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- pjax and nprogress -->
+
+<script src="//cdn.bootcss.com/jquery.pjax/1.9.6/jquery.pjax.min.js"></script>
+<link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+<!-- pjax -->
+<script type="text/javascript" language="javascript">
+  $(function() {
+    $(document).pjax('a', 'main', {
+      fragment: 'main',
+      storage: true,
+      timeout: 6000
+    });
+    $(document).on('submit', 'form', function(event) {
+      $.pjax.submit(event, 'main', {
+        fragment: '#content',
+        timeout: 6000
+      });
+    });
+    $(document).on('pjax:send', function() {
+      NProgress.start();
+    });
+    $(document).on('pjax:complete', function() {
+      NProgress.done();
+    });
+  });
+</script>
 
 </body>
 </html>
