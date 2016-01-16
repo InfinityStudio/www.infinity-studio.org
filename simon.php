@@ -22,25 +22,15 @@
 require 'init.php';
 if (isset($_GET['pn'])) {
     switch ($_GET['pn']) {
-        case 'FoodCraft':
-            $smarty->assign('title', 'Infinity Studio - FoodCraft 食物工艺');
-            $smarty->assign('fcActive', 'active');
+        case 'simon':
+            $smarty->assign('title', 'Infinity Studio - simon');
             $smarty->assign('pn', $_GET['pn']);
+            $smarty->assign('zuoZhe', 'simon');
             break;
-        case 'HMCL':
-            $smarty->assign('title', 'Infinity Studio - HMCL 启动器');
-            $smarty->assign('hmclActive', 'active');
+        case 'simon2':
+            $smarty->assign('title', 'Infinity Studio - simon2');
             $smarty->assign('pn', $_GET['pn']);
-            break;
-        case 'ExoticPower':
-            $smarty->assign('title', 'Infinity Studio - Exotic Power 异域之能');
-            //$smarty->assign('epActive', 'active');
-            $smarty->assign('pn', $_GET['pn']);
-            break;
-        case 'Singularity':
-            $smarty->assign('title', 'Infinity Studio - Singularity');
-            //$smarty->assign('epActive', 'active');
-            $smarty->assign('pn', $_GET['pn']);
+            $smarty->assign('zuoZhe', 'simon2');
             break;
         default:
             header('Location: http://www.infinity-studio.org/404.html');
@@ -50,4 +40,4 @@ if (isset($_GET['pn'])) {
 } else {
     header('Location: 404.php');
 }
-$smarty->display('project.tpl', md5($_SERVER['REQUEST_URI']));
+$smarty->display('project_new.tpl', md5($_SERVER['REQUEST_URI']));
