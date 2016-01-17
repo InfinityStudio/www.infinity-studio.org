@@ -49,7 +49,7 @@ if (isset($_GET['pn'])) {
             $smarty->assign('author', 'simon3000');
             break;
         default:
-            header('Location: http://www.infinity-studio.org/404.html');
+            header('Location: http://www.infinity-studio.org/404.php');
             exit();
             break;
     }
