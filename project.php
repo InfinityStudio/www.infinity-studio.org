@@ -31,7 +31,7 @@ if (isset($_GET['pn'])) {
             $smarty->assign('title', 'Infinity Studio - HMCL 启动器');
             $smarty->assign('hmclActive', 'active');
             $smarty->assign('pn', $_GET['pn']);
-            smarty->assign('author', 'huanghongxun20');
+            $smarty->assign('author', 'huanghongxun20');
             break;
         case 'ExoticPower':
             $smarty->assign('title', 'Infinity Studio - Exotic Power 异域之能');
