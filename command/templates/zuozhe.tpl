@@ -20,7 +20,7 @@
   <blockquote class="zuoZhe">
     <div class="row">
       <div class="col-md-2">
-        <img src="/public/img/profile/{$author}.jpg" alt="" />
+        <img src="/public/img/profile/{$author}.jpg" alt="{$author}" width="100" />
       </div>
       <div class="col-md-10">
         <p>
