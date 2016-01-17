@@ -96,7 +96,10 @@
         <h2 class="text-center">simon大法</h2>
         <h4 class="text-center">机智如我</h4>
         <p>→_→</p>
-        {/if} {include file="zuozhe.tpl"}
+        {/if}
+        {*
+        *{include file="zuozhe.tpl"}
+        *}
     </div>
 </main>
 {include file="footer.tpl"}
