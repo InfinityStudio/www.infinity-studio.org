@@ -92,6 +92,7 @@
                 <br/>
             </div>
         </div>
+        {elseif $pn eq "simon"}
         <h2 class="text-center">simon大法</h2>
         <h4 class="text-center">机智如我</h4>
         <p>→_→</p>
