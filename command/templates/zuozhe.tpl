@@ -1,8 +1,9 @@
-<blockquote class="blockquote-reverse">
+<blockquote class="zuoZhe">
     <p>
-
-        {if $zuoZhe eq "simon"}我不服{/if}
-        {elseif $zuoZhe eq "simon2"}开个玩笑233{/if}
+        {if $zuoZhe eq "simon"}simon的简介
+        {elseif $zuoZhe eq "simon2"}
+        开个玩笑233
+        {/if}
     </p>
-    <footer>{$zuoZhe}</footer>
+    <footer>项目作者: {$zuoZhe}</footer>
 </blockquote>

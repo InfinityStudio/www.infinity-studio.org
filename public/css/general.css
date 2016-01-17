@@ -47,3 +47,7 @@ blockquote.d {
 ul li {
     list-style-type: none;
 }
+blockquote.zuoZhe {
+    background-color: rgba(0, 178, 255, 0.15);
+    border-color: rgba(0, 178, 255, 0.5);
+}
