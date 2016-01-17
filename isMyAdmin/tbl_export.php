@@ -5,20 +5,17 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\config\PageSettings;
-use PMA\libraries\Response;
 
 /**
  *
  */
 require_once 'libraries/common.inc.php';
+require_once 'libraries/config/page_settings.class.php';
 require_once 'libraries/display_export.lib.php';
-require_once 'libraries/config/user_preferences.forms.php';
-require_once 'libraries/config/page_settings.forms.php';
 
-PageSettings::showGroup('Export');
+PMA_PageSettings::showGroup('Export');
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('export.js');
@@ -28,7 +25,70 @@ $cfgRelation = PMA_getRelationsParam();
 
 // handling export template actions
 if (isset($_REQUEST['templateAction']) && $cfgRelation['exporttemplateswork']) {
-    PMA_handleExportTemplateActions($cfgRelation);
+
+    if (isset($_REQUEST['templateId'])) {
+        $templateId = $_REQUEST['templateId'];
+        $id = PMA_Util::sqlAddSlashes($templateId);
+    }
+
+    $templateTable = PMA_Util::backquote($cfgRelation['db']) . '.'
+       . PMA_Util::backquote($cfgRelation['export_templates']);
+    $user = PMA_Util::sqlAddSlashes($GLOBALS['cfg']['Server']['user']);
+
+    switch ($_REQUEST['templateAction']) {
+    case 'create':
+        $query = "INSERT INTO " . $templateTable . "("
+            . " `username`, `export_type`,"
+            . " `template_name`, `template_data`"
+            . ") VALUES ("
+            . "'" . $user . "', "
+            . "'" . PMA_Util::sqlAddSlashes($_REQUEST['exportType']) . "', "
+            . "'" . PMA_Util::sqlAddSlashes($_REQUEST['templateName']) . "', "
+            . "'" . PMA_Util::sqlAddSlashes($_REQUEST['templateData']) . "');";
+        break;
+    case 'load':
+        $query = "SELECT `template_data` FROM " . $templateTable
+             . " WHERE `id` = " . $id  . " AND `username` = '" . $user . "'";
+        break;
+    case 'update':
+        $query = "UPDATE " . $templateTable . " SET `template_data` = "
+          . "'" . PMA_Util::sqlAddSlashes($_REQUEST['templateData']) . "'"
+          . " WHERE `id` = " . $id  . " AND `username` = '" . $user . "'";
+        break;
+    case 'delete':
+        $query = "DELETE FROM " . $templateTable
+           . " WHERE `id` = " . $id  . " AND `username` = '" . $user . "'";
+        break;
+    default:
+        break;
+    }
+
+    $result = PMA_queryAsControlUser($query, false);
+
+    $response = PMA_Response::getInstance();
+    if (! $result) {
+        $error = $GLOBALS['dbi']->getError($GLOBALS['controllink']);
+        $response->isSuccess(false);
+        $response->addJSON('message', $error);
+        exit;
+    }
+
+    $response->isSuccess(true);
+    if ('create' == $_REQUEST['templateAction']) {
+        $response->addJSON(
+            'data',
+            PMA_getOptionsForExportTemplates($_REQUEST['exportType'])
+        );
+    } elseif ('load' == $_REQUEST['templateAction']) {
+        $data = null;
+        while ($row = $GLOBALS['dbi']->fetchAssoc(
+            $result, $GLOBALS['controllink']
+        )) {
+            $data = $row['template_data'];
+        }
+        $response->addJSON('data', $data);
+    }
+    $GLOBALS['dbi']->freeResult($result);
     exit;
 }
 
@@ -115,27 +175,8 @@ if (! empty($sql_query)) {
         $sql_query = SqlParser\TokensList::build($tokens);
     }
 
-    echo PMA\libraries\Util::getMessage(PMA\libraries\Message::success());
+    echo PMA_Util::getMessage(PMA_Message::success());
 }
 
-require_once 'libraries/display_export.lib.php';
-
-if (! isset($sql_query)) {
-    $sql_query = '';
-}
-if (! isset($num_tables)) {
-    $num_tables = 0;
-}
-if (! isset($unlim_num_rows)) {
-    $unlim_num_rows = 0;
-}
-if (! isset($multi_values)) {
-    $multi_values = '';
-}
-$response = Response::getInstance();
-$response->addHTML(
-    PMA_getExportDisplay(
-        'table', $db, $table, $sql_query, $num_tables,
-        $unlim_num_rows, $multi_values
-    )
-);
+$export_type = 'table';
+require_once 'libraries/display_export.inc.php';

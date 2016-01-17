@@ -1,6 +1,4 @@
 <?php
-use PMA\libraries\Table;
-
 $myfield = $save_row[$i]['Field'];
 // Use an md5 as array index to avoid having special characters
 // in the name attribute (see bug #1746964 )
@@ -24,9 +22,9 @@ if ($foreign_db) {
         $foreign_table = $existrel[$myfield]['foreign_table'];
     }
     $tables_rs = $GLOBALS['dbi']->query(
-        'SHOW TABLES FROM ' . PMA\libraries\Util::backquote($foreign_db),
+        'SHOW TABLES FROM ' . PMA_Util::backquote($foreign_db),
         null,
-        PMA\libraries\DatabaseInterface::QUERY_STORE
+        PMA_DatabaseInterface::QUERY_STORE
     );
     while ($row = $GLOBALS['dbi']->fetchRow($tables_rs)) {
         $tables[] = $row[0];
@@ -39,7 +37,7 @@ if ($foreign_db && $foreign_table) {
     if (isset($existrel[$myfield])) {
         $foreign_column = $existrel[$myfield]['foreign_field'];
     }
-    $table_obj = new Table($foreign_table, $foreign_db);
+    $table_obj = new PMA_Table($foreign_table, $foreign_db);
     $columns = $table_obj->getUniqueColumns(false, false);
 }
 ?>
@@ -51,15 +49,15 @@ if ($foreign_db && $foreign_table) {
     </td>
 
     <td>
-        <?php echo PMA\libraries\Template::get('table/relation/relational_dropdown')->render(
+        <?php echo PMA\Template::get('table/relation/relational_dropdown')->render(
             array(
                 'name' => 'destination_db[' . $myfield_md5 . ']',
                 'title' => __('Database'),
-                'values' => $GLOBALS['dblist']->databases,
+                'values' => $GLOBALS['pma']->databases,
                 'foreign' => $foreign_db
             )
         ); ?>
-        <?php echo PMA\libraries\Template::get('table/relation/relational_dropdown')->render(
+        <?php echo PMA\Template::get('table/relation/relational_dropdown')->render(
             array(
                 'name' => 'destination_table[' . $myfield_md5 . ']',
                 'title' => __('Table'),
@@ -67,7 +65,7 @@ if ($foreign_db && $foreign_table) {
                 'foreign' => $foreign_table
             )
         ); ?>
-        <?php echo PMA\libraries\Template::get('table/relation/relational_dropdown')->render(
+        <?php echo PMA\Template::get('table/relation/relational_dropdown')->render(
             array(
                 'name' => 'destination_column[' . $myfield_md5 . ']',
                 'title' => __('Column'),

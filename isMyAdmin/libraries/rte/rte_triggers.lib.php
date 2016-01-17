@@ -5,8 +5,6 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Response;
-
 if (! defined('PHPMYADMIN')) {
     exit;
 }
@@ -108,11 +106,11 @@ function PMA_TRI_handleEditor()
                             $errors
                         );
                     } else {
-                        $message = PMA\libraries\Message::success(
+                        $message = PMA_Message::success(
                             __('Trigger %1$s has been modified.')
                         );
                         $message->addParam(
-                            PMA\libraries\Util::backquote($_REQUEST['item_name'])
+                            PMA_Util::backquote($_REQUEST['item_name'])
                         );
                         $sql_query = $drop_item . $item_query;
                     }
@@ -128,11 +126,11 @@ function PMA_TRI_handleEditor()
                     . '<br /><br />'
                     . __('MySQL said: ') . $GLOBALS['dbi']->getError(null);
                 } else {
-                    $message = PMA\libraries\Message::success(
+                    $message = PMA_Message::success(
                         __('Trigger %1$s has been created.')
                     );
                     $message->addParam(
-                        PMA\libraries\Util::backquote($_REQUEST['item_name'])
+                        PMA_Util::backquote($_REQUEST['item_name'])
                     );
                     $sql_query = $item_query;
                 }
@@ -140,7 +138,7 @@ function PMA_TRI_handleEditor()
         }
 
         if (count($errors)) {
-            $message = PMA\libraries\Message::error(
+            $message = PMA_Message::error(
                 '<b>'
                 . __(
                     'One or more errors have occurred while processing your request:'
@@ -154,9 +152,9 @@ function PMA_TRI_handleEditor()
             $message->addString('</ul>');
         }
 
-        $output = PMA\libraries\Util::getMessage($message, $sql_query);
+        $output = PMA_Util::getMessage($message, $sql_query);
         if ($GLOBALS['is_ajax_request']) {
-            $response = PMA\libraries\Response::getInstance();
+            $response = PMA_Response::getInstance();
             if ($message->isSuccess()) {
                 $items = $GLOBALS['dbi']->getTriggers($db, $table, '');
                 $trigger = false;
@@ -174,7 +172,7 @@ function PMA_TRI_handleEditor()
                     $response->addJSON(
                         'name',
                         htmlspecialchars(
-                            mb_strtoupper(
+                            /*overload*/mb_strtoupper(
                                 $_REQUEST['item_name']
                             )
                         )
@@ -184,7 +182,7 @@ function PMA_TRI_handleEditor()
                 $response->addJSON('message', $output);
             } else {
                 $response->addJSON('message', $message);
-                $response->setRequestStatus(false);
+                $response->isSuccess(false);
             }
             exit;
         }
@@ -292,7 +290,7 @@ function PMA_TRI_getEditorForm($mode, $item)
 {
     global $db, $table, $event_manipulations, $action_timings;
 
-    $modeToUpper = mb_strtoupper($mode);
+    $modeToUpper = /*overload*/mb_strtoupper($mode);
 
     // Escape special characters
     $need_escape = array(
@@ -310,7 +308,7 @@ function PMA_TRI_getEditorForm($mode, $item)
                        . "type='hidden' value='{$item['item_original_name']}'/>\n";
     }
     $query  = "SELECT `TABLE_NAME` FROM `INFORMATION_SCHEMA`.`TABLES` ";
-    $query .= "WHERE `TABLE_SCHEMA`='" . PMA\libraries\Util::sqlAddSlashes($db) . "' ";
+    $query .= "WHERE `TABLE_SCHEMA`='" . PMA_Util::sqlAddSlashes($db) . "' ";
     $query .= "AND `TABLE_TYPE`='BASE TABLE'";
     $tables = $GLOBALS['dbi']->fetchResult($query);
 
@@ -415,18 +413,18 @@ function PMA_TRI_getQueryFromRequest()
 
     $query = 'CREATE ';
     if (! empty($_REQUEST['item_definer'])) {
-        if (mb_strpos($_REQUEST['item_definer'], '@') !== false
+        if (/*overload*/mb_strpos($_REQUEST['item_definer'], '@') !== false
         ) {
             $arr = explode('@', $_REQUEST['item_definer']);
-            $query .= 'DEFINER=' . PMA\libraries\Util::backquote($arr[0]);
-            $query .= '@' . PMA\libraries\Util::backquote($arr[1]) . ' ';
+            $query .= 'DEFINER=' . PMA_Util::backquote($arr[0]);
+            $query .= '@' . PMA_Util::backquote($arr[1]) . ' ';
         } else {
             $errors[] = __('The definer must be in the "username@hostname" format!');
         }
     }
     $query .= 'TRIGGER ';
     if (! empty($_REQUEST['item_name'])) {
-        $query .= PMA\libraries\Util::backquote($_REQUEST['item_name']) . ' ';
+        $query .= PMA_Util::backquote($_REQUEST['item_name']) . ' ';
     } else {
         $errors[] = __('You must provide a trigger name!');
     }
@@ -448,7 +446,7 @@ function PMA_TRI_getQueryFromRequest()
     if (! empty($_REQUEST['item_table'])
         && in_array($_REQUEST['item_table'], $GLOBALS['dbi']->getTables($db))
     ) {
-        $query .= PMA\libraries\Util::backquote($_REQUEST['item_table']);
+        $query .= PMA_Util::backquote($_REQUEST['item_table']);
     } else {
         $errors[] = __('You must provide a valid table name!');
     }

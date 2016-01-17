@@ -17,11 +17,12 @@ header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 3600) . ' GMT');
 define('PMA_MINIMUM_COMMON', true);
 require_once './libraries/common.inc.php';
 
-$buffer = PMA\libraries\OutputBuffering::getInstance();
+require_once './libraries/OutputBuffering.class.php';
+$buffer = PMA_OutputBuffering::getInstance();
 $buffer->start();
 register_shutdown_function(
     function () {
-        echo PMA\libraries\OutputBuffering::getInstance()->getContents();
+        echo PMA_OutputBuffering::getInstance()->getContents();
     }
 );
 
@@ -68,7 +69,7 @@ function PMA_getImage(image, alternate, attributes) {
         return false;
     };
     var sprites = [
-        <?php echo implode($keys, ",\n        ") , "\n"; ?>
+        <?php echo implode($keys, ",\n        ") . "\n"; ?>
     ];
     // custom image object, it will eventually be returned by this functions
     var retval = {

@@ -5,21 +5,19 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\config\PageSettings;
 
 /**
  *
  */
 require_once 'libraries/common.inc.php';
-require_once 'libraries/config/user_preferences.forms.php';
-require_once 'libraries/config/page_settings.forms.php';
+require_once 'libraries/config/page_settings.class.php';
 
-PageSettings::showGroup('Sql_queries');
+PMA_PageSettings::showGroup('Sql_queries');
 
 /**
  * Runs common work
  */
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('functions.js');

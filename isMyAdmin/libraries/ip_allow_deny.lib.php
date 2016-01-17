@@ -6,6 +6,9 @@
  *
  * @package PhpMyAdmin
  */
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
  * Gets the "true" IP address of the current user
@@ -62,8 +65,8 @@ function PMA_getIp()
  */
 function PMA_ipMaskTest($testRange, $ipToTest)
 {
-    if (mb_strpos($testRange, ':') > -1
-        || mb_strpos($ipToTest, ':') > -1
+    if (/*overload*/mb_strpos($testRange, ':') > -1
+        || /*overload*/mb_strpos($ipToTest, ':') > -1
     ) {
         // assume IPv6
         $result = PMA_ipv6MaskTest($testRange, $ipToTest);
@@ -115,7 +118,7 @@ function PMA_ipv4MaskTest($testRange, $ipToTest)
 
         for ($i = 0; $i < 31; $i++) {
             if ($i < $regs[5] - 1) {
-                $maskl = $maskl + PMA\libraries\Util::pow(2, (30 - $i));
+                $maskl = $maskl + PMA_Util::pow(2, (30 - $i));
             } // end if
         } // end for
 
@@ -176,11 +179,11 @@ function PMA_ipv6MaskTest($test_range, $ip_to_test)
     $result = true;
 
     // convert to lowercase for easier comparison
-    $test_range = mb_strtolower($test_range);
-    $ip_to_test = mb_strtolower($ip_to_test);
+    $test_range = /*overload*/mb_strtolower($test_range);
+    $ip_to_test = /*overload*/mb_strtolower($ip_to_test);
 
-    $is_cidr = mb_strpos($test_range, '/') > -1;
-    $is_range = mb_strpos($test_range, '[') > -1;
+    $is_cidr = /*overload*/mb_strpos($test_range, '/') > -1;
+    $is_range = /*overload*/mb_strpos($test_range, '[') > -1;
     $is_single = ! $is_cidr && ! $is_range;
 
     $ip_hex = bin2hex(inet_pton($ip_to_test));
@@ -229,7 +232,7 @@ function PMA_ipv6MaskTest($test_range, $ip_to_test)
         $pos = 31;
         while ($flexbits > 0) {
             // Get the character at this position
-            $orig = mb_substr($last_hex, $pos, 1);
+            $orig = /*overload*/mb_substr($last_hex, $pos, 1);
 
             // Convert it to an integer
             $origval = hexdec($orig);
@@ -245,7 +248,7 @@ function PMA_ipv6MaskTest($test_range, $ip_to_test)
 
             // We processed one nibble, move to previous position
             $flexbits -= 4;
-            --$pos;
+            $pos -= 1;
         }
 
         // check if the IP to test is within the range

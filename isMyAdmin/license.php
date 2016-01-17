@@ -14,9 +14,6 @@
  */
 require 'libraries/common.inc.php';
 
-$response = PMA\libraries\Response::getInstance();
-$response->disable();
-
 /**
  *
  */

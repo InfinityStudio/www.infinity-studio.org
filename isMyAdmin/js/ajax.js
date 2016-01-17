@@ -141,7 +141,7 @@ var AJAX = {
      */
     lockPageHandler: function(event) {
         //Don't lock on enter.
-        if (0 === event.charCode) {
+        if (0 == event.charCode) {
             return;
         }
 
@@ -488,7 +488,19 @@ var AJAX = {
             PMA_ajaxShowMessage(data.error, false);
             AJAX.active = false;
             AJAX.xhr = null;
-            PMA_handleRedirectAndReload(data);
+            if (parseInt(data.redirect_flag) == 1) {
+                // add one more GET param to display session expiry msg
+                if (window.location.href.indexOf('?') === -1) {
+                    window.location.href += '?session_expired=1';
+                } else {
+                    window.location.href += '&session_expired=1';
+                }
+                window.location.reload();
+            } else if (parseInt(data.reload_flag) == 1) {
+                // remove the token param and reload
+                window.location.href = window.location.href.replace(/&?token=[^&#]*/g, "");
+                window.location.reload();
+            }
             if (data.fieldWithError) {
                 $(':input.error').removeClass("error");
                 $('#'+data.fieldWithError).addClass("error");
@@ -549,11 +561,11 @@ var AJAX = {
             var self = this;
             // Clear loaded scripts if they are from another version of phpMyAdmin.
             // Depends on common params being set before loading scripts in responseHandler
-            if (self._scriptsVersion === null) {
-                self._scriptsVersion = PMA_commonParams.get('PMA_VERSION');
+            if (self._scriptsVersion == null) {
+            	self._scriptsVersion = PMA_commonParams.get('PMA_VERSION');
             } else if (self._scriptsVersion != PMA_commonParams.get('PMA_VERSION')) {
-                self._scripts = [];
-                self._scriptsVersion = PMA_commonParams.get('PMA_VERSION');
+            	self._scripts = [];
+            	self._scriptsVersion = PMA_commonParams.get('PMA_VERSION');
             }
             self._scriptsToBeLoaded = [];
             self._scriptsToBeFired = [];
@@ -739,7 +751,7 @@ $(function () {
                 //TODO: Check if sometimes menu is not retrieved from server,
                 // Not sure but it seems menu was missing only for printview which
                 // been removed lately, so if it's right some dead menu checks/fallbacks
-                // may need to be removed from this file and Header.php
+                // may need to be removed from this file and Header.class.php
                 //AJAX.handleMenu.replace(event.originalEvent.state.menu);
             }
         });

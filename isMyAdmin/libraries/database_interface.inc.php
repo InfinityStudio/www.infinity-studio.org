@@ -6,21 +6,19 @@
  *
  * @package PhpMyAdmin-DBI
  */
-use PMA\libraries\dbi\DBIDummy;
-use PMA\libraries\di\Container;
-use PMA\libraries\DatabaseInterface;
-use PMA\libraries\dbi\DBIMysql;
-use PMA\libraries\dbi\DBIMysqli;
-
 if (! defined('PHPMYADMIN')) {
     exit;
 }
+
+require_once 'libraries/di/Container.class.php';
+require_once 'libraries/DatabaseInterface.class.php';
 
 if (defined('TESTSUITE')) {
     /**
      * For testsuite we use dummy driver which can fake some queries.
      */
-    $extension = new DBIDummy();
+    include_once './libraries/dbi/DBIDummy.class.php';
+    $extension = new PMA_DBI_Dummy();
 } else {
 
     /**
@@ -29,9 +27,9 @@ if (defined('TESTSUITE')) {
      * (if PHP 7+, it's the only one supported)
      */
     $extension = 'mysqli';
-    if (!DatabaseInterface::checkDbExtension($extension)) {
+    if (! PMA_DatabaseInterface::checkDbExtension($extension)) {
 
-        $docurl = PMA\libraries\Util::getDocuLink('faq', 'faqmysql');
+        $docurl = PMA_Util::getDocuLink('faq', 'faqmysql');
         $doclink = sprintf(
             __('See %sour documentation%s for more information.'),
             '[a@' . $docurl  . '@documentation]',
@@ -40,7 +38,7 @@ if (defined('TESTSUITE')) {
 
         if (PMA_PHP_INT_VERSION < 70000) {
             $extension = 'mysql';
-            if (! PMA\libraries\DatabaseInterface::checkDbExtension($extension)) {
+            if (! PMA_DatabaseInterface::checkDbExtension($extension)) {
                 // warn about both extensions missing and exit
                 PMA_warnMissingExtension(
                     'mysqli|mysql',
@@ -74,16 +72,17 @@ if (defined('TESTSUITE')) {
      */
     switch($extension) {
     case 'mysql' :
-        $extension = new DBIMysql();
+        include_once './libraries/dbi/DBIMysql.class.php';
+        $extension = new PMA_DBI_Mysql();
         break;
     case 'mysqli' :
-        include_once 'libraries/dbi/DBIMysqli.lib.php';
-        $extension = new DBIMysqli();
+        include_once './libraries/dbi/DBIMysqli.class.php';
+        $extension = new PMA_DBI_Mysqli();
         break;
     }
 }
-$GLOBALS['dbi'] = new DatabaseInterface($extension);
+$GLOBALS['dbi'] = new PMA_DatabaseInterface($extension);
 
-$container = Container::getDefaultContainer();
+$container = \PMA\DI\Container::getDefaultContainer();
 $container->set('PMA_DatabaseInterface', $GLOBALS['dbi']);
 $container->alias('dbi', 'PMA_DatabaseInterface');

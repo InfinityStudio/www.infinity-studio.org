@@ -1,13 +1,12 @@
 <div class="clearfloat print_ignore">
-    <img class="selectallarrow" src="<?php echo $pmaThemeImage , 'arrow_' , $text_dir , '.png'; ?>" width="38" height="22" alt="<?php __('With selected:'); ?>" />
+    <img class="selectallarrow" src="<?php echo $pmaThemeImage . 'arrow_' . $text_dir . '.png'; ?>" width="38" height="22" alt="<?php __('With selected:'); ?>" />
     <input type="checkbox" id="tablesForm_checkall" class="checkall_box" title="<?php echo __('Check all'); ?>" />
     <label for="tablesForm_checkall"><?php echo __('Check all'); ?></label>
     <?php if ($overhead_check != ''): ?>
          / <a href="#" onclick="unMarkAllRows('tablesForm'); <?php echo $overhead_check; ?> return false;"><?php echo __('Check tables having overhead'); ?></a>
     <?php endif; ?>
-    <select name="submit_mult" style="margin: 0 3em 0 3em;">
+    <select name="submit_mult" class="autosubmit" style="margin: 0 3em 0 3em;">
         <option value="<?php echo __('With selected:'); ?>" selected="selected"><?php echo __('With selected:'); ?></option>
-        <option value="copy_tbl"><?php echo __('Copy table')?></option>
         <option value="show_create" ><?php echo __('Show create'); ?></option>
         <option value="export" ><?php echo __('Export'); ?></option>
         <?php if (!$db_is_system_schema
@@ -19,9 +18,11 @@
             <optgroup label="<?php echo __('Table maintenance'); ?>">
                 <option value="analyze_tbl" ><?php echo __('Analyze table'); ?></option>
                 <option value="check_tbl" ><?php echo __('Check table'); ?></option>
-                <option value="checksum_tbl" ><?php echo __('Checksum table'); ?></option>
-                <option value="optimize_tbl" ><?php echo __('Optimize table'); ?></option>
-                <option value="repair_tbl" ><?php echo __('Repair table'); ?></option>
+                <?php if (!PMA_DRIZZLE): ?>
+                    <option value="checksum_tbl" ><?php echo __('Checksum table'); ?></option>
+                    <option value="optimize_tbl" ><?php echo __('Optimize table'); ?></option>
+                    <option value="repair_tbl" ><?php echo __('Repair table'); ?></option>
+                <?php endif; ?>
             </optgroup>
             <optgroup label="<?php echo __('Prefix'); ?>">
                 <option value="add_prefix_tbl" ><?php echo __('Add prefix to table'); ?></option>

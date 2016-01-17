@@ -7,18 +7,14 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\config\PageSettings;
-use PMA\libraries\Response;
-use PMA\libraries\Util;
 
 /**
  * Gets the variables sent or posted to this script and displays the header
  */
 require_once 'libraries/common.inc.php';
-require_once 'libraries/config/user_preferences.forms.php';
-require_once 'libraries/config/page_settings.forms.php';
+require_once 'libraries/config/page_settings.class.php';
 
-PageSettings::showGroup('Edit');
+PMA_PageSettings::showGroup('Edit');
 
 /**
  * Ensures db and table are valid, else moves to the "parent" script
@@ -54,7 +50,7 @@ require_once 'libraries/file_listing.lib.php';
  * (at this point, $GLOBALS['goto'] will be set but could be empty)
  */
 if (empty($GLOBALS['goto'])) {
-    if (mb_strlen($table)) {
+    if (/*overload*/mb_strlen($table)) {
         // avoid a problem (see bug #2202709)
         $GLOBALS['goto'] = 'tbl_sql.php';
     } else {
@@ -76,7 +72,7 @@ $comments_map = PMA_getCommentsMap($db, $table);
 /**
  * Load JavaScript files
  */
-$response = Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('functions.js');
@@ -94,7 +90,7 @@ $scripts->addFile('gis_data_editor.js');
  * $disp_message come from tbl_replace.php
  */
 if (! empty($disp_message)) {
-    $response->addHTML(Util::getMessage($disp_message, null));
+    $response->addHTML(PMA_Util::getMessage($disp_message, null));
 }
 
 $table_columns = PMA_getTableColumns($db, $table);
@@ -156,7 +152,7 @@ $html_output .= PMA_getHtmlForInsertEditFormHeader($has_blob_field, $is_upload);
 
 $html_output .= PMA_URL_getHiddenInputs($_form_params);
 
-$titles['Browse'] = Util::getIcon('b_browse.png', __('Browse foreign values'));
+$titles['Browse'] = PMA_Util::getIcon('b_browse.png', __('Browse foreign values'));
 
 // user can toggle the display of Function column and column types
 // (currently does not work for multi-edits)
@@ -218,7 +214,7 @@ $html_output .= PMA_getActionsPanel(
 
 if ($biggest_max_file_size > 0) {
     $html_output .= '        '
-        . Util::generateHiddenMaxFileSize(
+        . PMA_Util::generateHiddenMaxFileSize(
             $biggest_max_file_size
         ) . "\n";
 }

@@ -5,18 +5,16 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\config\PageSettings;
 
 /**
  *
  */
 require_once 'libraries/common.inc.php';
-require_once 'libraries/config/user_preferences.forms.php';
-require_once 'libraries/config/page_settings.forms.php';
+require_once 'libraries/config/page_settings.class.php';
 
-PageSettings::showGroup('Import');
+PMA_PageSettings::showGroup('Import');
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('import.js');
@@ -30,7 +28,7 @@ $url_query .= '&amp;goto=tbl_import.php&amp;back=tbl_import.php';
 require_once 'libraries/tbl_info.inc.php';
 
 require 'libraries/display_import.lib.php';
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $response->addHTML(
     PMA_getImportDisplay(
         'table', $db, $table, $max_upload_size

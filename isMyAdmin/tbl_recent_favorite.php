@@ -6,14 +6,13 @@
  * @package PhpMyAdmin
  */
 
-use PMA\libraries\RecentFavoriteTable;
-
 require_once 'libraries/common.inc.php';
+require_once 'libraries/RecentFavoriteTable.class.php';
 
-RecentFavoriteTable::getInstance('recent')
+PMA_RecentFavoriteTable::getInstance('recent')
     ->removeIfInvalid($_REQUEST['db'], $_REQUEST['table']);
 
-RecentFavoriteTable::getInstance('favorite')
+PMA_RecentFavoriteTable::getInstance('favorite')
     ->removeIfInvalid($_REQUEST['db'], $_REQUEST['table']);
 
 require 'sql.php';

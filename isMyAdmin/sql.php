@@ -7,24 +7,22 @@
  *          that returns 0 rows - to prevent cyclic redirects or includes
  * @package PhpMyAdmin
  */
-use PMA\libraries\config\PageSettings;
-use PMA\libraries\Response;
-use PMA\libraries\Util;
 
 /**
  * Gets some core libraries
  */
 require_once 'libraries/common.inc.php';
+require_once 'libraries/Table.class.php';
+require_once 'libraries/Header.class.php';
 require_once 'libraries/check_user_privileges.lib.php';
 require_once 'libraries/bookmark.lib.php';
 require_once 'libraries/sql.lib.php';
-require_once 'libraries/config/user_preferences.forms.php';
-require_once 'libraries/config/page_settings.forms.php';
+require_once 'libraries/config/page_settings.class.php';
 
-PageSettings::showGroup('Browse');
+PMA_PageSettings::showGroup('Browse');
 
 
-$response = Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('jquery/jquery-ui-timepicker-addon.js');
@@ -45,24 +43,32 @@ if (isset($ajax_reload) && $ajax_reload['reload'] === true) {
 /**
  * Defines the url to return to in case of error in a sql statement
  */
-$is_gotofile  = true;
-if (empty($goto)) {
+// Security checks
+if (! empty($goto)) {
+    $is_gotofile     = preg_replace('@^([^?]+).*$@s', '\\1', $goto);
+    if (! @file_exists('' . $is_gotofile)) {
+        unset($goto);
+    } else {
+        $is_gotofile = ($is_gotofile == $goto);
+    }
+} else {
     if (empty($table)) {
-        $goto = Util::getScriptNameForOption(
+        $goto = PMA_Util::getScriptNameForOption(
             $GLOBALS['cfg']['DefaultTabDatabase'], 'database'
         );
     } else {
-        $goto = Util::getScriptNameForOption(
+        $goto = PMA_Util::getScriptNameForOption(
             $GLOBALS['cfg']['DefaultTabTable'], 'table'
         );
     }
+    $is_gotofile  = true;
 } // end if
 
 if (! isset($err_url)) {
     $err_url = (! empty($back) ? $back : $goto)
         . '?' . PMA_URL_getCommon(array('db' => $GLOBALS['db']))
-        . ((mb_strpos(' ' . $goto, 'db_') != 1
-            && mb_strlen($table))
+        . ((/*overload*/mb_strpos(' ' . $goto, 'db_') != 1
+            && /*overload*/mb_strlen($table))
             ? '&amp;table=' . urlencode($table)
             : ''
         );
@@ -105,9 +111,9 @@ if (isset($_REQUEST['get_set_values']) && $_REQUEST['get_set_values'] == true) {
 if (isset($_REQUEST['get_default_fk_check_value'])
     && $_REQUEST['get_default_fk_check_value'] == true
 ) {
-    $response = Response::getInstance();
+    $response = PMA_Response::getInstance();
     $response->addJSON(
-        'default_fk_check_value', Util::isForeignKeyCheck()
+        'default_fk_check_value', PMA_Util::isForeignKeyCheck()
     );
     exit;
 }
@@ -122,8 +128,8 @@ if (isset($_REQUEST['set_col_prefs']) && $_REQUEST['set_col_prefs'] == true) {
 
 // Default to browse if no query set and we have table
 // (needed for browsing from DefaultTabTable)
-$tableLength = mb_strlen($table);
-$dbLength = mb_strlen($db);
+$tableLength = /*overload*/mb_strlen($table);
+$dbLength = /*overload*/mb_strlen($db);
 if (empty($sql_query) && $tableLength && $dbLength) {
     $sql_query = PMA_getDefaultSqlQueryForBrowse($db, $table);
 
@@ -131,20 +137,13 @@ if (empty($sql_query) && $tableLength && $dbLength) {
     $goto = '';
 } else {
     // Now we can check the parameters
-    Util::checkParameters(array('sql_query'));
+    PMA_Util::checkParameters(array('sql_query'));
 }
 
 /**
  * Parse and analyze the query
  */
-require_once 'libraries/parse_analyze.lib.php';
-list(
-    $analyzed_sql_results,
-    $db,
-    $table
-) = PMA_parseAnalyze($sql_query, $db);
-// @todo: possibly refactor
-extract($analyzed_sql_results);
+require_once 'libraries/parse_analyze.inc.php';
 
 
 /**
@@ -157,7 +156,7 @@ extract($analyzed_sql_results);
 if (PMA_hasNoRightsToDropDatabase(
     $analyzed_sql_results, $cfg['AllowUserDropDatabase'], $is_superuser
 )) {
-    Util::mysqlDie(
+    PMA_Util::mysqlDie(
         __('"DROP DATABASE" statements are disabled.'),
         '',
         false,

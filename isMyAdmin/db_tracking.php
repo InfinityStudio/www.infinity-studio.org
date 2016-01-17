@@ -5,7 +5,6 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Tracker;
 
 /**
  * Run common work
@@ -16,7 +15,7 @@ require_once './libraries/tracking.lib.php';
 require_once 'libraries/display_create_table.lib.php';
 
 //Get some js files needed for Ajax requests
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('jquery/jquery.tablesorter.js');
@@ -41,21 +40,21 @@ list(
     $tooltip_truename,
     $tooltip_aliasname,
     $pos
-) = PMA\libraries\Util::getDbInfo($db, isset($sub_part) ? $sub_part : '');
+) = PMA_Util::getDbInfo($db, isset($sub_part) ? $sub_part : '');
 
 // Work to do?
 //  (here, do not use $_REQUEST['db] as it can be crafted)
 if (isset($_REQUEST['delete_tracking']) && isset($_REQUEST['table'])) {
 
-    Tracker::deleteTracking($GLOBALS['db'], $_REQUEST['table']);
-    PMA\libraries\Message::success(
+    PMA_Tracker::deleteTracking($GLOBALS['db'], $_REQUEST['table']);
+    PMA_Message::success(
         __('Tracking data deleted successfully.')
     )->display();
 
 } elseif (isset($_REQUEST['submit_create_version'])) {
 
     PMA_createTrackingForMultipleTables($_REQUEST['selected']);
-    PMA\libraries\Message::success(
+    PMA_Message::success(
         sprintf(
             __(
                 'Version %1$s was created for selected tables,'
@@ -71,9 +70,9 @@ if (isset($_REQUEST['delete_tracking']) && isset($_REQUEST['table'])) {
         if ($_REQUEST['submit_mult'] == 'delete_tracking') {
 
             foreach ($_REQUEST['selected_tbl'] as $table) {
-                Tracker::deleteTracking($GLOBALS['db'], $table);
+                PMA_Tracker::deleteTracking($GLOBALS['db'], $table);
             }
-            PMA\libraries\Message::success(
+            PMA_Message::success(
                 __('Tracking data deleted successfully.')
             )->display();
 
@@ -88,18 +87,18 @@ if (isset($_REQUEST['delete_tracking']) && isset($_REQUEST['table'])) {
             exit;
         }
     } else {
-        PMA\libraries\Message::notice(
+        PMA_Message::notice(
             __('No tables selected.')
         )->display();
     }
 }
 
 // Get tracked data about the database
-$data = Tracker::getTrackedData($_REQUEST['db'], '', '1');
+$data = PMA_Tracker::getTrackedData($_REQUEST['db'], '', '1');
 
 // No tables present and no log exist
 if ($num_tables == 0 && count($data['ddlog']) == 0) {
-    echo '<p>' , __('No tables found in database.') , '</p>' , "\n";
+    echo '<p>' . __('No tables found in database.') . '</p>' . "\n";
 
     if (empty($db_is_system_schema)) {
         echo PMA_getHtmlForCreateTable($db);
@@ -112,19 +111,16 @@ $cfgRelation = PMA_getRelationsParam();
 
 // Prepare statement to get HEAD version
 $all_tables_query = ' SELECT table_name, MAX(version) as version FROM ' .
-    PMA\libraries\Util::backquote($cfgRelation['db']) . '.' .
-    PMA\libraries\Util::backquote($cfgRelation['tracking']) .
-    ' WHERE db_name = \'' . PMA\libraries\Util::sqlAddSlashes($_REQUEST['db']) .
-    '\' ' .
-    ' GROUP BY table_name' .
-    ' ORDER BY table_name ASC';
+     PMA_Util::backquote($cfgRelation['db']) . '.' .
+     PMA_Util::backquote($cfgRelation['tracking']) .
+     ' WHERE db_name = \'' . PMA_Util::sqlAddSlashes($_REQUEST['db']) . '\' ' .
+     ' GROUP BY table_name' .
+     ' ORDER BY table_name ASC';
 
 $all_tables_result = PMA_queryAsControlUser($all_tables_query);
 
 // If a HEAD version exists
-if (is_object($all_tables_result)
-    && $GLOBALS['dbi']->numRows($all_tables_result) > 0
-) {
+if (is_object($all_tables_result) && $GLOBALS['dbi']->numRows($all_tables_result) > 0) {
     PMA_displayTrackedTables(
         $GLOBALS['db'], $all_tables_result, $url_query, $pmaThemeImage,
         $text_dir, $cfgRelation
@@ -146,5 +142,5 @@ if (count($data['ddlog']) > 0) {
         $log .= '# ' . $entry['date'] . ' ' . $entry['username'] . "\n"
             . $entry['statement'] . "\n";
     }
-    echo PMA\libraries\Util::getMessage(__('Database Log'), $log);
+    echo PMA_Util::getMessage(__('Database Log'), $log);
 }

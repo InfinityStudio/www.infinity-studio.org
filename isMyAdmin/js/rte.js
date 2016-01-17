@@ -388,7 +388,7 @@ RTE.COMMON = {
              *          the AJAX message shown to the user
              */
             var $msg = PMA_ajaxShowMessage(PMA_messages.strProcessingRequest);
-            $.post(url, {'is_js_confirmed': 1, 'ajax_request': true}, function (data) {
+            $.get(url, {'is_js_confirmed': 1, 'ajax_request': true}, function (data) {
                 if (data.success === true) {
                     /**
                      * @var $table Object containing reference
@@ -437,7 +437,7 @@ RTE.COMMON = {
                 } else {
                     PMA_ajaxShowMessage(data.error, false);
                 }
-            }); // end $.post()
+            }); // end $.get()
         }); // end $.PMA_confirm()
     },
 
@@ -462,7 +462,7 @@ RTE.COMMON = {
                  * @var $curr_row Object containing reference to the current row
                  */
                 var $curr_row = $anchor.parents('tr');
-                $.post($anchor.attr('href'), {'is_js_confirmed': 1, 'ajax_request': true}, function (data) {
+                $.get($anchor.attr('href'), {'is_js_confirmed': 1, 'ajax_request': true}, function (data) {
                     returnCount++;
                     if (data.success === true) {
                         /**
@@ -519,7 +519,7 @@ RTE.COMMON = {
                             PMA_reloadNavigation();
                         }
                     }
-                }); // end $.post()
+                }); // end $.get()
             }); // end drop_anchors.each()
         }); // end $.PMA_confirm()
     }
@@ -591,48 +591,6 @@ RTE.ROUTINE = {
             $('table.rte_table').last().find('select[name=item_returnopts_text]'),
             $('table.rte_table').last().find('select[name=item_returnopts_num]')
         );
-        // Allow changing parameter order
-        $('.routine_params_table tbody').sortable({
-            containment: '.routine_params_table tbody',
-            handle: '.dragHandle',
-            stop: function(event, ui) {
-                that.reindexParameters();
-            },
-        });
-    },
-    /**
-     * Reindexes the parameters after dropping a parameter or reordering parameters
-     */
-    reindexParameters: function () {
-        /**
-         * @var index Counter used for reindexing the input
-         *            fields in the routine parameters table
-         */
-        var index = 0;
-        $('table.routine_params_table tbody').find('tr').each(function () {
-            $(this).find(':input').each(function () {
-                /**
-                 * @var inputname The value of the name attribute of
-                 *                the input field being reindexed
-                 */
-                var inputname = $(this).attr('name');
-                if (inputname.substr(0, 14) === 'item_param_dir') {
-                    $(this).attr('name', inputname.substr(0, 14) + '[' + index + ']');
-                } else if (inputname.substr(0, 15) === 'item_param_name') {
-                    $(this).attr('name', inputname.substr(0, 15) + '[' + index + ']');
-                } else if (inputname.substr(0, 15) === 'item_param_type') {
-                    $(this).attr('name', inputname.substr(0, 15) + '[' + index + ']');
-                } else if (inputname.substr(0, 17) === 'item_param_length') {
-                    $(this).attr('name', inputname.substr(0, 17) + '[' + index + ']');
-                    $(this).attr('id', 'item_param_length_' + index);
-                } else if (inputname.substr(0, 20) === 'item_param_opts_text') {
-                    $(this).attr('name', inputname.substr(0, 20) + '[' + index + ']');
-                } else if (inputname.substr(0, 19) === 'item_param_opts_num') {
-                    $(this).attr('name', inputname.substr(0, 19) + '[' + index + ']');
-                }
-            });
-            index++;
-        });
     },
     /**
      * Overriding the validateCustom() function defined in common.js
@@ -810,7 +768,7 @@ RTE.ROUTINE = {
          *          the AJAX message shown to the user
          */
         var $msg = PMA_ajaxShowMessage();
-        $.post($this.attr('href'), {'ajax_request': true}, function (data) {
+        $.get($this.attr('href'), {'ajax_request': true}, function (data) {
             if (data.success === true) {
                 PMA_ajaxRemoveMessage($msg);
                 // If 'data.dialog' is true we show a dialog with a form
@@ -894,7 +852,7 @@ RTE.ROUTINE = {
             } else {
                 PMA_ajaxShowMessage(data.error, false);
             }
-        }); // end $.post()
+        }); // end $.get()
     }
 };
 
@@ -1056,6 +1014,34 @@ $(function () {
         $(this).parent().parent().remove();
         // After removing a parameter, the indices of the name attributes in
         // the input fields lose the correct order and need to be reordered.
-        RTE.ROUTINE.reindexParameters();
+        /**
+         * @var index Counter used for reindexing the input
+         *            fields in the routine parameters table
+         */
+        var index = 0;
+        $(this).closest('div.ui-dialog').find('table.routine_params_table').find('tr').has('td').each(function () {
+            $(this).find(':input').each(function () {
+                /**
+                 * @var inputname The value of the name attribute of
+                 *                the input field being reindexed
+                 */
+                var inputname = $(this).attr('name');
+                if (inputname.substr(0, 14) === 'item_param_dir') {
+                    $(this).attr('name', inputname.substr(0, 14) + '[' + index + ']');
+                } else if (inputname.substr(0, 15) === 'item_param_name') {
+                    $(this).attr('name', inputname.substr(0, 15) + '[' + index + ']');
+                } else if (inputname.substr(0, 15) === 'item_param_type') {
+                    $(this).attr('name', inputname.substr(0, 15) + '[' + index + ']');
+                } else if (inputname.substr(0, 17) === 'item_param_length') {
+                    $(this).attr('name', inputname.substr(0, 17) + '[' + index + ']');
+                    $(this).attr('id', 'item_param_length_' + index);
+                } else if (inputname.substr(0, 20) === 'item_param_opts_text') {
+                    $(this).attr('name', inputname.substr(0, 20) + '[' + index + ']');
+                } else if (inputname.substr(0, 19) === 'item_param_opts_num') {
+                    $(this).attr('name', inputname.substr(0, 19) + '[' + index + ']');
+                }
+            });
+            index++;
+        });
     }); // end $(document).on()
 }); // end of $()

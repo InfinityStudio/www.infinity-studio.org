@@ -15,16 +15,19 @@
 require_once 'libraries/common.inc.php';
 require_once 'libraries/tbl_common.inc.php';
 require_once 'libraries/tbl_info.inc.php';
+require_once 'libraries/di/Container.class.php';
+require_once 'libraries/Response.class.php';
+require_once 'libraries/controllers/TableSearchController.class.php';
 
-use PMA\libraries\controllers\table\TableSearchController;
+use PMA\DI;
 
-$container = \PMA\libraries\di\Container::getDefaultContainer();
-$container->factory('PMA\libraries\controllers\table\TableSearchController');
+$container = DI\Container::getDefaultContainer();
+$container->factory('PMA\Controllers\Table\TableSearchController');
 $container->alias(
-    'TableSearchController', 'PMA\libraries\controllers\table\TableSearchController'
+    'TableSearchController', 'PMA\Controllers\Table\TableSearchController'
 );
-$container->set('PMA\libraries\Response', PMA\libraries\Response::getInstance());
-$container->alias('response', 'PMA\libraries\Response');
+$container->set('PMA_Response', PMA_Response::getInstance());
+$container->alias('response', 'PMA_Response');
 
 /* Define dependencies for the concerned controller */
 $dependency_definitions = array(
@@ -32,6 +35,6 @@ $dependency_definitions = array(
     'url_query' => &$url_query
 );
 
-/** @var TableSearchController $controller */
+/** @var PMA\Controllers\TableSearchController $controller */
 $controller = $container->get('TableSearchController', $dependency_definitions);
 $controller->indexAction();

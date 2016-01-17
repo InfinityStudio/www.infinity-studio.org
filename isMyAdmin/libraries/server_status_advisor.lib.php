@@ -1,5 +1,6 @@
 <?php
 /* vim: set expandtab sw=4 ts=4 sts=4: */
+
 /**
  * functions for displaying server status sub item: advisor
  *
@@ -7,16 +8,19 @@
  *
  * @package PhpMyAdmin
  */
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
- * Returns html with PMA\libraries\Advisor
+ * Returns html with Advisor
  *
  * @return string
  */
 function PMA_getHtmlForAdvisor()
 {
     $output  = '<a href="#openAdvisorInstructions">';
-    $output .= PMA\libraries\Util::getIcon('b_help.png', __('Instructions'));
+    $output .= PMA_Util::getIcon('b_help.png', __('Instructions'));
     $output .= '</a>';
     $output .= '<div id="statustabs_advisor"></div>';
     $output .= '<div id="advisorInstructionsDialog" style="display:none;">';
@@ -50,7 +54,7 @@ function PMA_getHtmlForAdvisor()
     $output .= '</p>';
     $output .= '</div>';
     $output .= '<div id="advisorData" style="display:none;">';
-    $advisor = new PMA\libraries\Advisor();
+    $advisor = new Advisor();
     $output .= htmlspecialchars(
         json_encode(
             $advisor->run()

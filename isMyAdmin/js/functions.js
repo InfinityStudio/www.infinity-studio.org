@@ -93,27 +93,6 @@ $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
 });
 
 /**
- * Hanle redirect and reload flags send as part of AJAX requests
- *
- * @param data ajax response data
- */
-function PMA_handleRedirectAndReload(data) {
-    if (parseInt(data.redirect_flag) == 1) {
-        // add one more GET param to display session expiry msg
-        if (window.location.href.indexOf('?') === -1) {
-            window.location.href += '?session_expired=1';
-        } else {
-            window.location.href += '&session_expired=1';
-        }
-        window.location.reload();
-    } else if (parseInt(data.reload_flag) == 1) {
-        // remove the token param and reload
-        window.location.href = window.location.href.replace(/&?token=[^&#]*/g, "");
-        window.location.reload();
-    }
-}
-
-/**
  * Creates an SQL editor which supports auto completing etc.
  *
  * @param $textarea jQuery object wrapping the textarea to be made the editor
@@ -270,7 +249,7 @@ function PMA_hideShowDefaultValue($default_type)
  */
 function PMA_hideShowExpression($virtuality)
 {
-    if ($virtuality.val() === '') {
+    if ($virtuality.val() == '') {
         $virtuality.siblings('.expression').hide();
     } else {
         $virtuality.siblings('.expression').show();
@@ -486,9 +465,6 @@ function PMA_addDatepicker($this_element, type, options)
         onClose: function (dateText, dp_inst) {
             // The value is no more from the date picker
             $this_element.data('comes_from', '');
-            if (typeof $this_element.data('datepicker') !== 'undefined') {
-                $this_element.data('datepicker').inline = false;
-            }
         }
     };
     if (type == "datetime" || type == "timestamp") {
@@ -970,6 +946,11 @@ AJAX.registerOnload('functions.js', function () {
 })*/
 
 /**
+ * This array is used to remember mark status of rows in browse mode
+ */
+var marked_row = [];
+
+/**
  * marks all rows and selects its first checkbox inside the given element
  * the given element is usually a table or a div containing the table or tables
  *
@@ -998,6 +979,20 @@ function unMarkAllRows(container_id)
     .parents("tr").removeClass("marked");
     return true;
 }
+
+/**
+ * Checks/unchecks all checkbox in given container (f.e. a form, fieldset or div)
+ *
+ * @param string   container_id  the container id
+ * @param boolean  state         new value for checkbox (true or false)
+ * @return boolean  always true
+ */
+function setCheckboxes(container_id, state)
+{
+
+    $("#" + container_id).find("input:checkbox").prop('checked', state);
+    return true;
+} // end of the 'setCheckboxes()' function
 
 /**
   * Checks/unchecks all options of a <select> element
@@ -1197,33 +1192,30 @@ function updateQueryParameters() {
         var query = codemirror_editor ? codemirror_editor.getValue() : $('#sqlquery').val();
 
         var allParameters = query.match(/:[a-zA-Z0-9_]+/g);
-        var parameters = [];
-        // get unique parameters
-        if (allParameters) {
-            $.each(allParameters, function(i, parameter){
-                if ($.inArray(parameter, parameters) === -1) {
-                    parameters.push(parameter);
-                }
-            });
-        } else {
-            $('#parametersDiv').text(PMA_messages.strNoParam);
-            return;
-        }
+         var parameters = [];
+         // get unique parameters
+         if (allParameters) {
+             $.each(allParameters, function(i, parameter){
+                 if ($.inArray(parameter, parameters) === -1) {
+                     parameters.push(parameter);
+                 }
+             });
+         }
 
-        var $temp = $('<div />');
-        $temp.append($('#parametersDiv').children());
-        $('#parametersDiv').empty();
+         var $temp = $('<div />');
+         $temp.append($('#parametersDiv').children());
+         $('#parametersDiv').empty();
 
-        $.each(parameters, function (i, parameter) {
-            var paramName = parameter.substring(1);
-            var $param = $temp.find('#paramSpan_' + paramName );
-            if (! $param.length) {
-                $param = $('<span class="parameter" id="paramSpan_' + paramName + '" />');
-                $('<label for="param_' + paramName + '" />').text(parameter).appendTo($param);
-                $('<input type="text" name="parameters[' + parameter + ']" id="param_' + paramName + '" />').appendTo($param);
-            }
-            $('#parametersDiv').append($param);
-        });
+         $.each(parameters, function (i, parameter) {
+             var paramName = parameter.substring(1);
+             var $param = $temp.find('#paramSpan_' + paramName );
+             if (! $param.length) {
+                 $param = $('<span class="parameter" id="paramSpan_' + paramName + '" />');
+                 $('<label for="param_' + paramName + '" />').text(parameter).appendTo($param);
+                 $('<input type="text" name="parameters[' + parameter + ']" id="param_' + paramName + '" />').appendTo($param);
+             }
+             $('#parametersDiv').append($param);
+         });
     } else {
         $('#parametersDiv').empty();
     }
@@ -2111,7 +2103,7 @@ function PMA_highlightSQL($base)
 function PMA_updateCode($base, htmlValue, rawValue)
 {
     var $code = $base.find('code');
-    if ($code.length === 0) {
+    if ($code.length == 0) {
         return false;
     }
 
@@ -2399,65 +2391,56 @@ function PMA_showNoticeForEnum(selectElement)
     }
 }
 
-/**
- * Creates a Profiling Chart. Used in sql.js
+/*
+ * Creates a Profiling Chart with jqplot. Used in sql.js
  * and in server_status_monitor.js
  */
-function PMA_createProfilingChart(target, data)
+function PMA_createProfilingChartJqplot(target, data)
 {
-    // create the chart
-    var factory = new JQPlotChartFactory();
-    var chart = factory.createChart(ChartType.PIE, target);
-
-    // create the data table and add columns
-    var dataTable = new DataTable();
-    dataTable.addColumn(ColumnType.STRING, '');
-    dataTable.addColumn(ColumnType.NUMBER, '');
-    dataTable.setData(data);
-
-    // draw the chart and return the chart object
-    chart.draw(dataTable, {
-        seriesDefaults: {
-            rendererOptions: {
-                showDataLabels:  true
-            }
-        },
-        highlighter: {
-            tooltipLocation: 'se',
-            sizeAdjust: 0,
-            tooltipAxes: 'pieref',
-            formatString: '%s, %.9Ps'
-        },
-        legend: {
-            show: true,
-            location: 'e',
-            rendererOptions: {
-                numberColumns: 2
-            }
-        },
-        // from http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines#Color_Palette
-        seriesColors: [
-            '#fce94f',
-            '#fcaf3e',
-            '#e9b96e',
-            '#8ae234',
-            '#729fcf',
-            '#ad7fa8',
-            '#ef2929',
-            '#eeeeec',
-            '#888a85',
-            '#c4a000',
-            '#ce5c00',
-            '#8f5902',
-            '#4e9a06',
-            '#204a87',
-            '#5c3566',
-            '#a40000',
-            '#babdb6',
-            '#2e3436'
-        ]
-    });
-    return chart;
+    return $.jqplot(target, [data],
+        {
+            seriesDefaults: {
+                renderer: $.jqplot.PieRenderer,
+                rendererOptions: {
+                    showDataLabels:  true
+                }
+            },
+            highlighter: {
+                show: true,
+                tooltipLocation: 'se',
+                sizeAdjust: 0,
+                tooltipAxes: 'pieref',
+                useAxesFormatters: false,
+                formatString: '%s, %.9Ps'
+            },
+            legend: {
+                show: true,
+                location: 'e',
+                rendererOptions: {numberColumns: 2}
+            },
+            // from http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines#Color_Palette
+            seriesColors: [
+                '#fce94f',
+                '#fcaf3e',
+                '#e9b96e',
+                '#8ae234',
+                '#729fcf',
+                '#ad7fa8',
+                '#ef2929',
+                '#eeeeec',
+                '#888a85',
+                '#c4a000',
+                '#ce5c00',
+                '#8f5902',
+                '#4e9a06',
+                '#204a87',
+                '#5c3566',
+                '#a40000',
+                '#babdb6',
+                '#2e3436'
+            ]
+        }
+    );
 }
 
 /**
@@ -2755,7 +2738,6 @@ AJAX.registerTeardown('functions.js', function () {
     $(document).off('submit', "form.create_table_form.ajax");
     $(document).off('click', "form.create_table_form.ajax input[name=submit_num_fields]");
     $(document).off('keyup', "form.create_table_form.ajax input");
-    $(document).off('change', "input[name=partition_count],input[name=subpartition_count],select[name=partition_by]");
 });
 
 /**
@@ -2869,21 +2851,24 @@ AJAX.registerOnload('functions.js', function () {
     }); // end create table form (save)
 
     /**
-     * Submits the intermediate changes in the table creation form
-     * to refresh the UI accordingly
+     * Attach event handler for create table form (add fields)
      */
-    function submitChangesInCreateTableForm (actionParam) {
-
+    $(document).on('click', "form.create_table_form.ajax input[name=submit_num_fields]", function (event) {
+        event.preventDefault();
         /**
          * @var    the_form    object referring to the create table form
          */
-        var $form = $('form.create_table_form.ajax');
+        var $form = $(this).closest('form');
+
+        if (!checkFormElementInRange(this.form, 'added_fields', PMA_messages.strLeastColumnError, 1)) {
+            return;
+        }
 
         var $msgbox = PMA_ajaxShowMessage(PMA_messages.strProcessingRequest);
         PMA_prepareForAjaxRequest($form);
 
         //User wants to add more fields to the table
-        $.post($form.attr('action'), $form.serialize() + "&" + actionParam, function (data) {
+        $.post($form.attr('action'), $form.serialize() + "&submit_num_fields=1", function (data) {
             if (typeof data !== 'undefined' && data.success) {
                 var $pageContent = $("#page_content");
                 $pageContent.html(data.message);
@@ -2895,19 +2880,6 @@ AJAX.registerOnload('functions.js', function () {
                 PMA_ajaxShowMessage(data.error);
             }
         }); //end $.post()
-    }
-
-    /**
-     * Attach event handler for create table form (add fields)
-     */
-    $(document).on('click', "form.create_table_form.ajax input[name=submit_num_fields]", function (event) {
-        event.preventDefault();
-
-        if (!checkFormElementInRange(this.form, 'added_fields', PMA_messages.strLeastColumnError, 1)) {
-            return;
-        }
-
-        submitChangesInCreateTableForm('submit_num_fields=1');
     }); // end create table form (add fields)
 
     $(document).on('keydown', "form.create_table_form.ajax input[name=added_fields]", function (event) {
@@ -2920,20 +2892,6 @@ AJAX.registerOnload('functions.js', function () {
                 .click();
         }
     });
-
-    /**
-     * Attach event handler to manage changes in number of partitions and subpartitions
-     */
-    $(document).on('change', "input[name=partition_count],input[name=subpartition_count],select[name=partition_by]", function (event) {
-        $this = $(this);
-        $form = $this.parents('form');
-        if ($form.is(".create_table_form.ajax")) {
-            submitChangesInCreateTableForm('submit_partition_change=1');
-        } else {
-            $form.submit();
-        }
-    });
-
     $("input[value=AUTO_INCREMENT]").change(function(){
         if (this.checked) {
             var col = /\d/.exec($(this).attr('name'));
@@ -3767,14 +3725,12 @@ function showIndexEditDialog($outer)
     $('a.ui-slider-handle').addClass('ui-state-focus');
     // set focus on index name input, if empty
     var input = $outer.find('input#input_index_name');
-    if (! input.val()) {
-        input.focus();
-    }
+    input.val() || input.focus();
 }
 
 /**
  * Function to display tooltips that were
- * generated on the PHP side by PMA\libraries\Util::showHint()
+ * generated on the PHP side by PMA_Util::showHint()
  *
  * @param object $div a div jquery object which specifies the
  *                    domain for searching for tooltips. If we
@@ -4024,7 +3980,7 @@ AJAX.registerOnload('functions.js', function () {
     PMA_init_slider();
 
     /**
-     * Enables the text generated by PMA\libraries\Util::linkOrButton() to be clickable
+     * Enables the text generated by PMA_Util::linkOrButton() to be clickable
      */
     $(document).on('click', 'a.formLinkSubmit', function (e) {
         if (! $(this).hasClass('requireConfirm')) {
@@ -4336,20 +4292,12 @@ function PMA_getCellValue(td) {
     var $td = $(td);
     if ($td.is('.null')) {
         return '';
-    } else if ((! $td.is('.to_be_saved')
-        || $td.is('.set'))
-        && $td.data('original_data')
-    ) {
+    } else if (! $td.is('.to_be_saved') && $td.data('original_data')) {
         return $td.data('original_data');
     } else {
         return $td.text();
     }
 }
-
-$(window).on('popstate', function (event, data) {
-    $('#printcss').attr('media','print');
-    return true;
-});
 
 /**
  * Unbind all event handlers before tearing down a page
@@ -4396,145 +4344,14 @@ AJAX.registerOnload('functions.js', function () {
 });
 
 /**
- * Produce print preview
+ * Print button
  */
-function printPreview()
+function printPage()
 {
-    $('#printcss').attr('media','all');
-    createPrintAndBackButtons();
-}
-
-/**
- * Create print and back buttons in preview page
- */
-function createPrintAndBackButtons() {
-
-    var back_button = $("<input/>",{
-        type: 'button',
-        value: PMA_messages.back,
-        id: 'back_button_print_view'
-    });
-    back_button.click(removePrintAndBackButton);
-    back_button.appendTo('#page_content');
-    var print_button = $("<input/>",{
-        type: 'button',
-        value: PMA_messages.print,
-        id: 'print_button_print_view'
-    });
-    print_button.click(printPage);
-    print_button.appendTo('#page_content');
-}
-
-/**
- * Remove print and back buttons and revert to normal view
- */
-function removePrintAndBackButton(){
-    $('#printcss').attr('media','print');
-    $('#back_button_print_view').remove();
-    $('#print_button_print_view').remove();
-}
-
-/**
- * Print page
- */
-function printPage(){
+    // Do print the page
     if (typeof(window.print) != 'undefined') {
         window.print();
     }
-}
-
-/**
- * Print button
- */
-function copyToClipboard()
-{
-    var textArea = document.createElement("textarea");
-
-    //
-    // *** This styling is an extra step which is likely not required. ***
-    //
-    // Why is it here? To ensure:
-    // 1. the element is able to have focus and selection.
-    // 2. if element was to flash render it has minimal visual impact.
-    // 3. less flakyness with selection and copying which **might** occur if
-    //    the textarea element is not visible.
-    //
-    // The likelihood is the element won't even render, not even a flash,
-    // so some of these are just precautions. However in IE the element
-    // is visible whilst the popup box asking the user for permission for
-    // the web page to copy to the clipboard.
-    //
-
-    // Place in top-left corner of screen regardless of scroll position.
-    textArea.style.position = 'fixed';
-    textArea.style.top = 0;
-    textArea.style.left = 0;
-
-    // Ensure it has a small width and height. Setting to 1px / 1em
-    // doesn't work as this gives a negative w/h on some browsers.
-    textArea.style.width = '2em';
-    textArea.style.height = '2em';
-
-    // We don't need padding, reducing the size if it does flash render.
-    textArea.style.padding = 0;
-
-    // Clean up any borders.
-    textArea.style.border = 'none';
-    textArea.style.outline = 'none';
-    textArea.style.boxShadow = 'none';
-
-    // Avoid flash of white box if rendered for any reason.
-    textArea.style.background = 'transparent';
-
-    textArea.value = '';
-
-    var elementList = $('#serverinfo a');
-
-    elementList.each(function(){
-        textArea.value += $(this).text().split(':')[1].trim() + '/';
-    });
-    textArea.value += '\t\t' + window.location.href;
-    textArea.value += '\n';
-
-    elementList = $('.notice,.success');
-
-    elementList.each(function(){
-        textArea.value += $(this).clone().children().remove().end().text() + '\n\n';
-    });
-
-    elementList = $('.sql pre');
-
-    elementList.each(function() {
-        textArea.value += $(this).text() + '\n\n';
-    });
-
-    elementList = $('.table_results .column_heading a');
-
-    elementList.each(function() {
-        textArea.value += $(this).clone().children().remove().end().text() + '\t';
-    });
-
-    textArea.value += '\n';
-    elementList = $('tbody .odd,tbody .even');
-    elementList.each(function() {
-        var childElementList = $(this).find('.data span');
-        childElementList.each(function(){
-            textArea.value += $(this).clone().children().remove().end().text() + '\t';
-        });
-        textArea.value += '\n';
-    });
-
-    document.body.appendChild(textArea);
-
-    textArea.select();
-
-    try {
-        document.execCommand('copy');
-    } catch (err) {
-        alert('Sorry! Unable to copy');
-    }
-
-    document.body.removeChild(textArea);
 }
 
 /**
@@ -4591,7 +4408,7 @@ function PMA_createViewDialog($this)
                     syntaxHighlighter.save();
                 }
                 $msg = PMA_ajaxShowMessage();
-                $.post('view_create.php', $('#createViewDialog').find('form').serialize(), function (data) {
+                $.get('view_create.php', $('#createViewDialog').find('form').serialize(), function (data) {
                     PMA_ajaxRemoveMessage($msg);
                     if (typeof data !== 'undefined' && data.success === true) {
                         $('#createViewDialog').dialog("close");

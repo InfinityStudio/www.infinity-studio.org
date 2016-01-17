@@ -1,8 +1,3 @@
-<?php
-use PMA\libraries\Partition;
-use PMA\libraries\StorageEngine;
-
-?>
 <form method="post"
       action="<?php echo $action; ?>"
       class="<?php echo ($action == 'tbl_create.php' ? 'create_table' : 'append_fields'); ?>_form ajax lock-page">
@@ -68,7 +63,7 @@ use PMA\libraries\StorageEngine;
         </div>
     <?php endif; ?>
     <?php if (is_array($content_cells)): ?>
-        <?php echo PMA\libraries\Template::get(
+        <?php echo PMA\Template::get(
             'columns_definitions/table_fields_definitions'
         )->render(array(
             'is_backup' => $is_backup,
@@ -90,12 +85,12 @@ use PMA\libraries\StorageEngine;
                 <td width="25">&nbsp;</td>
                 <th>
                     <?php echo __('Storage Engine:'); ?>
-                    <?php echo PMA\libraries\Util::showMySQLDocu('Storage_engines'); ?>
+                    <?php echo PMA_Util::showMySQLDocu('Storage_engines'); ?>
                 </th>
                 <td width="25">&nbsp;</td>
                 <th>
                     <?php echo __('Connection:'); ?>
-                    <?php echo PMA\libraries\Util::showMySQLDocu('federated-create-connection'); ?>
+                    <?php echo PMA_Util::showMySQLDocu('federated-create-connection'); ?>
                 </th>
             </tr>
             <tr>
@@ -119,7 +114,7 @@ use PMA\libraries\StorageEngine;
                 </td>
                 <td width="25">&nbsp;</td>
                 <td>
-                    <?php echo StorageEngine::getHtmlSelect(
+                    <?php echo PMA_StorageEngine::getHtmlSelect(
                         'tbl_storage_engine',
                         null,
                         (isset($_REQUEST['tbl_storage_engine']) ? $_REQUEST['tbl_storage_engine'] : null)
@@ -136,17 +131,25 @@ use PMA\libraries\StorageEngine;
                            required="required" />
                 </td>
             </tr>
-            <?php if (Partition::havePartitioning()): ?>
+            <?php if (PMA_Partition::havePartitioning()): ?>
                 <tr class="vtop">
-                    <th colspan="5">
+                    <th>
                         <?php echo __('PARTITION definition:'); ?>
                         &nbsp;
-                        <?php echo PMA\libraries\Util::showMySQLDocu('Partitioning'); ?>
+                        <?php echo PMA_Util::showMySQLDocu('Partitioning'); ?>
                     </th>
                 </tr>
                 <tr>
-                    <td colspan="5">
-                        <?php include 'libraries/tbl_partition_definition.inc.php'; ?>
+                    <td>
+                        <textarea name="partition_definition"
+                                  id="partitiondefinition"
+                                  cols="<?php echo $GLOBALS['cfg']['TextareaCols']; ?>"
+                                  rows="<?php echo $GLOBALS['cfg']['TextareaRows']; ?>"
+                                  dir="<?php echo $GLOBALS['text_dir']; ?>">
+
+                            <?php echo (isset($_REQUEST['partition_definition']) ? htmlspecialchars($_REQUEST['partition_definition']) : ''); ?>
+
+                        </textarea>
                     </td>
                 </tr>
             <?php endif; ?>

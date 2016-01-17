@@ -6,31 +6,6 @@
  */
 
 /**
- * updates the tree state in sessionStorage
- *
- * @returns void
- */
-function navTreeStateUpdate() {
-    // update if session storage is supported
-    if (isStorageSupported('sessionStorage')) {
-        var storage = window.sessionStorage;
-        // try catch necessary here to detect whether
-        // content to be stored exceeds storage capacity
-        try {
-            storage.setItem('navTreePaths', JSON.stringify(traverseNavigationForPaths()));
-            storage.setItem('server', PMA_commonParams.get('server'));
-            storage.setItem('token', PMA_commonParams.get('token'));
-        } catch(error) {
-            // storage capacity exceeded & old navigation tree
-            // state is no more valid, so remove it
-            storage.removeItem('navTreePaths');
-            storage.removeItem('server');
-            storage.removeItem('token');
-        }
-    }
-}
-
-/**
  * Loads child items of a node and executes a given callback
  *
  * @param isNode
@@ -330,6 +305,7 @@ $(function () {
     $(document).on('focus', '#pma_navigation_tree li.fast_filter input.searchClause', PMA_fastFilter.events.focus);
     $(document).on('blur', '#pma_navigation_tree li.fast_filter input.searchClause', PMA_fastFilter.events.blur);
     $(document).on('keyup', '#pma_navigation_tree li.fast_filter input.searchClause', PMA_fastFilter.events.keyup);
+    $(document).on('mouseover', '#pma_navigation_tree li.fast_filter input.searchClause', PMA_fastFilter.events.mouseover);
 
     /**
      * Ajax handler for pagination
@@ -438,7 +414,6 @@ $(function () {
     $(document).on('click', 'a.hideNavItem.ajax', function (event) {
         event.preventDefault();
         $.ajax({
-            type: 'POST',
             url: $(this).attr('href') + '&ajax_request=true',
             success: function (data) {
                 if (typeof data !== 'undefined' && data.success === true) {
@@ -486,7 +461,6 @@ $(function () {
         var $tr = $(this).parents('tr');
         var $msg = PMA_ajaxShowMessage();
         $.ajax({
-            type: 'POST',
             url: $(this).attr('href') + '&ajax_request=true',
             success: function (data) {
                 PMA_ajaxRemoveMessage($msg);
@@ -541,9 +515,7 @@ $(function () {
             }
         });
     });
-});
 
-AJAX.registerOnload('navigation.js', function () {
     // Check if session storage is supported
     if (isStorageSupported('sessionStorage')) {
         var storage = window.sessionStorage;
@@ -564,6 +536,31 @@ AJAX.registerOnload('navigation.js', function () {
         }
     }
 });
+
+/**
+ * updates the tree state in sessionStorage
+ *
+ * @returns void
+ */
+function navTreeStateUpdate() {
+    // update if session storage is supported
+    if (isStorageSupported('sessionStorage')) {
+        var storage = window.sessionStorage;
+        // try catch necessary here to detect whether
+        // content to be stored exceeds storage capacity
+        try {
+            storage.setItem('navTreePaths', JSON.stringify(traverseNavigationForPaths()));
+            storage.setItem('server', PMA_commonParams.get('server'));
+            storage.setItem('token', PMA_commonParams.get('token'));
+        } catch(error) {
+            // storage capacity exceeded & old navigation tree
+            // state is no more valid, so remove it
+            storage.removeItem('navTreePaths');
+            storage.removeItem('server');
+            storage.removeItem('token');
+        }
+    }
+}
 
 /**
  * Expands a node in navigation tree.
@@ -962,8 +959,8 @@ function PMA_navigationTreePagination($this) {
         }
     }
     $.post(url, params, function (data) {
+        PMA_ajaxRemoveMessage($msgbox);
         if (typeof data !== 'undefined' && data.success) {
-            PMA_ajaxRemoveMessage($msgbox);
             if (isDbSelector) {
                 var val = PMA_fastFilter.getSearchClause();
                 $('#pma_navigation_tree')
@@ -993,7 +990,6 @@ function PMA_navigationTreePagination($this) {
             }
         } else {
             PMA_ajaxShowMessage(data.error);
-            PMA_handleRedirectAndReload(data);
         }
         navTreeStateUpdate();
     });
@@ -1310,6 +1306,26 @@ var PMA_fastFilter = {
             if ($(this).val() == this.defaultValue && $obj.data('fastFilter')) {
                 $obj.data('fastFilter').restore();
             }
+        },
+        mouseover: function (event) {
+            var message = '';
+            if ($(this).closest('li.fast_filter').is('.db_fast_filter')) {
+                message = PMA_messages.strHoverDbFastFilter;
+            } else {
+                var node_type = $(this).siblings("input[name='pos2_name']").val();
+                var node_name = PMA_messages.strTables;
+                if (node_type == 'views') {
+                    node_name = PMA_messages.strViews;
+                } else if (node_type == 'procedures') {
+                    node_name = PMA_messages.strProcedures;
+                } else if (node_type == 'functions') {
+                    node_name = PMA_messages.strFunctions;
+                } else if (node_type == 'events') {
+                    node_name = PMA_messages.strEvents;
+                }
+                message = PMA_sprintf(PMA_messages.strHoverFastFilter, node_name);
+            }
+            PMA_tooltip($(this), 'input', message);
         },
         keyup: function (event) {
             var $obj = $(this).closest('div.list_container');

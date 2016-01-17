@@ -26,11 +26,12 @@ $_GET['scripts'] = json_encode($_GET['scripts']);
 define('PMA_MINIMUM_COMMON', true);
 require_once './libraries/common.inc.php';
 
-$buffer = PMA\libraries\OutputBuffering::getInstance();
+require_once './libraries/OutputBuffering.class.php';
+$buffer = PMA_OutputBuffering::getInstance();
 $buffer->start();
 register_shutdown_function(
     function () {
-        echo PMA\libraries\OutputBuffering::getInstance()->getContents();
+        echo PMA_OutputBuffering::getInstance()->getContents();
     }
 );
 

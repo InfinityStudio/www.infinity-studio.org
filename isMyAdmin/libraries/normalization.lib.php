@@ -1,12 +1,17 @@
 <?php
+
 /* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
  * set of functions used for normalization
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Message;
-use PMA\libraries\Util;
+
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
+
+require_once 'libraries/Template.class.php';
 
 /**
  * build the html for columns of $colTypeCategory category
@@ -37,11 +42,11 @@ function PMA_getHtmlForColumnsList(
     $selectColHtml = "";
     foreach ($columns as $column => $def) {
         if (isset($def['Type'])) {
-            $extracted_columnspec = Util::extractColumnSpec($def['Type']);
+            $extracted_columnspec = PMA_Util::extractColumnSpec($def['Type']);
             $type = $extracted_columnspec['type'];
         }
         if (empty($columnTypeList)
-            || in_array(mb_strtoupper($type), $columnTypeList)
+            || in_array(/*overload*/mb_strtoupper($type), $columnTypeList)
         ) {
             if ($listType == 'checkbox') {
                 $selectColHtml .= '<input type="checkbox" value="'
@@ -100,9 +105,7 @@ function PMA_getHtmlForCreateNewColumn(
         );
     }
 
-    return PMA\libraries\Template::get(
-        'columns_definitions/table_fields_definitions'
-    )
+    return PMA\Template::get('columns_definitions/table_fields_definitions')
         ->render(
             array(
             'is_backup' => true,
@@ -143,7 +146,7 @@ function PMA_getHtmlFor1NFStep1($db, $table, $normalizedTo)
         ) . " </a>)</h4>"
         . "<p class='cm-em'>" . __(
             'Select a column which can be split into more '
-            . 'than one (on select of \'no such column\', it\'ll move to next step).'
+            . 'than one. (on select of \'no such column\', it\'ll move to next step)'
         )
         . "</p>"
         . "<div id='extra'>"
@@ -179,7 +182,7 @@ function PMA_getHtmlContentsFor1NFStep2($db, $table)
 {
     $step = 2;
     $stepTxt = __('Have a primary key');
-    $primary = PMA\libraries\Index::getPrimary($table, $db);
+    $primary = PMA_Index::getPrimary($table, $db);
     $hasPrimaryKey = "0";
     $legendText = __('Step 1.') . $step . " " . $stepTxt;
     $extra = '';
@@ -194,7 +197,7 @@ function PMA_getHtmlContentsFor1NFStep2($db, $table)
             . "(or combination of columns) that uniquely identify all rows."
         );
         $subText = '<a href="#" id="createPrimaryKey">'
-            . Util::getIcon(
+            . PMA_Util::getIcon(
                 'b_index_add.png', __(
                     'Add a primary key on existing column(s)'
                 )
@@ -286,7 +289,7 @@ function PMA_getHtmlContentsFor1NFStep3($db, $table)
         . '<input type="submit" value="' . __('No repeating group')
         . '" onclick="goToStep4();"'
         . '/>';
-    $primary = PMA\libraries\Index::getPrimary($table, $db);
+    $primary = PMA_Index::getPrimary($table, $db);
     $primarycols = $primary->getColumns();
     $pk = array();
     foreach ($primarycols as $col) {
@@ -313,7 +316,7 @@ function PMA_getHtmlContentsFor1NFStep3($db, $table)
 function PMA_getHtmlFor2NFstep1($db, $table)
 {
     $legendText = __('Step 2.') . "1 " . __('Find partial dependencies');
-    $primary = PMA\libraries\Index::getPrimary($table, $db);
+    $primary = PMA_Index::getPrimary($table, $db);
     $primarycols = $primary->getColumns();
     $pk = array();
     $subText = '';
@@ -454,13 +457,13 @@ function PMA_createNewTablesFor2NF($partialDependencies, $tablesName, $table, $d
     $GLOBALS['dbi']->selectDb($db, $GLOBALS['userlink']);
     foreach ($partialDependencies as $key=>$dependents) {
         if ($tablesName->$key != $table) {
-            $backquotedKey = implode(', ', Util::backquote(explode(', ', $key)));
-            $queries[] = 'CREATE TABLE ' . Util::backquote($tablesName->$key)
+            $backquotedKey = implode(', ', PMA_Util::backquote(explode(', ', $key)));
+            $queries[] = 'CREATE TABLE ' . PMA_Util::backquote($tablesName->$key)
                 . ' SELECT DISTINCT ' . $backquotedKey
                 . (count($dependents)>0?', ':'')
-                . implode(',', Util::backquote($dependents))
-                . ' FROM ' . Util::backquote($table) . ';';
-            $queries[] = 'ALTER TABLE ' . Util::backquote($tablesName->$key)
+                . implode(',', PMA_Util::backquote($dependents))
+                . ' FROM ' . PMA_Util::backquote($table) . ';';
+            $queries[] = 'ALTER TABLE ' . PMA_Util::backquote($tablesName->$key)
                 . ' ADD PRIMARY KEY(' . $backquotedKey . ');';
             $nonPKCols = array_merge($nonPKCols, $dependents);
         } else {
@@ -469,22 +472,22 @@ function PMA_createNewTablesFor2NF($partialDependencies, $tablesName, $table, $d
     }
 
     if ($dropCols) {
-        $query = 'ALTER TABLE ' . Util::backquote($table);
+        $query = 'ALTER TABLE ' . PMA_Util::backquote($table);
         foreach ($nonPKCols as $col) {
-            $query .= ' DROP ' . Util::backquote($col) . ',';
+            $query .= ' DROP ' . PMA_Util::backquote($col) . ',';
         }
         $query = trim($query, ', ');
         $query .= ';';
         $queries[] = $query;
     } else {
-        $queries[] = 'DROP TABLE ' . Util::backquote($table);
+        $queries[] = 'DROP TABLE ' . PMA_Util::backquote($table);
     }
     foreach ($queries as $query) {
         if (!$GLOBALS['dbi']->tryQuery($query, $GLOBALS['userlink'])) {
-            $message = Message::error(__('Error in processing!'));
+            $message = PMA_Message::error(__('Error in processing!'));
             $message->addMessage('<br /><br />');
             $message->addMessage(
-                Message::rawError(
+                PMA_Message::rawError(
                     $GLOBALS['dbi']->getError($GLOBALS['userlink'])
                 )
             );
@@ -519,7 +522,7 @@ function PMA_getHtmlForNewTables3NF($dependencies, $tables, $db)
         if (count(array_unique($arrDependson)) == 1) {
             continue;
         }
-        $primary = PMA\libraries\Index::getPrimary($table, $db);
+        $primary = PMA_Index::getPrimary($table, $db);
         $primarycols = $primary->getColumns();
         $pk = array();
         foreach ($primarycols as $col) {
@@ -588,16 +591,16 @@ function PMA_createNewTablesFor3NF($newTables, $db)
         foreach ($tablesList as $table=>$cols) {
             if ($table != $originalTable) {
                 $quotedPk = implode(
-                    ', ', Util::backquote(explode(', ', $cols->pk))
+                    ', ', PMA_Util::backquote(explode(', ', $cols->pk))
                 );
                 $quotedNonpk = implode(
-                    ', ', Util::backquote(explode(', ', $cols->nonpk))
+                    ', ', PMA_Util::backquote(explode(', ', $cols->nonpk))
                 );
-                $queries[] = 'CREATE TABLE ' . Util::backquote($table)
+                $queries[] = 'CREATE TABLE ' . PMA_Util::backquote($table)
                     . ' SELECT DISTINCT ' . $quotedPk
                     . ', ' . $quotedNonpk
-                    . ' FROM ' . Util::backquote($originalTable) . ';';
-                $queries[] = 'ALTER TABLE ' . Util::backquote($table)
+                    . ' FROM ' . PMA_Util::backquote($originalTable) . ';';
+                $queries[] = 'ALTER TABLE ' . PMA_Util::backquote($table)
                     . ' ADD PRIMARY KEY(' . $quotedPk . ');';
             } else {
                 $dropCols = $cols;
@@ -610,26 +613,26 @@ function PMA_createNewTablesFor3NF($newTables, $db)
             $colPresent = array_merge(
                 explode(', ', $dropCols->pk), explode(', ', $dropCols->nonpk)
             );
-            $query = 'ALTER TABLE ' . Util::backquote($originalTable);
+            $query = 'ALTER TABLE ' . PMA_Util::backquote($originalTable);
             foreach ($columns as $col) {
                 if (!in_array($col, $colPresent)) {
-                    $query .= ' DROP ' . Util::backquote($col) . ',';
+                    $query .= ' DROP ' . PMA_Util::backquote($col) . ',';
                 }
             }
             $query = trim($query, ', ');
             $query .= ';';
             $queries[] = $query;
         } else {
-            $queries[] = 'DROP TABLE ' . Util::backquote($originalTable);
+            $queries[] = 'DROP TABLE ' . PMA_Util::backquote($originalTable);
         }
         $dropCols = false;
     }
     foreach ($queries as $query) {
         if (!$GLOBALS['dbi']->tryQuery($query, $GLOBALS['userlink'])) {
-            $message = Message::error(__('Error in processing!'));
+            $message = PMA_Message::error(__('Error in processing!'));
             $message->addMessage('<br /><br />');
             $message->addMessage(
-                Message::rawError(
+                PMA_Message::rawError(
                     $GLOBALS['dbi']->getError($GLOBALS['userlink'])
                 )
             );
@@ -660,15 +663,15 @@ function PMA_createNewTablesFor3NF($newTables, $db)
 function PMA_moveRepeatingGroup(
     $repeatingColumns, $primary_columns, $newTable, $newColumn, $table, $db
 ) {
-    $repeatingColumnsArr = (array)Util::backquote(
+    $repeatingColumnsArr = (array)PMA_Util::backquote(
         explode(', ', $repeatingColumns)
     );
     $primary_columns = implode(
-        ',', Util::backquote(explode(',', $primary_columns))
+        ',', PMA_Util::backquote(explode(',', $primary_columns))
     );
-    $query1 = 'CREATE TABLE ' . Util::backquote($newTable);
-    $query2 = 'ALTER TABLE ' . Util::backquote($table);
-    $message = Message::success(
+    $query1 = 'CREATE TABLE ' . PMA_Util::backquote($newTable);
+    $query2 = 'ALTER TABLE ' . PMA_Util::backquote($table);
+    $message = PMA_Message::success(
         sprintf(
             __('Selected repeating group has been moved to the table \'%s\''),
             htmlspecialchars($table)
@@ -682,8 +685,8 @@ function PMA_moveRepeatingGroup(
         }
         $first = false;
         $query1 .=  ' SELECT ' . $primary_columns . ',' . $repeatingColumn
-            . ' as ' . Util::backquote($newColumn)
-            . ' FROM ' . Util::backquote($table);
+            . ' as ' . PMA_Util::backquote($newColumn)
+            . ' FROM ' . PMA_Util::backquote($table);
         $query2 .= ' DROP ' . $repeatingColumn . ',';
     }
     $query2 = trim($query2, ',');
@@ -691,10 +694,10 @@ function PMA_moveRepeatingGroup(
     $GLOBALS['dbi']->selectDb($db, $GLOBALS['userlink']);
     foreach ($queries as $query) {
         if (!$GLOBALS['dbi']->tryQuery($query, $GLOBALS['userlink'])) {
-            $message = Message::error(__('Error in processing!'));
+            $message = PMA_Message::error(__('Error in processing!'));
             $message->addMessage('<br /><br />');
             $message->addMessage(
-                Message::rawError(
+                PMA_Message::rawError(
                     $GLOBALS['dbi']->getError($GLOBALS['userlink'])
                 )
             );
@@ -733,7 +736,7 @@ function PMA_getHtmlFor3NFstep1($db, $tables)
     );
     $cnt = 0;
     foreach ($tables as $table) {
-        $primary = PMA\libraries\Index::getPrimary($table, $db);
+        $primary = PMA_Index::getPrimary($table, $db);
         $primarycols = $primary->getColumns();
         $selectTdForm = "";
         $pk = array();
@@ -808,7 +811,7 @@ function PMA_getHtmlForNormalizetable()
             '2nf'      => __('Second step of normalization (1NF+2NF)'),
             '3nf'  => __('Third step of normalization (1NF+2NF+3NF)'));
 
-    $html_output .= Util::getRadioFields(
+    $html_output .= PMA_Util::getRadioFields(
         'normalizeTo', $choices, '1nf', true
     );
     $html_output .= '</fieldset><fieldset class="tblFooters">'
@@ -839,17 +842,17 @@ function PMA_findPartialDependencies($table, $db)
     $columns = (array) $GLOBALS['dbi']->getColumnNames(
         $db, $table, $GLOBALS['userlink']
     );
-    $columns = (array)Util::backquote($columns);
+    $columns = (array)PMA_Util::backquote($columns);
     $totalRowsRes = $GLOBALS['dbi']->fetchResult(
         'SELECT COUNT(*) FROM (SELECT * FROM '
-        . Util::backquote($table) . ' LIMIT 500) as dt;'
+        . PMA_Util::backquote($table) . ' LIMIT 500) as dt;'
     );
     $totalRows = $totalRowsRes[0];
-    $primary = PMA\libraries\Index::getPrimary($table, $db);
+    $primary = PMA_Index::getPrimary($table, $db);
     $primarycols = $primary->getColumns();
     $pk = array();
     foreach ($primarycols as $col) {
-        $pk[] = Util::backquote($col->getName());
+        $pk[] = PMA_Util::backquote($col->getName());
     }
     $partialKeys = PMA_getAllCombinationPartialKeys($pk);
     $distinctValCount = PMA_findDistinctValuesCount(
@@ -913,7 +916,7 @@ function PMA_checkPartialDependency(
 ) {
     $query = 'SELECT '
         . 'COUNT(DISTINCT ' . $partialKey . ',' . $column . ') as pkColCnt '
-        . 'FROM (SELECT * FROM ' . Util::backquote($table)
+        . 'FROM (SELECT * FROM ' . PMA_Util::backquote($table)
         . ' LIMIT 500) as dt'  . ';';
     $res = $GLOBALS['dbi']->fetchResult($query, null, null, $GLOBALS['userlink']);
     $pkColCnt = $res[0];
@@ -946,7 +949,7 @@ function PMA_findDistinctValuesCount($columns, $table)
         }
     }
     $query = trim($query, ', ');
-    $query .= ' FROM (SELECT * FROM ' . Util::backquote($table)
+    $query .= ' FROM (SELECT * FROM ' . PMA_Util::backquote($table)
         . ' LIMIT 500) as dt' . ';';
     $res = $GLOBALS['dbi']->fetchResult($query, null, null, $GLOBALS['userlink']);
     foreach ($columns as $column) {

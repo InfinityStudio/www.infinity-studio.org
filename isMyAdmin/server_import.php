@@ -5,19 +5,16 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\config\PageSettings;
-use PMA\libraries\Response;
 
 /**
  *
  */
 require_once 'libraries/common.inc.php';
-require_once 'libraries/config/user_preferences.forms.php';
-require_once 'libraries/config/page_settings.forms.php';
+require_once 'libraries/config/page_settings.class.php';
 
-PageSettings::showGroup('Import');
+PMA_PageSettings::showGroup('Import');
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('import.js');
@@ -28,7 +25,7 @@ $scripts->addFile('import.js');
 require 'libraries/server_common.inc.php';
 
 require 'libraries/display_import.lib.php';
-$response = Response::getInstance();
+$response = PMA_Response::getInstance();
 $response->addHTML(
     PMA_getImportDisplay(
         'server', $db, $table, $max_upload_size

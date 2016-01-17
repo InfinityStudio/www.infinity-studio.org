@@ -168,10 +168,7 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
     var $this_function = $("select[name='funcs[multi_edit][" + multi_edit + "][" +
         urlField + "]']");
     var function_selected = false;
-    if (typeof $this_function.val() !== 'undefined' &&
-        $this_function.val() !== null &&
-        $this_function.val().length > 0
-    ) {
+    if (typeof $this_function.val() !== 'undefined' && $this_function.val().length > 0) {
         function_selected = true;
     }
 
@@ -348,9 +345,9 @@ AJAX.registerOnload('tbl_change.js', function () {
                 return false;
             }
 
-            return !(value.substring(0, 3) === "MD5" &&
-                typeof options.data('maxlength') !== 'undefined' &&
-                options.data('maxlength') < 32);
+            return !(value.substring(0, 3) === "MD5"
+            && typeof options.data('maxlength') !== 'undefined'
+            && options.data('maxlength') < 32);
         });
 
         jQuery.validator.addMethod("validationFunctionForDateTime", function(value, element, options) {
@@ -379,8 +376,8 @@ AJAX.registerOnload('tbl_change.js', function () {
                     return isDate(dt_value, tmstmp);
                 }
 
-                return isDate(dt_value.substring(0, dv), tmstmp) &&
-                    isTime(dt_value.substring(dv + 1));
+                return isDate(dt_value.substring(0, dv), tmstmp)
+                    && isTime(dt_value.substring(dv + 1));
             }
         });
         /*
@@ -437,7 +434,7 @@ AJAX.registerOnload('tbl_change.js', function () {
      * "Continue insertion" are handled in the "Continue insertion" code
      *
      */
-    $(document).on('click', 'input.checkbox_null', function () {
+    $(document).on('click', 'input.checkbox_null', function (e) {
         nullify(
             // use hidden fields populated by tbl_change.php
             $(this).siblings('.nullify_code').val(),
@@ -453,7 +450,7 @@ AJAX.registerOnload('tbl_change.js', function () {
      * when we are in edit-mode, and not in insert-mode(no previous value
      * available).
      */
-    $('select[name="submit_type"]').bind('change', function () {
+    $('select[name="submit_type"]').bind('change', function (e) {
         var thisElemSubmitTypeVal = $(this).val();
         var $table = $('table.insertRowTable');
         var auto_increment_column = $table.find('input[name^="auto_increment"]');
@@ -565,7 +562,7 @@ AJAX.registerOnload('tbl_change.js', function () {
                         // will change
                         .data('hashed_field', hashed_field)
                         .data('new_row_index', new_row_index)
-                        .bind('change', function () {
+                        .bind('change', function (e) {
                             var $changed_element = $(this);
                             verificationsAfterFieldChange(
                                 $changed_element.data('hashed_field'),
@@ -584,7 +581,7 @@ AJAX.registerOnload('tbl_change.js', function () {
                         // will be clicked
                         .data('hashed_field', hashed_field)
                         .data('new_row_index', new_row_index)
-                        .bind('click', function () {
+                        .bind('click', function (e) {
                             var $changed_element = $(this);
                             nullify(
                                 $changed_element.siblings('.nullify_code').val(),

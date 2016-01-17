@@ -5,7 +5,9 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Message;
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
   * Get HTML for the Change password dialog
@@ -78,7 +80,7 @@ function PMA_getHtmlForChangePassword($mode, $username, $hostname)
         . '</td>'
         . '</tr>';
 
-    $serverType = PMA\libraries\Util::getServerType();
+    $serverType = PMA_Util::getServerType();
     $orig_auth_plugin = PMA_getCurrentAuthenticationPlugin(
         'change',
         $username,
@@ -98,7 +100,7 @@ function PMA_getHtmlForChangePassword($mode, $username, $hostname)
             || ($is_superuser && $mode == 'edit_other')
         ) {
             $auth_plugin_dropdown = PMA_getHtmlForAuthPluginsDropdown(
-                $orig_auth_plugin, 'change_pw', 'new'
+                $username, $hostname, $orig_auth_plugin, 'change_pw', 'new'
             );
 
             $html .= '<tr class="vmiddle">'
@@ -109,19 +111,15 @@ function PMA_getHtmlForChangePassword($mode, $username, $hostname)
                 . '</table>';
 
             $html .= '<div '
-                . ($orig_auth_plugin != 'sha256_password'
-                    ? 'style="display:none"'
-                    : '')
+                . ($orig_auth_plugin != 'sha256_password' ? 'style="display:none"' : '')
                 . ' id="ssl_reqd_warning_cp">'
-                . Message::notice(
+                . PMA_Message::notice(
                     __(
                         'This method requires using an \'<i>SSL connection</i>\' '
-                        . 'or an \'<i>unencrypted connection that encrypts the '
-                        . 'password using RSA</i>\'; while connecting to the server.'
+                        . 'or an \'<i>unencrypted connection that encrypts the password '
+                        . 'using RSA</i>\'; while connecting to the server.'
                     )
-                    . PMA\libraries\Util::showMySQLDocu(
-                        'sha256-authentication-plugin'
-                    )
+                    . PMA_Util::showMySQLDocu('sha256-authentication-plugin')
                 )
                     ->getDisplay()
                 . '</div>';
@@ -131,7 +129,7 @@ function PMA_getHtmlForChangePassword($mode, $username, $hostname)
         }
     } else {
         $auth_plugin_dropdown = PMA_getHtmlForAuthPluginsDropdown(
-            $orig_auth_plugin, 'change_pw', 'old'
+            $username, $hostname, $orig_auth_plugin, 'change_pw', 'old'
         );
 
         $html .= '<tr class="vmiddle">'

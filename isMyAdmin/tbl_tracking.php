@@ -7,14 +7,12 @@
  */
 
 // Run common work
-use PMA\libraries\Tracker;
-
 require_once './libraries/common.inc.php';
 
 require_once './libraries/tracking.lib.php';
 
 //Get some js files needed for Ajax requests
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('jquery/jquery.tablesorter.js');
@@ -23,20 +21,20 @@ $scripts->addFile('tbl_tracking.js');
 define('TABLE_MAY_BE_ABSENT', true);
 require './libraries/tbl_common.inc.php';
 
-if (Tracker::isActive()
-    && Tracker::isTracked($GLOBALS["db"], $GLOBALS["table"])
+if (PMA_Tracker::isActive()
+    && PMA_Tracker::isTracked($GLOBALS["db"], $GLOBALS["table"])
     && ! (isset($_REQUEST['toggle_activation'])
     && $_REQUEST['toggle_activation'] == 'deactivate_now')
     && ! (isset($_REQUEST['report_export'])
     && $_REQUEST['export_type'] == 'sqldumpfile')
 ) {
-    $msg = PMA\libraries\Message::notice(
+    $msg = PMA_Message::notice(
         sprintf(
             __('Tracking of %s is activated.'),
             htmlspecialchars($GLOBALS["db"] . '.' . $GLOBALS["table"])
         )
     );
-    PMA\libraries\Response::getInstance()->addHTML($msg->getDisplay());
+    PMA_Response::getInstance()->addHTML($msg->getDisplay());
 }
 
 $url_query .= '&amp;goto=tbl_tracking.php&amp;back=tbl_tracking.php';
@@ -45,7 +43,7 @@ $url_params['back'] = 'tbl_tracking.php';
 
 // Init vars for tracking report
 if (isset($_REQUEST['report']) || isset($_REQUEST['report_export'])) {
-    $data = Tracker::getTrackedData(
+    $data = PMA_Tracker::getTrackedData(
         $_REQUEST['db'], $_REQUEST['table'], $_REQUEST['version']
     );
 
@@ -100,12 +98,12 @@ if (isset($_REQUEST['submit_mult'])) {
             foreach ($_REQUEST['selected_versions'] as $version) {
                 PMA_deleteTrackingVersion($version);
             }
-            $html .= PMA\libraries\Message::success(
+            $html .= PMA_Message::success(
                 __('Tracking versions deleted successfully.')
             )->getDisplay();
         }
     } else {
-        $html .= PMA\libraries\Message::notice(
+        $html .= PMA_Message::notice(
             __('No versions selected.')
         )->getDisplay();
     }
@@ -124,20 +122,20 @@ if (isset($_REQUEST['submit_create_version'])) {
 if (isset($_REQUEST['toggle_activation'])
     && $_REQUEST['toggle_activation'] == 'deactivate_now'
 ) {
-    $html .= PMA_changeTracking('deactivate');
+    $html .= PMA_deactivateTracking();
 }
 
 // Activate tracking
 if (isset($_REQUEST['toggle_activation'])
     && $_REQUEST['toggle_activation'] == 'activate_now'
 ) {
-    $html .= PMA_changeTracking('activate');
+    $html .= PMA_activateTracking();
 }
 
 // Export as SQL execution
 if (isset($_REQUEST['report_export']) && $_REQUEST['export_type'] == 'execution') {
     $sql_result = PMA_exportAsSQLExecution($entries);
-    $msg = PMA\libraries\Message::success(__('SQL statements executed.'));
+    $msg = PMA_Message::success(__('SQL statements executed.'));
     $html .= $msg->getDisplay();
 }
 
@@ -206,5 +204,5 @@ $html .= PMA_getHtmlForDataDefinitionAndManipulationStatements(
 
 $html .= '<br class="clearfloat"/>';
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $response->addHTML($html);

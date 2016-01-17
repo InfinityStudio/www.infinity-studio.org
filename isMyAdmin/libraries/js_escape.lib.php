@@ -6,6 +6,9 @@
  * @package PhpMyAdmin
  *
  */
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
  * Format a string so it can be a string inside JavaScript code inside an
@@ -30,9 +33,7 @@ function PMA_jsFormat($a_string = '', $add_backquotes = true)
         $a_string = str_replace('#', '\\#', $a_string);
     }
 
-    return $add_backquotes
-        ? PMA\libraries\Util::backquote($a_string)
-        : $a_string;
+    return (($add_backquotes) ? PMA_Util::backquote($a_string) : $a_string);
 } // end of the 'PMA_jsFormat()' function
 
 /**

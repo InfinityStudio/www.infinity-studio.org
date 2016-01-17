@@ -12,7 +12,7 @@
 require './lib/common.inc.php';
 
 $validators = array();
-require './libraries/config/Validator.php';
+require './libraries/config/Validator.class.php';
 
 header('Content-type: application/json');
 
@@ -24,7 +24,7 @@ if (!($values instanceof stdClass)) {
     PMA_fatalError(__('Wrong data'));
 }
 $values = (array)$values;
-$result = PMA\libraries\config\Validator::validate($GLOBALS['ConfigFile'], $vids, $values, true);
+$result = PMA_Validator::validate($GLOBALS['ConfigFile'], $vids, $values, true);
 if ($result === false) {
     $result = 'Wrong data or no validation for ' . $vids;
 }

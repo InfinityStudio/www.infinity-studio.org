@@ -5,9 +5,6 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Message;
-use PMA\libraries\Response;
-
 if (! defined('PHPMYADMIN')) {
     exit;
 }
@@ -63,7 +60,7 @@ function PMA_RTE_sendEditor($type, $mode, $item, $title, $db, $operation = null)
             $editor = PMA_EVN_getEditorForm($mode, $operation, $item);
         }
         if ($GLOBALS['is_ajax_request']) {
-            $response = PMA\libraries\Response::getInstance();
+            $response = PMA_Response::getInstance();
             $response->addJSON('message', $editor);
             $response->addJSON('title', $title);
         } else {
@@ -75,13 +72,13 @@ function PMA_RTE_sendEditor($type, $mode, $item, $title, $db, $operation = null)
         $message  = __('Error in processing request:') . ' ';
         $message .= sprintf(
             PMA_RTE_getWord('not_found'),
-            htmlspecialchars(PMA\libraries\Util::backquote($_REQUEST['item_name'])),
-            htmlspecialchars(PMA\libraries\Util::backquote($db))
+            htmlspecialchars(PMA_Util::backquote($_REQUEST['item_name'])),
+            htmlspecialchars(PMA_Util::backquote($db))
         );
-        $message = Message::error($message);
+        $message = PMA_message::error($message);
         if ($GLOBALS['is_ajax_request']) {
-            $response = PMA\libraries\Response::getInstance();
-            $response->setRequestStatus(false);
+            $response = PMA_Response::getInstance();
+            $response->isSuccess(false);
             $response->addJSON('message', $message);
             exit;
         } else {

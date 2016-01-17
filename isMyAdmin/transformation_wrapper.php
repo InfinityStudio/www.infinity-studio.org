@@ -47,17 +47,17 @@ foreach ($request_params as $one_request_param) {
 $GLOBALS['dbi']->selectDb($db);
 if (isset($where_clause)) {
     $result = $GLOBALS['dbi']->query(
-        'SELECT * FROM ' . PMA\libraries\Util::backquote($table)
+        'SELECT * FROM ' . PMA_Util::backquote($table)
         . ' WHERE ' . $where_clause . ';',
         null,
-        PMA\libraries\DatabaseInterface::QUERY_STORE
+        PMA_DatabaseInterface::QUERY_STORE
     );
     $row = $GLOBALS['dbi']->fetchAssoc($result);
 } else {
     $result = $GLOBALS['dbi']->query(
-        'SELECT * FROM ' . PMA\libraries\Util::backquote($table) . ' LIMIT 1;',
+        'SELECT * FROM ' . PMA_Util::backquote($table) . ' LIMIT 1;',
         null,
-        PMA\libraries\DatabaseInterface::QUERY_STORE
+        PMA_DatabaseInterface::QUERY_STORE
     );
     $row = $GLOBALS['dbi']->fetchAssoc($result);
 }
@@ -84,7 +84,7 @@ if ($cfgRelation['commwork'] && $cfgRelation['mimework']) {
 }
 
 // Only output the http headers
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $response->getHeader()->sendHttpHeaders();
 
 // [MIME]

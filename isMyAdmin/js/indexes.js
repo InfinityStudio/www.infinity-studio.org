@@ -9,37 +9,6 @@
  */
 
 /**
- * Returns the array of indexes based on the index choice
- *
- * @param index_choice index choice
- */
-function PMA_getIndexArray(index_choice)
-{
-    var source_array = null;
-
-    switch (index_choice.toLowerCase()) {
-    case 'primary':
-        source_array = primary_indexes;
-        break;
-    case 'unique':
-        source_array = unique_indexes;
-        break;
-    case 'index':
-        source_array = indexes;
-        break;
-    case 'fulltext':
-        source_array = fulltext_indexes;
-        break;
-    case 'spatial':
-        source_array = spatial_indexes;
-        break;
-    default:
-        return null;
-    }
-    return source_array;
-}
-
-/**
  * Hides/shows the inputs and submits appropriately depending
  * on whether the index type chosen is 'SPATIAL' or not.
  */
@@ -522,6 +491,38 @@ function PMA_indexTypeSelectionDialog(source_array, index_choice, col_index)
 }
 
 /**
+ * Returns the array of indexes based on the index choice
+ *
+ * @param index_choice index choice
+ */
+function PMA_getIndexArray(index_choice)
+{
+    var source_array = null;
+
+    switch (index_choice.toLowerCase()) {
+    case 'primary':
+        source_array = primary_indexes;
+        break;
+    case 'unique':
+        source_array = unique_indexes;
+        break;
+    case 'index':
+        source_array = indexes;
+        break;
+    case 'fulltext':
+        source_array = fulltext_indexes;
+        break;
+    case 'spatial':
+        source_array = spatial_indexes;
+        break;
+    default:
+        return null;
+    }
+    return source_array;
+}
+
+
+/**
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('indexes.js', function () {
@@ -609,7 +610,7 @@ AJAX.registerOnload('indexes.js', function () {
 
         $anchor.PMA_confirm(question, $anchor.attr('href'), function (url) {
             var $msg = PMA_ajaxShowMessage(PMA_messages.strDroppingPrimaryKeyIndex, false);
-            $.post(url, {'is_js_confirmed': 1, 'ajax_request': true}, function (data) {
+            $.get(url, {'is_js_confirmed': 1, 'ajax_request': true}, function (data) {
                 if (typeof data !== 'undefined' && data.success === true) {
                     PMA_ajaxRemoveMessage($msg);
                     var $table_ref = $rows_to_hide.closest('table');
@@ -643,7 +644,7 @@ AJAX.registerOnload('indexes.js', function () {
                 } else {
                     PMA_ajaxShowMessage(PMA_messages.strErrorProcessingRequest + " : " + data.error, false);
                 }
-            }); // end $.post()
+            }); // end $.get()
         }); // end $.PMA_confirm()
     }); //end Drop Primary Key/Index
 
@@ -702,7 +703,7 @@ AJAX.registerOnload('indexes.js', function () {
         }
 
         // Select a source array.
-        source_array = PMA_getIndexArray(index_choice);
+        var source_array = PMA_getIndexArray(index_choice);
         if (source_array == null) {
             return;
         }

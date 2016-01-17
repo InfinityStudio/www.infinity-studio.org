@@ -1,5 +1,6 @@
 <?php
 /* vim: set expandtab sw=4 ts=4 sts=4: */
+
 /**
  * functions for displaying processes list
  *
@@ -7,9 +8,9 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Message;
-use PMA\libraries\ServerStatusData;
-use PMA\libraries\Util;
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
  * Prints html for auto refreshing processes list
@@ -18,7 +19,7 @@ use PMA\libraries\Util;
  */
 function PMA_getHtmlForProcessListAutoRefresh()
 {
-    $notice = Message::notice(
+    $notice = PMA_Message::notice(
         __(
             'Note: Enabling the auto refresh here might cause '
             . 'heavy traffic between the web server and the MySQL server.'
@@ -26,14 +27,14 @@ function PMA_getHtmlForProcessListAutoRefresh()
     )->getDisplay();
     $retval  = $notice . '<div class="tabLinks">';
     $retval .= '<label>' . __('Refresh rate') . ': ';
-    $retval .= ServerStatusData::getHtmlForRefreshList(
+    $retval .= PMA_ServerStatusData::getHtmlForRefreshList(
         'refreshRate',
         5,
         Array(2, 3, 4, 5, 10, 20, 40, 60, 120, 300, 600, 1200)
     );
     $retval .= '</label>';
     $retval .= '<a id="toggleRefresh" href="#">';
-    $retval .= Util::getImage('play.png') . __('Start auto refresh');
+    $retval .= PMA_Util::getImage('play.png') . __('Start auto refresh');
     $retval .= '</a>';
     $retval .= '</div>';
     return $retval;
@@ -102,22 +103,49 @@ function PMA_getHtmlForServerProcesslist()
     );
     $sortableColCount = count($sortable_columns);
 
-    $sql_query = $show_full_sql
-        ? 'SHOW FULL PROCESSLIST'
-        : 'SHOW PROCESSLIST';
-    if ((! empty($_REQUEST['order_by_field'])
-        && ! empty($_REQUEST['sort_order']))
-        || (! empty($_REQUEST['showExecuting']))
-    ) {
-        $sql_query = 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ';
-    }
-    if (! empty($_REQUEST['showExecuting'])) {
-        $sql_query .= ' WHERE state = "executing" ';
-    }
-    if (!empty($_REQUEST['order_by_field']) && !empty($_REQUEST['sort_order'])) {
-        $sql_query .= ' ORDER BY '
-            . Util::backquote($_REQUEST['order_by_field'])
-            . ' ' . $_REQUEST['sort_order'];
+    if (PMA_DRIZZLE) {
+        $left_str = 'left(p.info, '
+            . (int)$GLOBALS['cfg']['MaxCharactersInDisplayedSQL'] . ')';
+        $sql_query = "SELECT
+                p.id       AS Id,
+                p.username AS User,
+                p.host     AS Host,
+                p.db       AS db,
+                p.command  AS Command,
+                p.time     AS Time,
+                p.state    AS State,"
+                . ($show_full_sql ? 's.query' : $left_str )
+                . " AS Info FROM data_dictionary.PROCESSLIST p "
+                . ($show_full_sql
+                ? 'LEFT JOIN data_dictionary.SESSIONS s ON s.session_id = p.id'
+                : '');
+        if (! empty($_REQUEST['showExecuting'])) {
+            $sql_query .= ' WHERE p.state = "executing" ';
+        }
+        if (! empty($_REQUEST['order_by_field'])
+            && ! empty($_REQUEST['sort_order'])
+        ) {
+            $sql_query .= ' ORDER BY p.' . $_REQUEST['order_by_field'] . ' '
+                 . $_REQUEST['sort_order'];
+        }
+    } else {
+        $sql_query = $show_full_sql
+            ? 'SHOW FULL PROCESSLIST'
+            : 'SHOW PROCESSLIST';
+        if ((! empty($_REQUEST['order_by_field'])
+            && ! empty($_REQUEST['sort_order']))
+            || (! empty($_REQUEST['showExecuting']))
+        ) {
+            $sql_query = 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ';
+        }
+        if (! empty($_REQUEST['showExecuting'])) {
+            $sql_query .= ' WHERE state = "executing" ';
+        }
+        if (!empty($_REQUEST['order_by_field']) && !empty($_REQUEST['sort_order'])) {
+            $sql_query .= ' ORDER BY '
+                . PMA_Util::backquote($_REQUEST['order_by_field'])
+                . ' ' . $_REQUEST['sort_order'];
+        }
     }
 
     $result = $GLOBALS['dbi']->query($sql_query);
@@ -166,15 +194,15 @@ function PMA_getHtmlForServerProcesslist()
 
         $retval .= '</a>';
 
-        if (0 === --$sortableColCount) {
+        if (! PMA_DRIZZLE && (0 === --$sortableColCount)) {
             $retval .= '<a href="' . $full_text_link . '">';
             if ($show_full_sql) {
-                $retval .= Util::getImage(
+                $retval .= PMA_Util::getImage(
                     's_partialtext.png',
                     __('Truncate Shown Queries')
                 );
             } else {
-                $retval .= Util::getImage(
+                $retval .= PMA_Util::getImage(
                     's_fulltext.png',
                     __('Show Full Queries')
                 );
@@ -241,7 +269,7 @@ function PMA_getHtmlForProcessListFilter()
 /**
  * Prints Every Item of Server Process
  *
- * @param array $process       data of Every Item of Server Process
+ * @param Array $process       data of Every Item of Server Process
  * @param bool  $odd_row       display odd row or not
  * @param bool  $show_full_sql show full sql or not
  *
@@ -255,7 +283,7 @@ function PMA_getHtmlForServerProcessItem($process, $odd_row, $show_full_sql)
         || (! empty($_REQUEST['showExecuting']))
     ) {
         foreach (array_keys($process) as $key) {
-            $new_key = ucfirst(mb_strtolower($key));
+            $new_key = ucfirst(/*overload*/mb_strtolower($key));
             if ($new_key !== $key) {
                 $process[$new_key] = $process[$key];
                 unset($process[$key]);
@@ -276,7 +304,7 @@ function PMA_getHtmlForServerProcessItem($process, $odd_row, $show_full_sql)
     $retval .= '<td>' . htmlspecialchars($process['User']) . '</td>';
     $retval .= '<td>' . htmlspecialchars($process['Host']) . '</td>';
     $retval .= '<td>' . ((! isset($process['db'])
-            || !mb_strlen($process['db']))
+            || !/*overload*/mb_strlen($process['db']))
             ? '<i>' . __('None') . '</i>'
             : htmlspecialchars($process['db'])) . '</td>';
     $retval .= '<td>' . htmlspecialchars($process['Command']) . '</td>';
@@ -290,7 +318,7 @@ function PMA_getHtmlForServerProcessItem($process, $odd_row, $show_full_sql)
     if (empty($process['Info'])) {
         $retval .= '---';
     } else {
-        $retval .= Util::formatSql($process['Info'], ! $show_full_sql);
+        $retval .= PMA_Util::formatSql($process['Info'], ! $show_full_sql);
     }
     $retval .= '</td>';
     $retval .= '</tr>';

@@ -32,6 +32,7 @@ if (! defined('PHPMYADMIN')) {
  *
  */
 require_once './libraries/check_user_privileges.lib.php';
+require_once 'libraries/Template.class.php';
 
 /**
  * Returns the html for create table.
@@ -42,7 +43,7 @@ require_once './libraries/check_user_privileges.lib.php';
  */
 function PMA_getHtmlForCreateTable($db)
 {
-    return PMA\libraries\Template::get('database/create_table')->render(
+    return PMA\Template::get('database/create_table')->render(
         array('db' => $db)
     );
 }

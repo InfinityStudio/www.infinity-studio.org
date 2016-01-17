@@ -5,8 +5,6 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Template;
-use PMA\libraries\Util;
 
 /**
  * Displays top part of the form
@@ -62,7 +60,8 @@ function PMA_displayTabsTop($tabs)
         );
     }
 
-    $htmlOutput = Template::get('list/unordered')->render(
+    include_once './libraries/Template.class.php';
+    $htmlOutput = PMA\Template::get('list/unordered')->render(
         array(
             'class' => 'tabs',
             'items' => $items,
@@ -183,7 +182,7 @@ function PMA_displayInput($path, $name, $type, $value, $description = '',
         } else {
             // In this case we just use getImage() because it's available
             foreach ($icon_init as $k => $v) {
-                $icons[$k] = Util::getImage(
+                $icons[$k] = PMA_Util::getImage(
                     $v[0], $v[1]
                 );
             }
@@ -276,7 +275,7 @@ function PMA_displayInput($path, $name, $type, $value, $description = '',
         foreach ($opts['values'] as $opt_value_key => $opt_value) {
             // set names for boolean values
             if (is_bool($opt_value)) {
-                $opt_value = mb_strtolower(
+                $opt_value = /*overload*/mb_strtolower(
                     $opt_value ? __('Yes') : __('No')
                 );
             }
@@ -501,7 +500,9 @@ function PMA_displayJavascript($js_array)
         return null;
     }
 
-    return Template::get('javascript/display')->render(
+    include_once './libraries/Template.class.php';
+
+    return PMA\Template::get('javascript/display')->render(
         array('js_array' => $js_array,)
     );
 }

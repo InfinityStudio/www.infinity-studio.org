@@ -5,7 +5,7 @@ if ($_foreigners
     && PMA_searchColumnInForeigners($_foreigners, $column_name)): ?>
     <?php if (is_array($foreignData['disp_row'])): ?>
         <select name="criteriaValues[<?php echo $column_index; ?>]"
-                id="<?php echo $column_id , $column_index; ?>">
+                id="<?php echo $column_id . $column_index; ?>">
             <?php echo PMA_foreignDropdown(
                 $foreignData['disp_row'], $foreignData['foreign_field'],
                 $foreignData['foreign_display'], '', $foreignMaxLimit
@@ -13,7 +13,7 @@ if ($_foreigners
         </select>
     <?php elseif ($foreignData['foreign_link'] == true): ?>
         <input type="text"
-               id="<?php echo $column_id , $column_index; ?>"
+               id="<?php echo $column_id . $column_index; ?>"
                name="criteriaValues[<?php echo $column_index; ?>]"
                id="field_<?php echo md5($column_name); ?>[<?php echo $column_index; ?>]"
                class="textfield"
@@ -36,7 +36,7 @@ if ($_foreigners
         </a>
     <?php endif; ?>
 
-<?php elseif (in_array($column_type, PMA\libraries\Util::getGISDatatypes())): ?>
+<?php elseif (in_array($column_type, PMA_Util::getGISDatatypes())): ?>
     <input type="text"
            name="criteriaValues[<?php echo $column_index; ?>]"
            size="40"
@@ -46,11 +46,11 @@ if ($_foreigners
 
         <?php
         $edit_url = 'gis_data_editor.php' . PMA_URL_getCommon();
-        $edit_str = PMA\libraries\Util::getIcon('b_edit.png', __('Edit/Insert'));
+        $edit_str = PMA_Util::getIcon('b_edit.png', __('Edit/Insert'));
         ?>
 
         <span class="open_search_gis_editor">
-            <?php echo PMA\libraries\Util::linkOrButton(
+            <?php echo PMA_Util::linkOrButton(
                 $edit_url, $edit_str, array(), false, false, '_blank'
             ); ?>
         </span>
@@ -64,7 +64,7 @@ if ($_foreigners
     <?php
     $in_zoom_search_edit = false;
     $column_type = htmlspecialchars($column_type);
-    $value = explode(', ', str_replace("'", '', mb_substr($column_type, 5, -1)));
+    $value = explode(', ', str_replace("'", '', /*overload*/mb_substr($column_type, 5, -1)));
     $cnt_value = count($value);
     /*
      * Enum in edit mode   --> dropdown
@@ -79,10 +79,10 @@ if ($_foreigners
         || (strncasecmp($column_type, 'set', 3) && $in_zoom_search_edit)
     ): ?>
         <select name="criteriaValues[<?php echo $column_index; ?>]"
-                id="<?php echo $column_id , $column_index; ?>">
+                id="<?php echo $column_id . $column_index; ?>">
     <?php else: ?>
         <select name="criteriaValues[<?php echo $column_index; ?>]"
-                id="<?php echo $column_id , $column_index; ?>"
+                id="<?php echo $column_id . $column_index; ?>"
                 multiple="multiple"
                 size="<?php echo min(3, $cnt_value); ?>">
     <?php endif; ?>
@@ -125,7 +125,7 @@ if ($_foreigners
            name="criteriaValues[<?php echo $column_index; ?>]"
            size="40"
            class="<?php echo $the_class; ?>"
-           id="<?php echo $column_id , $column_index; ?>"
+           id="<?php echo $column_id .  $column_index; ?>"
            <?php if (isset($criteriaValues[$column_index])
                && is_string($criteriaValues[$column_index])
            ): ?>

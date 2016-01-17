@@ -304,6 +304,10 @@ AJAX.registerOnload('tbl_chart.js', function () {
         temp_chart_title = $(this).val();
     })
     .keyup(function () {
+        var title = $(this).val();
+        if (title.length === 0) {
+            title = ' ';
+        }
         currentSettings.title = $('input[name="chartTitle"]').val();
         drawChart();
     })

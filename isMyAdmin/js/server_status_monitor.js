@@ -632,10 +632,8 @@ AJAX.registerOnload('server_status_monitor.js', function () {
                 } catch (err) {
                     alert(PMA_messages.strFailedBuildingGrid);
                     // If an exception is thrown, load default again
-                    if (isStorageSupported('localStorage')) {
-                        window.localStorage.removeItem('monitorCharts');
-                        window.localStorage.removeItem('monitorSettings');
-                    }
+                    window.localStorage.removeItem('monitorCharts');
+                    window.localStorage.removeItem('monitorSettings');
                     rebuildGrid();
                 }
 
@@ -661,11 +659,9 @@ AJAX.registerOnload('server_status_monitor.js', function () {
 
     $('a[href="#clearMonitorConfig"]').click(function (event) {
         event.preventDefault();
-        if (isStorageSupported('localStorage')) {
-            window.localStorage.removeItem('monitorCharts');
-            window.localStorage.removeItem('monitorSettings');
-            window.localStorage.removeItem('monitorVersion');
-        }
+        window.localStorage.removeItem('monitorCharts');
+        window.localStorage.removeItem('monitorSettings');
+        window.localStorage.removeItem('monitorVersion');
         $(this).hide();
         rebuildGrid();
     });
@@ -942,20 +938,17 @@ AJAX.registerOnload('server_status_monitor.js', function () {
         var i;
 
         /* Apply default values & config */
-        if (isStorageSupported('localStorage')) {
-            if (typeof window.localStorage.monitorCharts !== 'undefined') {
+        if (window.localStorage) {
+            if (window.localStorage.monitorCharts) {
                 runtime.charts = $.parseJSON(window.localStorage.monitorCharts);
             }
-            if (typeof window.localStorage.monitorSettings !== 'undefined') {
+            if (window.localStorage.monitorSettings) {
                 monitorSettings = $.parseJSON(window.localStorage.monitorSettings);
             }
 
             $('a[href="#clearMonitorConfig"]').toggle(runtime.charts !== null);
 
-            if (runtime.charts !== null
-                && typeof window.localStorage.monitorVersion !== 'undefined'
-                && monitorProtocolVersion != window.localStorage.monitorVersion
-            ) {
+            if (runtime.charts !== null && monitorProtocolVersion != window.localStorage.monitorVersion) {
                 $('#emptyDialog').dialog({title: PMA_messages.strIncompatibleMonitorConfig});
                 $('#emptyDialog').html(PMA_messages.strIncompatibleMonitorConfigDescription);
 
@@ -2106,7 +2099,7 @@ AJAX.registerOnload('server_status_monitor.js', function () {
                     return false;
                 });
 
-                profilingChart = PMA_createProfilingChart(
+                profilingChart = PMA_createProfilingChartJqplot(
                     'queryProfiling',
                     chartData
                 );
@@ -2129,7 +2122,7 @@ AJAX.registerOnload('server_status_monitor.js', function () {
             gridCopy[key].maxYLabel = elem.maxYLabel;
         });
 
-        if (isStorageSupported('localStorage')) {
+        if (window.localStorage) {
             window.localStorage.monitorCharts = JSON.stringify(gridCopy);
             window.localStorage.monitorSettings = JSON.stringify(monitorSettings);
             window.localStorage.monitorVersion = monitorProtocolVersion;

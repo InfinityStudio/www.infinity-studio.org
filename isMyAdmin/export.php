@@ -5,7 +5,6 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\plugins\ExportPlugin;
 
 /**
  * Get the variables sent or posted to this script and a core script
@@ -13,12 +12,13 @@ use PMA\libraries\plugins\ExportPlugin;
 if (!defined('TESTSUITE')) {
     /**
      * If we are sending the export file (as opposed to just displaying it
-     * as text), we have to bypass the usual PMA\libraries\Response mechanism
+     * as text), we have to bypass the usual PMA_Response mechanism
      */
     if (isset($_POST['output_format']) && $_POST['output_format'] == 'sendit') {
         define('PMA_BYPASS_GET_INSTANCE', 1);
     }
     include_once 'libraries/common.inc.php';
+    include_once 'libraries/zip.lib.php';
     include_once 'libraries/plugin_interface.lib.php';
     include_once 'libraries/export.lib.php';
 
@@ -166,7 +166,7 @@ if (!defined('TESTSUITE')) {
     // sanitize this parameter which will be used below in a file inclusion
     $what = PMA_securePath($_POST['what']);
 
-    PMA\libraries\Util::checkParameters(array('what', 'export_type'));
+    PMA_Util::checkParameters(array('what', 'export_type'));
 
     // export class instance, not array of properties, as before
     /* @var $export_plugin ExportPlugin */
@@ -211,9 +211,7 @@ if (!defined('TESTSUITE')) {
     $separate_files = '';
 
     // Is it a quick or custom export?
-    if (isset($_REQUEST['quick_or_custom'])
-        && $_REQUEST['quick_or_custom'] == 'quick'
-    ) {
+    if (isset($_REQUEST['quick_or_custom']) && $_REQUEST['quick_or_custom'] == 'quick') {
         $quick_export = true;
     } else {
         $quick_export = false;
@@ -251,10 +249,12 @@ if (!defined('TESTSUITE')) {
     }
 
     // Generate error url and check for needed variables
+    /** @var PMA_String $pmaString */
+    $pmaString = $GLOBALS['PMA_String'];
     if ($export_type == 'server') {
         $err_url = 'server_export.php' . PMA_URL_getCommon();
     } elseif ($export_type == 'database'
-        && mb_strlen($db)
+        && /*overload*/mb_strlen($db)
     ) {
         $err_url = 'db_export.php' . PMA_URL_getCommon(array('db' => $db));
         // Check if we have something to export
@@ -263,8 +263,8 @@ if (!defined('TESTSUITE')) {
         } else {
             $tables = array();
         }
-    } elseif ($export_type == 'table' && mb_strlen($db)
-        && mb_strlen($table)
+    } elseif ($export_type == 'table' && /*overload*/mb_strlen($db)
+        && /*overload*/mb_strlen($table)
     ) {
         $err_url = 'tbl_export.php' . PMA_URL_getCommon(
             array(
@@ -317,7 +317,7 @@ if (!defined('TESTSUITE')) {
     if ($what == 'sql') {
         $crlf = "\n";
     } else {
-        $crlf = PMA\libraries\Util::whichCrlf();
+        $crlf = PMA_Util::whichCrlf();
     }
 
     $output_kanji_conversion = function_exists('PMA_Kanji_strConv')
@@ -377,7 +377,7 @@ if (!defined('TESTSUITE')) {
             if ($export_type == 'database') {
                 $num_tables = count($tables);
                 if ($num_tables == 0) {
-                    $message = PMA\libraries\Message::error(
+                    $message = PMA_Message::error(
                         __('No tables found in database.')
                     );
                     $active_page = 'db_export.php';
@@ -408,7 +408,7 @@ if (!defined('TESTSUITE')) {
         // Will we need relation & co. setup?
         $do_relation = isset($GLOBALS[$what . '_relation']);
         $do_comments = isset($GLOBALS[$what . '_include_comments'])
-            || isset($GLOBALS[$what . '_comments']);
+            || isset($GLOBALS[$what . '_comments']) ;
         $do_mime     = isset($GLOBALS[$what . '_mime']);
         if ($do_relation || $do_comments || $do_mime) {
             $cfgRelation = PMA_getRelationsParam();
@@ -454,8 +454,10 @@ if (!defined('TESTSUITE')) {
                         $do_relation, $do_comments, $do_mime, $do_dates, $aliases,
                         $separate_files
                     );
-                } finally {
                     PMA_unlockTables();
+                } catch (Exception $e) { // TODO use finally when PHP version is 5.5
+                    PMA_unlockTables();
+                    throw $e;
                 }
             } else {
                 PMA_exportDatabase(
@@ -485,8 +487,10 @@ if (!defined('TESTSUITE')) {
                         $do_mime, $do_dates, $allrows, $limit_to, $limit_from,
                         $sql_query, $aliases
                     );
-                } finally {
                     PMA_unlockTables();
+                } catch (Exception $e) { // TODO use finally when PHP version is 5.5
+                    PMA_unlockTables();
+                    throw $e;
                 }
             } else {
                 PMA_exportTable(

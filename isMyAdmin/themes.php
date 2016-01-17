@@ -10,7 +10,7 @@
  * get some globals
  */
 require './libraries/common.inc.php';
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $response->getFooter()->setMinimal();
 $header = $response->getHeader();
 $header->setBodyId('bodythemes');

@@ -27,8 +27,7 @@ if (! empty($_REQUEST['master_connection'])) {
     );
     if ($server_slave_multi_replication) {
         $GLOBALS['dbi']->query(
-            "SET @@default_master_connection = '"
-            . PMA\libraries\Util::sqlAddSlashes(
+            "SET @@default_master_connection = '" . PMA_Util::sqlAddSlashes(
                 $_REQUEST['master_connection']
             ) . "'"
         );
@@ -226,8 +225,8 @@ function PMA_extractDbOrTable($string, $what = 'db')
  */
 function PMA_Replication_Slave_control($action, $control = null, $link = null)
 {
-    $action = mb_strtoupper($action);
-    $control = mb_strtoupper($control);
+    $action = /*overload*/mb_strtoupper($action);
+    $control = /*overload*/mb_strtoupper($control);
 
     if ($action != "START" && $action != "STOP") {
         return -1;

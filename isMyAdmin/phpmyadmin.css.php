@@ -5,7 +5,6 @@
  *
  * @package PhpMyAdmin
  */
- use PMA\libraries\OutputBuffering;
 
 /**
  *
@@ -21,11 +20,12 @@ if (PMA_USR_BROWSER_AGENT == 'IE' && PMA_USR_BROWSER_VER == '6'
 ) {
     @ini_set('zlib.output_compression', 'Off');
 } else {
-    $buffer = OutputBuffering::getInstance();
+    include_once 'libraries/OutputBuffering.class.php';
+    $buffer = PMA_OutputBuffering::getInstance();
     $buffer->start();
     register_shutdown_function(
         function () {
-            echo OutputBuffering::getInstance()->getContents();
+            echo PMA_OutputBuffering::getInstance()->getContents();
         }
     );
 }

@@ -5,6 +5,9 @@
  *
  * @package PhpMyAdmin
  */
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
 * Prints details about the current Git commit revision
@@ -14,8 +17,8 @@
 function PMA_printGitRevision()
 {
     if (! $GLOBALS['PMA_Config']->get('PMA_VERSION_GIT')) {
-        $response = PMA\libraries\Response::getInstance();
-        $response->setRequestStatus(false);
+        $response = PMA_Response::getInstance();
+        $response->isSuccess(false);
         return;
     }
 
@@ -62,20 +65,16 @@ function PMA_printGitRevision()
         . $branch . ',<br /> '
         . sprintf(
             __('committed on %1$s by %2$s'),
-            PMA\libraries\Util::localisedDate(strtotime($committer['date'])),
-            '<a href="' . PMA_linkURL(
-                'mailto:' . htmlspecialchars($committer['email'])
-            ) . '">'
+            PMA_Util::localisedDate(strtotime($committer['date'])),
+            '<a href="' . PMA_linkURL('mailto:' . htmlspecialchars($committer['email'])) . '">'
             . htmlspecialchars($committer['name']) . '</a>'
         )
         . ($author != $committer
             ? ', <br />'
             . sprintf(
                 __('authored on %1$s by %2$s'),
-                PMA\libraries\Util::localisedDate(strtotime($author['date'])),
-                '<a href="' . PMA_linkURL(
-                    'mailto:' . htmlspecialchars($author['email'])
-                ) . '">'
+                PMA_Util::localisedDate(strtotime($author['date'])),
+                '<a href="' . PMA_linkURL('mailto:' . htmlspecialchars($author['email'])) . '">'
                 . htmlspecialchars($author['name']) . '</a>'
             )
             : ''),

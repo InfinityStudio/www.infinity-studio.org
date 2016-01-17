@@ -23,10 +23,10 @@ if (! isset($selected_tbl)) {
         $tooltip_truename,
         $tooltip_aliasname,
         $pos
-    ) = PMA\libraries\Util::getDbInfo($db, isset($sub_part) ? $sub_part : '');
+    ) = PMA_Util::getDbInfo($db, isset($sub_part) ? $sub_part : '');
 }
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $header->enablePrintView();
 
@@ -36,11 +36,12 @@ $header->enablePrintView();
 $cfgRelation  = PMA_getRelationsParam();
 
 require_once 'libraries/transformations.lib.php';
+require_once 'libraries/Index.class.php';
 
 /**
  * Check parameters
  */
-PMA\libraries\Util::checkParameters(array('db'));
+PMA_Util::checkParameters(array('db'));
 
 /**
  * Defines the url to return to in case of error in a sql statement
@@ -54,8 +55,8 @@ if ($cfgRelation['commwork']) {
      * Displays DB comment
      */
     if ($comment) {
-        echo '<p>' , __('Database comment')
-            , '<br /><i>' , htmlspecialchars($comment) , '</i></p>';
+        echo '<p>' . __('Database comment')
+            . '<br /><i>' . htmlspecialchars($comment) . '</i></p>';
     } // end if
 }
 
@@ -69,9 +70,9 @@ $count  = 0;
 foreach ($tables as $table) {
     $comments = PMA_getComments($db, $table);
 
-    echo '<div>' , "\n";
+    echo '<div>' . "\n";
 
-    echo '<h2>' , htmlspecialchars($table) , '</h2>' , "\n";
+    echo '<h2>' . htmlspecialchars($table) . '</h2>' . "\n";
 
     /**
      * Gets table information
@@ -85,7 +86,7 @@ foreach ($tables as $table) {
     $GLOBALS['dbi']->selectDb($db);
     $indexes = $GLOBALS['dbi']->getTableIndexes($db, $table);
     list($primary, $pk_array, $indexes_info, $indexes_data)
-        = PMA\libraries\Util::processIndexData($indexes);
+        = PMA_Util::processIndexData($indexes);
 
     /**
      * Gets columns properties
@@ -101,8 +102,8 @@ foreach ($tables as $table) {
      * Displays the comments of the table if MySQL >= 3.23
      */
     if (!empty($show_comment)) {
-        echo __('Table comments:') , ' ';
-        echo htmlspecialchars($show_comment) , '<br /><br />';
+        echo __('Table comments:') . ' ';
+        echo htmlspecialchars($show_comment) . '<br /><br />';
     }
 
     /**
@@ -110,16 +111,16 @@ foreach ($tables as $table) {
      */
 
     echo '<table width="100%" class="print">';
-    echo '<tr><th width="50">' , __('Column') , '</th>';
-    echo '<th width="80">' , __('Type') , '</th>';
-    echo '<th width="40">' , __('Null') , '</th>';
-    echo '<th width="70">' , __('Default') , '</th>';
+    echo '<tr><th width="50">' . __('Column') . '</th>';
+    echo '<th width="80">' . __('Type') . '</th>';
+    echo '<th width="40">' . __('Null') . '</th>';
+    echo '<th width="70">' . __('Default') . '</th>';
     if ($have_rel) {
-        echo '    <th>' , __('Links to') , '</th>' , "\n";
+        echo '    <th>' . __('Links to') . '</th>' . "\n";
     }
-    echo '    <th>' , __('Comments') , '</th>' , "\n";
+    echo '    <th>' . __('Comments') . '</th>' . "\n";
     if ($cfgRelation['mimework']) {
-        echo '    <th>MIME</th>' , "\n";
+        echo '    <th>MIME</th>' . "\n";
     }
     echo '</tr>';
     $odd_row = true;
@@ -129,7 +130,7 @@ foreach ($tables as $table) {
             $row['Null'] = 'NO';
         }
         $extracted_columnspec
-            = PMA\libraries\Util::extractColumnSpec($row['Type']);
+            = PMA_Util::extractColumnSpec($row['Type']);
 
         // reformat mysql query output
         // set or enum types: slashes single quotes inside options
@@ -152,14 +153,14 @@ foreach ($tables as $table) {
         echo htmlspecialchars($column_name);
 
         if (isset($pk_array[$row['Field']])) {
-            echo ' <em>(' , __('Primary') , ')</em>';
+            echo ' <em>(' . __('Primary') . ')</em>';
         }
         echo '</td>';
         echo '<td'
-            , PMA\libraries\Util::getClassForType(
+            . PMA_Util::getClassForType(
                 $extracted_columnspec['type']
             )
-            , ' lang="en" dir="ltr">' , $type , '</td>';
+            . ' lang="en" dir="ltr">' . $type . '</td>';
 
         echo '<td>';
         echo (($row['Null'] == 'NO') ? __('No') : __('Yes'));
@@ -179,13 +180,13 @@ foreach ($tables as $table) {
                     . $foreigner['foreign_field']
                 );
             }
-            echo '</td>' , "\n";
+            echo '</td>' . "\n";
         }
         echo '    <td>';
         if (isset($comments[$column_name])) {
             echo htmlspecialchars($comments[$column_name]);
         }
-        echo '</td>' , "\n";
+        echo '</td>' . "\n";
         if ($cfgRelation['mimework']) {
             $mime_map = PMA_getMIME($db, $table, true);
 
@@ -195,15 +196,15 @@ foreach ($tables as $table) {
                     str_replace('_', '/', $mime_map[$column_name]['mimetype'])
                 );
             }
-            echo '</td>' , "\n";
+            echo '</td>' . "\n";
         }
         echo '</tr>';
     } // end foreach
     $count++;
     echo '</table>';
     // display indexes information
-    if (count(PMA\libraries\Index::getFromTable($table, $db)) > 0) {
-        echo PMA\libraries\Index::getHtmlForIndexes($table, $db, true);
+    if (count(PMA_Index::getFromTable($table, $db)) > 0) {
+        echo PMA_Index::getHtmlForIndexes($table, $db, true);
     }
     echo '</div>';
 } //ends main while
@@ -211,4 +212,4 @@ foreach ($tables as $table) {
 /**
  * Displays the footer
  */
-echo PMA\libraries\Util::getButton();
+echo PMA_Util::getButton();

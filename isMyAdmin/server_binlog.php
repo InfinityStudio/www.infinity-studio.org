@@ -5,7 +5,6 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\DatabaseInterface;
 
 /**
  * requirements
@@ -22,13 +21,15 @@ require_once 'libraries/server_bin_log.lib.php';
 /**
  * array binary log files
  */
-$binary_logs = $GLOBALS['dbi']->fetchResult(
-    'SHOW MASTER LOGS',
-    'Log_name',
-    null,
-    null,
-    DatabaseInterface::QUERY_STORE
-);
+$binary_logs = PMA_DRIZZLE
+    ? null
+    : $GLOBALS['dbi']->fetchResult(
+        'SHOW MASTER LOGS',
+        'Log_name',
+        null,
+        null,
+        PMA_DatabaseInterface::QUERY_STORE
+    );
 
 if (! isset($_REQUEST['log'])
     || ! array_key_exists($_REQUEST['log'], $binary_logs)
@@ -42,7 +43,7 @@ if (!empty($_REQUEST['dontlimitchars'])) {
     $url_params['dontlimitchars'] = 1;
 }
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 
 $response->addHTML(PMA_getHtmlForSubPageHeader('binlog'));
 $response->addHTML(PMA_getLogSelector($binary_logs, $url_params));

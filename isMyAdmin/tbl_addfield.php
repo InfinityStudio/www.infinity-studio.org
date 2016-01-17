@@ -11,13 +11,13 @@
  */
 require_once 'libraries/common.inc.php';
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('tbl_structure.js');
 
 // Check parameters
-PMA\libraries\Util::checkParameters(array('db', 'table'));
+PMA_Util::checkParameters(array('db', 'table'));
 
 
 /**
@@ -68,9 +68,11 @@ if (isset($_REQUEST['do_save_data'])) {
             && is_array($_REQUEST['field_mimetype'])
             && $cfg['BrowseMIME']
         ) {
+            /** @var PMA_String $pmaString */
+            $pmaString = $GLOBALS['PMA_String'];
             foreach ($_REQUEST['field_mimetype'] as $fieldindex => $mimetype) {
                 if (isset($_REQUEST['field_name'][$fieldindex])
-                    && mb_strlen($_REQUEST['field_name'][$fieldindex])
+                    && /*overload*/mb_strlen($_REQUEST['field_name'][$fieldindex])
                 ) {
                     PMA_setMIME(
                         $db, $table,
@@ -86,25 +88,18 @@ if (isset($_REQUEST['do_save_data'])) {
         }
 
         // Go back to the structure sub-page
-        $message = PMA\libraries\Message::success(
+        $message = PMA_Message::success(
             __('Table %1$s has been altered successfully.')
         );
         $message->addParam($table);
         $response->addJSON(
-            'message',
-            PMA\libraries\Util::getMessage($message, $sql_query, 'success')
+            'message', PMA_Util::getMessage($message, $sql_query, 'success')
         );
         exit;
     } else {
-        $error_message_html = PMA\libraries\Util::mysqlDie(
-            '',
-            '',
-            false,
-            $err_url,
-            false
-        );
+        $error_message_html = PMA_Util::mysqlDie('', '', false, $err_url, false);
         $response->addHTML($error_message_html);
-        $response->setRequestStatus(false);
+        $response->isSuccess(false);
         exit;
     }
 } // end do alter table

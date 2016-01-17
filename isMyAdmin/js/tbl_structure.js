@@ -86,7 +86,6 @@ AJAX.registerTeardown('tbl_structure.js', function () {
     $(document).off('submit', ".append_fields_form.ajax");
     $('body').off('click', '#fieldsForm.ajax button[name="submit_mult"], #fieldsForm.ajax input[name="submit_mult"]');
     $(document).off('click', 'a[name^=partition_action].ajax');
-    $(document).off('click', '#remove_partitioning.ajax');
 });
 
 AJAX.registerOnload('tbl_structure.js', function () {
@@ -214,7 +213,7 @@ AJAX.registerOnload('tbl_structure.js', function () {
         var question = PMA_sprintf(PMA_messages.strDoYouReally, 'ALTER TABLE `' + escapeHtml(curr_table_name) + '` DROP `' + escapeHtml(curr_column_name) + '`;');
         $(this).PMA_confirm(question, $(this).attr('href'), function (url) {
             var $msg = PMA_ajaxShowMessage(PMA_messages.strDroppingColumn, false);
-            $.post(url, {'is_js_confirmed' : 1, 'ajax_request' : true, 'ajax_page_request' : true}, function (data) {
+            $.get(url, {'is_js_confirmed' : 1, 'ajax_request' : true, 'ajax_page_request' : true}, function (data) {
                 if (typeof data !== 'undefined' && data.success === true) {
                     PMA_ajaxRemoveMessage($msg);
                     if ($('.result_query').length) {
@@ -246,18 +245,18 @@ AJAX.registerOnload('tbl_structure.js', function () {
                 } else {
                     PMA_ajaxShowMessage(PMA_messages.strErrorProcessingRequest + " : " + data.error, false);
                 }
-            }); // end $.post()
+            }); // end $.get()
         }); // end $.PMA_confirm()
     }); //end of Drop Column Anchor action
 
     /**
-     * Attach Event Handler for 'Print' link
+     * Attach Event Handler for 'Print View'
      */
     $(document).on('click', "#printView", function (event) {
         event.preventDefault();
 
-        // Take to preview mode
-        printPreview();
+        // Print the page
+        printPage();
     }); //end of Print View action
 
     /**
@@ -288,7 +287,7 @@ AJAX.registerOnload('tbl_structure.js', function () {
         $(this).PMA_confirm(question, $(this).attr('href'), function (url) {
             PMA_ajaxShowMessage();
             AJAX.source = $this;
-            $.post(url, {'ajax_request' : true, 'ajax_page_request' : true}, AJAX.responseHandler);
+            $.get(url, {'ajax_request' : true, 'ajax_page_request' : true}, AJAX.responseHandler);
         }); // end $.PMA_confirm()
     }); //end Add key
 
@@ -462,21 +461,6 @@ AJAX.registerOnload('tbl_structure.js', function () {
         } else {
             submitPartitionAction($link.attr('href'));
         }
-    });
-
-    /**
-     * Handles remove partitioning
-     */
-    $(document).on('click', '#remove_partitioning.ajax', function (e) {
-        e.preventDefault();
-        var $link = $(this);
-        var question = PMA_messages.strRemovePartitioningWarning;
-        $link.PMA_confirm(question, $link.attr('href'), function (url) {
-            var submitData = '&ajax_request=true&ajax_page_request=true';
-            PMA_ajaxShowMessage();
-            AJAX.source = $link;
-            $.post(url, submitData, AJAX.responseHandler);
-        });
     });
 });
 

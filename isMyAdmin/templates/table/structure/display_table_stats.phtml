@@ -2,9 +2,6 @@
     <?php $odd_row = false; ?>
     <fieldset>
         <legend><?php echo __('Information'); ?></legend>
-        <p> <strong> <?php echo __('Table comments: ') ?> </strong>
-            <?php echo isset($showtable['TABLE_COMMENT']) ? $showtable['TABLE_COMMENT'] : '';?>
-        </p>
         <a id="showusage"></a>
 
         <?php if (! $tbl_is_view && ! $db_is_system_schema): ?>
@@ -47,7 +44,7 @@
                 <?php endif; ?>
 
                 <!-- Optimize link if overhead -->
-                <?php if (isset($free_size)
+                <?php if (isset($free_size) && !PMA_DRIZZLE
                             && ($tbl_storage_engine == 'MYISAM'
                             || $tbl_storage_engine == 'ARIA'
                             || $tbl_storage_engine == 'MARIA'
@@ -55,8 +52,8 @@
                     <tr class="tblFooters">
                         <td colspan="3" class="center">
                             <a href="sql.php<?php echo $url_query; ?>&pos=0&amp;sql_query=<?php echo urlencode(
-                                    'OPTIMIZE TABLE ' . PMA\libraries\Util::backquote($GLOBALS['table'])); ?>">
-                                <?php echo PMA\libraries\Util::getIcon('b_tbloptimize.png', __('Optimize table')); ?>
+                                    'OPTIMIZE TABLE ' . PMA_Util::backquote($GLOBALS['table'])); ?>">
+                                <?php echo PMA_Util::getIcon('b_tbloptimize.png', __('Optimize table')); ?>
                             </a>
                         </td>
                     </tr>
@@ -65,7 +62,7 @@
             </table>
         <?php endif; ?>
         <?php
-            echo PMA\libraries\Template::get('table/structure/row_stats_table')->render(
+            echo PMA\Template::get('table/structure/row_stats_table')->render(
               array(
                   'showtable' => $showtable,
                   'tbl_collation' => $tbl_collation,

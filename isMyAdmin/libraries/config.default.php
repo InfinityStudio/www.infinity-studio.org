@@ -549,7 +549,7 @@ $cfg['Servers'][$i]['AllowDeny']['order'] = '';
 $cfg['Servers'][$i]['AllowDeny']['rules'] = array();
 
 /**
- * Disable use of INFORMATION_SCHEMA.
+ * Disable use of INFORMATION_SCHEMA. Is always 'false' for Drizzle.
  *
  * @see https://sourceforge.net/p/phpmyadmin/bugs/2606/
  * @see http://bugs.mysql.com/19588
@@ -730,6 +730,7 @@ $cfg['MemoryLimit'] = '-1';
 
 /**
  * mark used tables, make possible to show locked tables (since MySQL 3.23.30)
+ * Is ignored for Drizzle.
  *
  * @global boolean $cfg['SkipLockedTables']
  */
@@ -1128,13 +1129,6 @@ $cfg['ShowDbStructureLastCheck'] = false;
  * @global boolean $cfg['HideStructureActions']
  */
 $cfg['HideStructureActions'] = true;
-
-/**
- * Show column comments in table structure view (true|false)?
- *
- * @global boolean $cfg['ShowColumnComments']
- */
-$cfg['ShowColumnComments'] = true;
 
 
 /*******************************************************************************
@@ -2768,14 +2762,14 @@ $cfg['TablePrimaryKeyOrder'] = 'NONE';
 $cfg['RememberSorting'] = true;
 
 /**
- * shows column comments in 'browse' mode.
+ * shows stored relation-comments in 'browse' mode.
  *
  * @global boolean $cfg['ShowBrowseComments']
  */
 $cfg['ShowBrowseComments'] = true;
 
 /**
- * shows column comments in 'table property' mode.
+ * shows stored relation-comments in 'table property' mode.
  *
  * @global boolean $cfg['ShowPropertyComments']
  */
@@ -3128,7 +3122,7 @@ $cfg['DefaultFunctions'] = array(
 );
 
 /**
- * Max rows retrieved for zoom search
+ * Max rows retreived for zoom search
  */
 $cfg['maxRowPlotLimit'] = 500;
 

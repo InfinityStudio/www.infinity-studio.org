@@ -5,6 +5,9 @@
  *
  * @package PhpMyAdmin
  */
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
  * Function to get html for one relational key
@@ -211,7 +214,7 @@ function PMA_getHtmlForRelationalFieldSelection($db, $table, $field, $foreignDat
 function PMA_getDescriptionAndTitle($description)
 {
     $limitChars = $GLOBALS['cfg']['LimitChars'];
-    if (mb_strlen($description) <= $limitChars) {
+    if (/*overload*/mb_strlen($description) <= $limitChars) {
         $description = htmlspecialchars(
             $description
         );
@@ -221,7 +224,7 @@ function PMA_getDescriptionAndTitle($description)
             $description
         );
         $description = htmlspecialchars(
-            mb_substr(
+            /*overload*/mb_substr(
                 $description, 0, $limitChars
             )
             . '...'
@@ -311,7 +314,7 @@ function PMA_getHtmlForGotoPage($foreignData)
     $nbTotalPage = @ceil($foreignData['the_total'] / $session_max_rows);
 
     if ($foreignData['the_total'] > $GLOBALS['cfg']['MaxRows']) {
-        $gotopage = PMA\libraries\Util::pageselector(
+        $gotopage = PMA_Util::pageselector(
             'pos',
             $session_max_rows,
             $pageNow,

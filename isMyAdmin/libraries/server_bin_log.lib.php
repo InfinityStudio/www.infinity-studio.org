@@ -1,5 +1,6 @@
 <?php
 /* vim: set expandtab sw=4 ts=4 sts=4: */
+
 /**
  * functions for displaying server binary log
  *
@@ -7,14 +8,15 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Message;
-use PMA\libraries\Util;
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
  * Returns the html for log selector.
  *
- * @param array $binary_logs Binary logs file names
- * @param array $url_params  links parameters
+ * @param Array $binary_logs Binary logs file names
+ * @param Array $url_params  links parameters
  *
  * @return string
  */
@@ -39,7 +41,7 @@ function PMA_getLogSelector($binary_logs, $url_params)
                 $html .= ' ('
                     . implode(
                         ' ',
-                        Util::formatByteDown(
+                        PMA_Util::formatByteDown(
                             $each_log['File_size'], 3, 2
                         )
                     )
@@ -51,7 +53,7 @@ function PMA_getLogSelector($binary_logs, $url_params)
         $html .= count($binary_logs) . ' ' . __('Files') . ', ';
         if ($full_size > 0) {
             $html .= implode(
-                ' ', Util::formatByteDown($full_size)
+                ' ', PMA_Util::formatByteDown($full_size)
             );
         }
         $html .= '</fieldset>';
@@ -67,7 +69,7 @@ function PMA_getLogSelector($binary_logs, $url_params)
 /**
  * Returns the html for binary log information.
  *
- * @param array $url_params links parameters
+ * @param Array $url_params links parameters
  *
  * @return string
  */
@@ -112,7 +114,7 @@ function PMA_getLogInfo($url_params)
     }
 
     //html output
-    $html  = Util::getMessage(Message::success(), $sql_query);
+    $html  = PMA_Util::getMessage(PMA_Message::success(), $sql_query);
     $html .= '<table id="binlogTable">'
         . '<thead>'
         . '<tr>'
@@ -144,7 +146,7 @@ function PMA_getLogInfo($url_params)
 /**
  * Returns the html for Navigation Row.
  *
- * @param array $url_params     Links parameters
+ * @param Array $url_params     Links parameters
  * @param int   $pos            Position to display
  * @param int   $num_rows       Number of results row
  * @param bool  $dontlimitchars Whether limit chars
@@ -164,7 +166,7 @@ function PMA_getNavigationRow($url_params, $pos, $num_rows, $dontlimitchars)
 
         $html .= '<a href="server_binlog.php'
             . PMA_URL_getCommon($this_url_params) . '"';
-        if (Util::showIcons('TableNavigationLinksMode')) {
+        if (PMA_Util::showIcons('TableNavigationLinksMode')) {
             $html .= ' title="' . _pgettext('Previous page', 'Previous') . '">';
         } else {
             $html .= '>' . _pgettext('Previous page', 'Previous');
@@ -198,7 +200,7 @@ function PMA_getNavigationRow($url_params, $pos, $num_rows, $dontlimitchars)
         $html .= ' - <a href="server_binlog.php'
             . PMA_URL_getCommon($this_url_params)
             . '"';
-        if (Util::showIcons('TableNavigationLinksMode')) {
+        if (PMA_Util::showIcons('TableNavigationLinksMode')) {
             $html .= ' title="' . _pgettext('Next page', 'Next') . '">';
         } else {
             $html .= '>' . _pgettext('Next page', 'Next');
@@ -231,7 +233,7 @@ function PMA_getAllLogItemInfo($result, $dontlimitchars)
             . (isset($value['Orig_log_pos'])
             ? $value['Orig_log_pos'] : $value['End_log_pos'])
             . '</td>'
-            . '<td>' . Util::formatSql($value['Info'], ! $dontlimitchars)
+            . '<td>' . PMA_Util::formatSql($value['Info'], ! $dontlimitchars)
             . '</td></tr>';
 
         $odd_row = !$odd_row;

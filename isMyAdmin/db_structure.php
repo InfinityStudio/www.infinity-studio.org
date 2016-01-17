@@ -8,9 +8,7 @@
 
 namespace PMA;
 
-use PMA\libraries\controllers\database\DatabaseStructureController;
-use PMA\libraries\Response;
-use PMA\libraries\Util;
+use PMA_Response;
 
 require_once 'libraries/common.inc.php';
 require_once 'libraries/db_common.inc.php';
@@ -25,16 +23,19 @@ list(
     $tooltip_truename,
     $tooltip_aliasname,
     $pos
-) = Util::getDbInfo($GLOBALS['db'], isset($sub_part) ? $sub_part : '');
+) = \PMA_Util::getDbInfo($GLOBALS['db'], isset($sub_part) ? $sub_part : '');
 
-$container = libraries\di\Container::getDefaultContainer();
-$container->factory('PMA\libraries\controllers\database\DatabaseStructureController');
+require_once 'libraries/di/Container.class.php';
+require_once 'libraries/controllers/DatabaseStructureController.class.php';
+require_once 'libraries/Response.class.php';
+
+$container = DI\Container::getDefaultContainer();
+$container->factory('PMA\Controllers\DatabaseStructureController');
 $container->alias(
-    'DatabaseStructureController',
-    'PMA\libraries\controllers\database\DatabaseStructureController'
+    'DatabaseStructureController', 'PMA\Controllers\DatabaseStructureController'
 );
-$container->set('PMA\libraries\Response', Response::getInstance());
-$container->alias('response', 'PMA\libraries\Response');
+$container->set('PMA_Response', PMA_Response::getInstance());
+$container->alias('response', 'PMA_Response');
 
 global $db, $pos, $db_is_system_schema, $total_num_tables, $tables, $num_tables;
 /* Define dependencies for the concerned controller */
@@ -48,9 +49,6 @@ $dependency_definitions = array(
     'tables' => $tables,
 );
 
-/** @var DatabaseStructureController $controller */
-$controller = $container->get(
-    'DatabaseStructureController',
-    $dependency_definitions
-);
+/** @var Controllers\DatabaseStructureController $controller */
+$controller = $container->get('DatabaseStructureController', $dependency_definitions);
 $controller->indexAction();

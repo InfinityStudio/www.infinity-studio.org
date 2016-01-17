@@ -1,32 +1,32 @@
 <?php
 /* vim: set expandtab sw=4 ts=4 sts=4: */
-
 /**
- * Handles server engines page.
+ * display list of server engines and additional information about them
  *
  * @package PhpMyAdmin
  */
 
-namespace PMA;
-
-use PMA\libraries\controllers\server\ServerEnginesController;
-use PMA\libraries\Response;
-
+/**
+ * requirements
+ */
 require_once 'libraries/common.inc.php';
 
-$container = libraries\di\Container::getDefaultContainer();
-$container->factory(
-    'PMA\libraries\controllers\server\ServerEnginesController'
-);
-$container->alias(
-    'ServerEnginesController',
-    'PMA\libraries\controllers\server\ServerEnginesController'
-);
-$container->set('PMA\libraries\Response', Response::getInstance());
-$container->alias('response', 'PMA\libraries\Response');
+/**
+ * Does the common work
+ */
+require 'libraries/server_common.inc.php';
+require 'libraries/StorageEngine.class.php';
+require 'libraries/server_engines.lib.php';
 
-/** @var ServerEnginesController $controller */
-$controller = $container->get(
-    'ServerEnginesController', array()
-);
-$controller->indexAction();
+/**
+ * Displays the sub-page heading
+ */
+$response = PMA_Response::getInstance();
+$response->addHTML(PMA_getHtmlForSubPageHeader('engines'));
+
+/**
+ * start output
+ */
+$response->addHTML(PMA_getHtmlForServerEngines());
+
+exit;

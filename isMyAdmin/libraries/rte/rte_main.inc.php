@@ -39,7 +39,7 @@ if ($GLOBALS['is_ajax_request'] != true) {
             $tooltip_truename,
             $tooltip_aliasname,
             $pos
-        ) = PMA\libraries\Util::getDbInfo($db, isset($sub_part) ? $sub_part : '');
+        ) = PMA_Util::getDbInfo($db, isset($sub_part) ? $sub_part : '');
     }
 } else {
     /**
@@ -47,7 +47,7 @@ if ($GLOBALS['is_ajax_request'] != true) {
      * to manually select the required database and
      * create the missing $url_query variable
      */
-    if (mb_strlen($db)) {
+    if (/*overload*/mb_strlen($db)) {
         $GLOBALS['dbi']->selectDb($db);
         if (! isset($url_query)) {
             $url_query = PMA_URL_getCommon(
@@ -74,7 +74,7 @@ $ajax_class = array(
 /**
  * Create labels for the list
  */
-$titles = PMA\libraries\Util::buildActionTitles();
+$titles = PMA_Util::buildActionTitles();
 
 /**
  * Keep a list of errors that occurred while

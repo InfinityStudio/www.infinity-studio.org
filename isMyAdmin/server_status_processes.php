@@ -6,20 +6,25 @@
  * @package PhpMyAdmin
  */
 
-use PMA\libraries\ServerStatusData;
-
 require_once 'libraries/common.inc.php';
 require_once 'libraries/server_common.inc.php';
+require_once 'libraries/ServerStatusData.class.php';
 require_once 'libraries/server_status_processes.lib.php';
 
 /**
  * Replication library
  */
-require_once 'libraries/replication.inc.php';
-require_once 'libraries/replication_gui.lib.php';
+if (PMA_DRIZZLE) {
+    $GLOBALS['replication_info'] = array();
+    $GLOBALS['replication_info']['master']['status'] = false;
+    $GLOBALS['replication_info']['slave']['status'] = false;
+} else {
+    include_once 'libraries/replication.inc.php';
+    include_once 'libraries/replication_gui.lib.php';
+}
 
-$ServerStatusData = new ServerStatusData();
-$response = PMA\libraries\Response::getInstance();
+$ServerStatusData = new PMA_ServerStatusData();
+$response = PMA_Response::getInstance();
 
 /**
  * Kills a selected process
@@ -28,18 +33,16 @@ $response = PMA\libraries\Response::getInstance();
 if ($response->isAjax() && !empty($_REQUEST['kill'])) {
     $query = $GLOBALS['dbi']->getKillQuery((int)$_REQUEST['kill']);
     if ($GLOBALS['dbi']->tryQuery($query)) {
-        $message = PMA\libraries\Message::success(
-            __('Thread %s was successfully killed.')
-        );
-        $response->setRequestStatus(true);
+        $message = PMA_Message::success(__('Thread %s was successfully killed.'));
+        $response->isSuccess(true);
     } else {
-        $message = PMA\libraries\Message::error(
+        $message = PMA_Message::error(
             __(
                 'phpMyAdmin was unable to kill thread %s.'
                 . ' It probably has already been closed.'
             )
         );
-        $response->setRequestStatus(false);
+        $response->isSuccess(false);
     }
     $message->addParam($_REQUEST['kill']);
     $response->addJSON('message', $message);

@@ -5,7 +5,9 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\Util;
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
  * Generate charset dropdown box
@@ -82,21 +84,19 @@ function PMA_generateCharsetDropdownBox($type = PMA_CSDROPDOWN_COLLATION,
 /**
  * Generate the charset query part
  *
- * @param string           $collation Collation
- * @param boolean optional $override  force 'CHARACTER SET' keyword
+ * @param string $collation Collation
  *
  * @return string
  */
-function PMA_generateCharsetQueryPart($collation, $override = false)
+function PMA_generateCharsetQueryPart($collation)
 {
-    list($charset) = explode('_', $collation);
-    $keyword = ' CHARSET=';
-
-    if ($override) {
-        $keyword = ' CHARACTER SET ';
+    if (!PMA_DRIZZLE) {
+        list($charset) = explode('_', $collation);
+        return ' CHARSET=' . $charset
+            . ($charset == $collation ? '' : ' COLLATE ' . $collation);
+    } else {
+        return ' COLLATE ' . $collation;
     }
-    return $keyword . $charset
-        . ($charset == $collation ? '' : ' COLLATE ' . $collation);
 }
 
 /**
@@ -116,8 +116,12 @@ function PMA_getDbCollation($db)
 
     if (! $GLOBALS['cfg']['Server']['DisableIS']) {
         // this is slow with thousands of databases
-        $sql = 'SELECT DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA'
-            . ' WHERE SCHEMA_NAME = \'' . Util::sqlAddSlashes($db)
+        $sql = PMA_DRIZZLE
+            ? 'SELECT DEFAULT_COLLATION_NAME FROM data_dictionary.SCHEMAS'
+            . ' WHERE SCHEMA_NAME = \'' . PMA_Util::sqlAddSlashes($db)
+            . '\' LIMIT 1'
+            : 'SELECT DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA'
+            . ' WHERE SCHEMA_NAME = \'' . PMA_Util::sqlAddSlashes($db)
             . '\' LIMIT 1';
         return $GLOBALS['dbi']->fetchValue($sql);
     } else {

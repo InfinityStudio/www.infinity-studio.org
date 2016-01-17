@@ -11,8 +11,6 @@
  *
  * @package PhpMyAdmin
  */
-use PMA\libraries\plugins\IOTransformationsPlugin;
-use PMA\libraries\Table;
 
 /**
  * Gets some core libraries
@@ -26,7 +24,7 @@ require_once 'libraries/insert_edit.lib.php';
 require_once 'libraries/transformations.lib.php';
 
 // Check parameters
-PMA\libraries\Util::checkParameters(array('db', 'table', 'goto'));
+PMA_Util::checkParameters(array('db', 'table', 'goto'));
 
 $GLOBALS['dbi']->selectDb($GLOBALS['db']);
 
@@ -35,7 +33,7 @@ $GLOBALS['dbi']->selectDb($GLOBALS['db']);
  */
 $goto_include = false;
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $header = $response->getHeader();
 $scripts = $header->getScripts();
 $scripts->addFile('makegrid.js');
@@ -125,6 +123,9 @@ $gis_from_wkb_functions = array(
     'MPolyFromWKB',
 );
 
+// to create an object of PMA_File class
+require_once './libraries/File.class.php';
+
 //if some posted fields need to be transformed.
 $mime_map = PMA_getMIME($GLOBALS['db'], $GLOBALS['table']);
 if ($mime_map === false) {
@@ -199,7 +200,7 @@ foreach ($loop_array as $rownumber => $where_clause) {
         // Note: $key is an md5 of the fieldname. The actual fieldname is
         // available in $multi_edit_columns_name[$key]
 
-        $file_to_insert = new PMA\libraries\File();
+        $file_to_insert = new PMA_File();
         $file_to_insert->checkTblChangeForm($key, $rownumber);
 
         $possibly_uploaded_val = $file_to_insert->getContent();
@@ -214,7 +215,9 @@ foreach ($loop_array as $rownumber => $where_clause) {
                 . $mime_map[$column_name]['input_transformation'];
             if (is_file($filename)) {
                 include_once $filename;
-                $classname = PMA_getTransformationClassName($filename);
+                $classname = PMA_getTransformationClassName(
+                    $mime_map[$column_name]['input_transformation']
+                );
                 /** @var IOTransformationsPlugin $transformation_plugin */
                 $transformation_plugin = new $classname();
                 $transformation_options = PMA_Transformation_getOptions(
@@ -281,20 +284,18 @@ foreach ($loop_array as $rownumber => $where_clause) {
             $value_sets[] = implode(', ', $query_values);
         } else {
             // build update query
-            $query[] = 'UPDATE ' . PMA\libraries\Util::backquote($GLOBALS['table'])
+            $query[] = 'UPDATE ' . PMA_Util::backquote($GLOBALS['table'])
                 . ' SET ' . implode(', ', $query_values)
                 . ' WHERE ' . $where_clause
                 . ($_REQUEST['clause_is_unique'] ? '' : ' LIMIT 1');
         }
     }
 } // end foreach ($loop_array as $where_clause)
-unset(
-    $multi_edit_columns_name, $multi_edit_columns_prev, $multi_edit_funcs,
+unset($multi_edit_columns_name, $multi_edit_columns_prev, $multi_edit_funcs,
     $multi_edit_columns_type, $multi_edit_columns_null, $func_no_param,
     $multi_edit_auto_increment, $current_value_as_an_array, $key, $current_value,
     $loop_array, $where_clause, $using_key,  $multi_edit_columns_null_prev,
-    $insert_fail
-);
+    $insert_fail);
 
 // Builds the sql query
 if ($is_insert && count($value_sets) > 0) {
@@ -303,7 +304,7 @@ if ($is_insert && count($value_sets) > 0) {
     // No change -> move back to the calling script
     //
     // Note: logic passes here for inline edit
-    $message = PMA\libraries\Message::success(__('No change'));
+    $message = PMA_Message::success(__('No change'));
     $active_page = $goto_include;
     include '' . PMA_securePath($goto_include);
     exit;
@@ -324,14 +325,10 @@ list ($url_params, $total_affected_rows, $last_messages, $warning_messages,
         = PMA_executeSqlQuery($url_params, $query);
 
 if ($is_insert && (count($value_sets) > 0 || $row_skipped)) {
-    $message = PMA\libraries\Message::getMessageForInsertedRows(
-        $total_affected_rows
-    );
+    $message = PMA_Message::getMessageForInsertedRows($total_affected_rows);
     $unsaved_values = array_values($unsaved_values);
 } else {
-    $message = PMA\libraries\Message::getMessageForAffectedRows(
-        $total_affected_rows
-    );
+    $message = PMA_Message::getMessageForAffectedRows($total_affected_rows);
 }
 if ($row_skipped) {
     $goto_include = 'tbl_change.php';
@@ -366,7 +363,7 @@ if ($response->isAjax() && ! isset($_POST['ajax_page_request'])) {
      * transformed fields, if they were edited. After that, output the correct
      * link/transformed value and exit
      *
-     * Logic taken from libraries/DisplayResults.php
+     * Logic taken from libraries/DisplayResults.class.php
      */
 
     if (isset($_REQUEST['rel_fields_list']) && $_REQUEST['rel_fields_list'] != '') {
@@ -427,14 +424,14 @@ if ($response->isAjax() && ! isset($_POST['ajax_page_request'])) {
     );
 
     /**Get the total row count of the table*/
-    $_table = new Table($_REQUEST['table'], $_REQUEST['db']);
+    $_table = new PMA_Table($_REQUEST['table'], $_REQUEST['db']);
     $extra_data['row_count'] = $_table->countRecords();
 
     $extra_data['sql_query']
-        = PMA\libraries\Util::getMessage($message, $GLOBALS['display_query']);
+        = PMA_Util::getMessage($message, $GLOBALS['display_query']);
 
-    $response = PMA\libraries\Response::getInstance();
-    $response->setRequestStatus($message->isSuccess());
+    $response = PMA_Response::getInstance();
+    $response->isSuccess($message->isSuccess());
     $response->addJSON('message', $message);
     $response->addJSON($extra_data);
     exit;

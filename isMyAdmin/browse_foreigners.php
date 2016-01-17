@@ -24,9 +24,9 @@ foreach ($request_params as $one_request_param) {
     }
 }
 
-PMA\libraries\Util::checkParameters(array('db', 'table', 'field'));
+PMA_Util::checkParameters(array('db', 'table', 'field'));
 
-$response = PMA\libraries\Response::getInstance();
+$response = PMA_Response::getInstance();
 $response->getFooter()->setMinimal();
 $header = $response->getHeader();
 $header->disableMenuAndConsole();
