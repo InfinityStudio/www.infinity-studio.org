@@ -21,7 +21,7 @@
 use command\controller\AuthorController;
 
 require 'init.php';
-$smarty->assign('title','Infinity Studio - 作者介绍');
+$smarty->assign('title','Infinity Studio - 成员介绍');
 if(isset($_GET["pn"]))
 {
     $_author = new AuthorController($smarty);

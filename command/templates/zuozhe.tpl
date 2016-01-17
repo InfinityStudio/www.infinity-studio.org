@@ -21,6 +21,7 @@
     <div class="row">
       <div class="col-md-2">
         <img src="/public/img/profile/{$author}.jpg" alt="{$author}" width="100" />
+        <!-- {$author[$pos].avatar} -->
       </div>
       <div class="col-md-10">
         <p>
