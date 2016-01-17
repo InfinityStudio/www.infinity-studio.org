@@ -30,6 +30,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="public/css/general.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="//cdn.bootcss.com/csshake/1.5.0/csshake.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
 	  <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>

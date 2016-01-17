@@ -60,14 +60,14 @@
 
             <p>一个以Minecraft世界观设定为基础的科技Mod，主要内容包括异域能量、对应的机器如组装机、重构机、传送机等。</p>
             <br/>
-            <a data-role="button" class="btn btn-info btn-sm" href="project.php?pn=ExoticPower">详细介绍</a>
+            <a data-role="button" class="btn btn-info btn-sm shake" href="project.php?pn=ExoticPower">详细介绍</a>
         </div>
         <div class="col-sm-6 text-justify">
             <strong>FoodCraft 食物工艺</strong><br/>
 
             <p>增加更多有趣的食物！</p>
             <br/>
-            <a data-role="button" class="btn btn-info btn-sm" href="project.php?pn=FoodCraft">详细介绍</a>
+            <a data-role="button" class="btn btn-info btn-sm shake" href="project.php?pn=FoodCraft">详细介绍</a>
         </div>
     </div>
 </div>
