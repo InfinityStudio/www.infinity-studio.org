@@ -17,9 +17,16 @@
  *
  * @author simon3000 <simon3000@163.com>
  *}
-<blockquote class="zuoZhe">
-    <p>
-        {$author[$pos].description}
-    </p>
-    <footer>项目作者: {$author[$pos].name}</footer>
-</blockquote>
+  <blockquote class="zuoZhe">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="/public/img/{$author}.jpg" alt="" />
+      </div>
+      <div class="col-md-8">
+        <p>
+            {$author[$pos].description}
+        </p>
+        <footer>项目作者: {$author[$pos].name}</footer>
+      </div>
+    </div>
+   </blockquote>
