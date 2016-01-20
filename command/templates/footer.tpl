@@ -37,6 +37,7 @@
            Reserved &middot;
        </div>
    </div>
+   <br>
  </footer>
 <div class="footer">
 
