@@ -39,7 +39,9 @@
    </div>
    <hr class="half-rule">
  </footer>
-
+<div class="footer">
+  
+</div>
 
 </body>
 </html>
