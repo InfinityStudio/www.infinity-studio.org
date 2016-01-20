@@ -20,8 +20,7 @@
  * @author simon3000 <simon3000@163.com>
  *}
  <footer>
-   <hr class="half-rule">
-   <div class="container">
+   <div class="container realFooter">
        <div class="text-center">
            {if $nav}
                {foreach from=$footer key=k item=v}
@@ -37,10 +36,9 @@
            Reserved &middot;
        </div>
    </div>
-   <hr class="half-rule">
  </footer>
 <div class="footer">
-  
+
 </div>
 
 </body>
