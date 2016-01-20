@@ -20,6 +20,7 @@
  * @author simon3000 <simon3000@163.com>
  *}
  <footer class="navbar-fixed-bottom">
+   <hr class="half-rule">
    <div class="container">
        <div class="text-center">
            {if $nav}
@@ -37,6 +38,8 @@
        </div>
    </div>
  </footer>
+<div class="footer">
 
+</div>
 </body>
 </html>
