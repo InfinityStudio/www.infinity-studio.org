@@ -64,28 +64,3 @@ blockquote.zuoZhe {
     background-color: rgba(0, 178, 255, 0.15);
     border-color: rgba(0, 178, 255, 0.5);
 }
-
-.footer {
-    height: 122px;
-}
-
-footer {
-    position: fixed;
-    bottom: 0px;
-		width: 100%;
-}
-
-.realFooter{
-	padding-top: 10px;
-	padding-bottom: 10px;
-	border-bottom-style: solid;
-	border-top-style: solid;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	border-color: rgb(0, 0, 0);
-	width: 100%;
-	margin-bottom: 15px;
-	margin-left: 0px;
-	margin-right: 0px;
-	background-color: rgba(255, 255, 255, 0.45);
-}

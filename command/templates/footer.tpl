@@ -19,8 +19,8 @@
  * @author Cannon_fotter <gfyguofanyi@gmail.com>
  * @author simon3000 <simon3000@163.com>
  *}
- <footer>
-   <div class="container realFooter">
+ <footer class="navbar-fixed-bottom">
+   <div class="container">
        <div class="text-center">
            {if $nav}
                {foreach from=$footer key=k item=v}
@@ -37,9 +37,6 @@
        </div>
    </div>
  </footer>
-<div class="footer">
-
-</div>
 
 </body>
 </html>
